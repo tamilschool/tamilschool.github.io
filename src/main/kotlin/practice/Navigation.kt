@@ -1,5 +1,6 @@
 package practice
 
+import data.QuestionState
 import kotlinx.css.LinearDimension
 import kotlinx.css.width
 import kotlinx.html.js.onClickFunction

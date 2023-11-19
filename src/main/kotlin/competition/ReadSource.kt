@@ -1,5 +1,10 @@
 package competition
 
+import data.CGroup
+import data.CGroupsCollection
+import data.CKuralOnly
+import data.CThirukkural
+import data.CThirukkuralCollection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 

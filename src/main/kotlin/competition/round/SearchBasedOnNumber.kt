@@ -1,7 +1,7 @@
 package competition.round
 
-import competition.CQuestionState
-import competition.CThirukkural
+import data.CQuestionState
+import data.CThirukkural
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.html.InputType

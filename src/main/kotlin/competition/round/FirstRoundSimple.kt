@@ -1,11 +1,11 @@
 package competition.round
 
-import competition.Group1Round1Score
-import competition.Group23Round1Score
-import competition.CKuralMeaning
-import competition.CQuestionState
-import competition.CScoreType
-import competition.CThirukkural
+import data.Group1Round1Score
+import data.Group23Round1Score
+import data.CKuralMeaning
+import data.CQuestionState
+import data.CScoreType
+import data.CThirukkural
 import kotlinx.css.*
 import competition.kuralDisplay
 import competition.kuralPorulSelection

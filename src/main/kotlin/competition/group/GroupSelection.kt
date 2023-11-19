@@ -1,6 +1,6 @@
 package competition.group
 
-import competition.CGroup
+import data.CGroup
 import kotlinx.css.pct
 import kotlinx.css.width
 import kotlinx.html.js.onClickFunction

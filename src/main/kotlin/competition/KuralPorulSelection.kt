@@ -1,5 +1,6 @@
 package competition
 
+import data.CKuralMeaning
 import kotlinx.css.LinearDimension
 import kotlinx.css.height
 import kotlinx.css.pct

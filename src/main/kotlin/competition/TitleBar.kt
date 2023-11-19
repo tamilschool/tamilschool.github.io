@@ -1,5 +1,9 @@
 package competition
 
+import data.CQuestionState
+import data.CRound
+import data.CScoreType
+import data.CTopic
 import kotlinx.css.LinearDimension
 import kotlinx.css.pct
 import kotlinx.css.width

@@ -14,6 +14,7 @@ package practice/*
  * limitations under the License.
  */
 
+import data.KuralOnly
 import kotlinx.css.fontSize
 import kotlinx.css.rem
 import react.RBuilder

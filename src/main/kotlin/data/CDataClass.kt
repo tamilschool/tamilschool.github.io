@@ -1,4 +1,4 @@
-package competition
+package data
 
 import kotlinx.serialization.Serializable
 
@@ -219,15 +219,15 @@ data class CScoreState(
 )
 
 data class CGroup1Score(
-    var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
-    var bonus: Number = 0F)
+  var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
+  var bonus: Number = 0F)
 data class Group1Round1Score(
   var thirukkural: CThirukkural,
   var score: MutableMap<CGroup1RoundType, Number> = CGroup1RoundType.values().associateWith { 0F }.toMutableMap())
 
 data class CGroup23Score(
-    val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
-    val round2: Map<CTopic, MutableSet<String>> = CTopic.values().associateWith { mutableSetOf() })
+  val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
+  val round2: Map<CTopic, MutableSet<String>> = CTopic.values().associateWith { mutableSetOf() })
 data class Group23Round1Score(
   var thirukkural: CThirukkural,
   var score: MutableMap<CGroup23Round1Type, Boolean> = CGroup23Round1Type.values().associateWith { false }.toMutableMap())

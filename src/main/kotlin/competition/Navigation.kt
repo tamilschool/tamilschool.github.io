@@ -1,5 +1,6 @@
 package competition
 
+import data.CQuestionState
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.role

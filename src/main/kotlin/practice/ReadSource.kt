@@ -1,5 +1,10 @@
 package practice
 
+import data.Group
+import data.GroupsCollection
+import data.KuralOnly
+import data.Thirukkural
+import data.ThirukkuralCollection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 

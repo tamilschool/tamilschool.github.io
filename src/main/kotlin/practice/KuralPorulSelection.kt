@@ -1,5 +1,6 @@
 package practice
 
+import data.KuralMeaning
 import kotlinx.css.LinearDimension
 import kotlinx.css.height
 import kotlinx.css.pct

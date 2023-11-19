@@ -1,4 +1,4 @@
-package practice
+package data
 
 import kotlinx.serialization.Serializable
 import kotlin.random.Random
@@ -6,15 +6,6 @@ import kotlin.random.Random
 enum class Group(val tamilDisplay: String, val englishDisplay: String) {
     II("பிரிவு 2", "7 to 9"),
     III("பிரிவு 3", "10 & Above");
-
-    companion object {
-        fun getGroupForEnglish(englishDisplay: String): Group {
-            return values().first { it.englishDisplay == englishDisplay }
-        }
-        fun getGroupForTamil(tamilDisplay: String): Group {
-            return values().first { it.tamilDisplay == tamilDisplay }
-        }
-    }
 }
 
 enum class Topic(val tamil: String) {

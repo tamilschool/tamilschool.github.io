@@ -1,12 +1,12 @@
 package competition.round
 
-import competition.Group1Round1Score
-import competition.CGroup1RoundType
-import competition.Group23Round1Score
-import competition.CGroup23Round1Type
-import competition.CKuralMeaning
-import competition.CScoreType
-import competition.CThirukkural
+import data.Group1Round1Score
+import data.CGroup1RoundType
+import data.Group23Round1Score
+import data.CGroup23Round1Type
+import data.CKuralMeaning
+import data.CScoreType
+import data.CThirukkural
 import kotlinx.html.js.onClickFunction
 import react.*
 import styled.*

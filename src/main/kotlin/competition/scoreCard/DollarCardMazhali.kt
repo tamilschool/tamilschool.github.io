@@ -15,7 +15,7 @@
  */
 package competition.scoreCard
 
-import competition.CTopic
+import data.CTopic
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.*

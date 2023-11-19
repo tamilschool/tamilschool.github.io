@@ -1,5 +1,6 @@
 package competition
 
+import data.CThirukkural
 import react.RBuilder
 import react.RComponent
 import react.RProps

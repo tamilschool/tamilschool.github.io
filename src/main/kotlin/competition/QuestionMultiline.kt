@@ -16,6 +16,7 @@ package competition
  * limitations under the License.
  */
 
+import data.CKuralOnly
 import kotlinx.css.fontSize
 import kotlinx.css.rem
 import react.*

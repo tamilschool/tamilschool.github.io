@@ -1,5 +1,6 @@
 package competition
 
+import data.CThirukkural
 import kotlinx.css.rem
 import react.RBuilder
 import react.RComponent

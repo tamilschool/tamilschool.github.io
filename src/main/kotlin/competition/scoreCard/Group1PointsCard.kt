@@ -15,8 +15,8 @@
  */
 package competition.scoreCard
 
-import competition.CGroup1RoundType
-import competition.CQuestionState
+import data.CGroup1RoundType
+import data.CQuestionState
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.*

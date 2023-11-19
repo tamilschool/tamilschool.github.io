@@ -1,5 +1,8 @@
 package practice
 
+import data.KuralMeaning
+import data.QuestionState
+import data.Topic
 import kotlinx.css.pct
 import react.RBuilder
 import react.RComponent

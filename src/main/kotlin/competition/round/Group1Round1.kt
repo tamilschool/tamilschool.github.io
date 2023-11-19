@@ -1,7 +1,7 @@
 package competition.round
 
-import competition.Group1Round1Score
-import competition.CGroup1RoundType
+import data.Group1Round1Score
+import data.CGroup1RoundType
 import kotlinx.css.UserSelect
 import kotlinx.css.minWidth
 import kotlinx.css.px

@@ -15,10 +15,10 @@
  */
 package competition.scoreCard
 
-import competition.CGroup1RoundType
-import competition.CGroup23Round1Type
-import competition.CQuestionState
-import competition.CScoreType
+import data.CGroup1RoundType
+import data.CGroup23Round1Type
+import data.CQuestionState
+import data.CScoreType
 import react.*
 import styled.css
 import styled.styledDiv

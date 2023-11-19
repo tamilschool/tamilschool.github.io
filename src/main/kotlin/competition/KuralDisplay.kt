@@ -1,5 +1,7 @@
 package competition
 
+import data.CKuralMeaning
+import data.CThirukkural
 import react.*
 import styled.css
 import styled.styledDiv

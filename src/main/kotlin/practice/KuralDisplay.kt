@@ -1,5 +1,7 @@
 package practice
 
+import data.KuralMeaning
+import data.Thirukkural
 import react.RBuilder
 import react.RComponent
 import react.RProps

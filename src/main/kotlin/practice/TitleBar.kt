@@ -1,5 +1,8 @@
 package practice
 
+import data.Group
+import data.QuestionState
+import data.Topic
 import kotlinx.css.LinearDimension
 import kotlinx.css.pct
 import kotlinx.css.width

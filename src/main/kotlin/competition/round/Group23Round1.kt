@@ -1,7 +1,7 @@
 package competition.round
 
-import competition.Group23Round1Score
-import competition.CGroup23Round1Type
+import data.Group23Round1Score
+import data.CGroup23Round1Type
 import kotlinx.css.UserSelect
 import kotlinx.css.userSelect
 import kotlinx.html.InputType

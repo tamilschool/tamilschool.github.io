@@ -1,5 +1,7 @@
 package practice
 
+import data.KuralMeaning
+import data.Thirukkural
 import kotlinx.css.pct
 import react.*
 

@@ -1,5 +1,7 @@
 package competition
 
+import data.CKuralMeaning
+import data.CThirukkural
 import kotlinx.css.LinearDimension
 import kotlinx.css.rem
 import react.RBuilder

@@ -1,5 +1,9 @@
 package practice
 
+import data.Group
+import data.KuralMeaning
+import data.QuestionState
+import data.Topic
 import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.css.width

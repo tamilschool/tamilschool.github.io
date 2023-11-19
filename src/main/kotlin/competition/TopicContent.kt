@@ -1,5 +1,7 @@
 package competition
 
+import data.CQuestionState
+import data.CTopic
 import kotlinx.css.pct
 import react.RBuilder
 import react.RComponent

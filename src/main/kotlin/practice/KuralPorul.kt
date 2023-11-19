@@ -1,5 +1,7 @@
 package practice
 
+import data.KuralMeaning
+import data.Thirukkural
 import kotlinx.css.LinearDimension
 import kotlinx.css.rem
 import react.RBuilder

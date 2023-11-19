@@ -4,6 +4,13 @@ import kotlinx.css.*
 import react.*
 import competition.round.firstRoundSimple
 import competition.scoreCard.scoreInfo
+import data.CKuralMeaning
+import data.CQuestionState
+import data.CRound
+import data.CThirukkural
+import data.CTopic
+import data.Group1Round1Score
+import data.Group23Round1Score
 import styled.css
 import styled.styledDiv
 import styled.styledImg
