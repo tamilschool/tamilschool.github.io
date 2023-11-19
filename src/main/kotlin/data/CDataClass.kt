@@ -2,17 +2,6 @@ package data
 
 import kotlinx.serialization.Serializable
 
-enum class CScoreType {
-    KuralOnly, KuralPorul, PottiSuttru
-}
-
-enum class CGroup(val tamilDisplay: String, val englishDisplay: String, val type: CScoreType) {
-    IA("பிரிவு 1 (முன்மழலை/மழலை)", "6 & Below", CScoreType.KuralOnly),
-    IB("பிரிவு 1", "6 & Below", CScoreType.KuralPorul),
-    II("பிரிவு 2", "7 to 9", CScoreType.PottiSuttru),
-    III("பிரிவு 3", "10 & Above", CScoreType.PottiSuttru);
-}
-
 enum class CRound(val tamil: String) {
     I("சுற்று 1"),
     II("சுற்று 2")
@@ -100,11 +89,11 @@ data class CThirukkural(
   val porulSalamanPapa: String,
   val porulMuKarunanidhi: String,
   val words: List<String>,
-  val group: Set<CGroup>
+  val group: Set<Group>
 )
 
 data class CQuestionState(
-  var selectedGroup: CGroup,
+  var selectedGroup: Group,
   var selectedRound: CRound,
   var selectedTopic: CTopic,
   var round2Kurals: List<CThirukkural>,

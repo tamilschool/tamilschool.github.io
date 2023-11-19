@@ -3,11 +3,6 @@ package data
 import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
-enum class Group(val tamilDisplay: String, val englishDisplay: String) {
-    II("பிரிவு 2", "7 to 9"),
-    III("பிரிவு 3", "10 & Above");
-}
-
 enum class Topic(val tamil: String) {
     Athikaram("அதிகாரம்"),
     Porul("பொருள்"),

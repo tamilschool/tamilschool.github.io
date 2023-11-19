@@ -18,7 +18,7 @@ package competition.scoreCard
 import data.CGroup1RoundType
 import data.CGroup23Round1Type
 import data.CQuestionState
-import data.CScoreType
+import data.ScoreType
 import react.*
 import styled.css
 import styled.styledDiv
@@ -34,7 +34,7 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
                 classes = mutableListOf("row")
             }
             when (props.questionState.selectedGroup.type) {
-                CScoreType.PottiSuttru -> {
+                ScoreType.PottiSuttru -> {
                     dollarCard {
                         kuralsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[CGroup23Round1Type.KURAL] == true }
                         porulsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[CGroup23Round1Type.PORUL] == true }
@@ -43,7 +43,7 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
                         questionState = props.questionState
                     }
                 }
-                CScoreType.KuralPorul -> {
+                ScoreType.KuralPorul -> {
                     dollarCard {
                         kuralsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[CGroup1RoundType.KURAL] }.count { it.toFloat() > 0 }
                         porulsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[CGroup1RoundType.PORUL] }.count { it.toFloat() > 0 }

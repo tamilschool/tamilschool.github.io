@@ -7,13 +7,13 @@ import competition.signout.signOut
 import competition.signout.signOutConfirm
 import data.CAthikaramState
 import data.CFirstWordState
-import data.CGroup
+import data.Group
 import data.CKuralMeaning
 import data.CLastWordState
 import data.CQuestionState
 import data.CRound
 import data.CScoreState
-import data.CScoreType
+import data.ScoreType
 import data.CThirukkural
 import data.CThirukkuralState
 import data.CTimerState
@@ -73,7 +73,7 @@ external interface CompetitionAppState : RState {
   var showSignOutConfirm: Boolean
   var allKurals: List<CThirukkural>
   var questionState: CQuestionState
-  var activeGroup: CGroup?
+  var activeGroup: Group?
   var searchResultKural: CThirukkural?
   var selectedKuralMeaning: MutableSet<CKuralMeaning>
 }
@@ -85,7 +85,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       val source = fetchSource()
       setState {
         allKurals = source
-        questionState = createQuestionState(CGroup.IA, allKurals)
+        questionState = createQuestionState(Group.IA, allKurals)
         selectedKuralMeaning = mutableSetOf(CKuralMeaning.SalamanPapa)
         showSignOutConfirm = false
         loaded = true
@@ -96,7 +96,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     }
   }
 
-  private fun createQuestionState(group: CGroup, thirukkurals: List<CThirukkural>): CQuestionState {
+  private fun createQuestionState(group: Group, thirukkurals: List<CThirukkural>): CQuestionState {
     val targetKurals = thirukkurals.filter { it.group.contains(group) }
     return CQuestionState(
       selectedGroup = group,
@@ -273,7 +273,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onAddKuralClick = {
                     setState {
                       searchResultKural?.let {
-                        if (questionState.selectedGroup.type == CScoreType.PottiSuttru) {
+                        if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
                           if (!questionState.scoreState.group23Score.round1.containsKey(it.kuralNo)) {
                             questionState.scoreState.group23Score.round1[it.kuralNo] =
                               Group23Round1Score(it)
@@ -290,14 +290,14 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   }
                   onDeleteKuralClick = { kuralNo ->
                     setState {
-                      if (questionState.selectedGroup.type == CScoreType.PottiSuttru) {
+                      if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
                         questionState.scoreState.group23Score.round1.remove(kuralNo)
                       } else {
                         questionState.scoreState.group1Score.round1.remove(kuralNo)
                       }
                     }
                     setState {
-                      if (questionState.selectedGroup.type != CScoreType.PottiSuttru) {
+                      if (questionState.selectedGroup.type != ScoreType.PottiSuttru) {
                         if (questionState.scoreState.group1Score.round1.isEmpty()) {
                           questionState.scoreState.group1Score.bonus = 0
                         }

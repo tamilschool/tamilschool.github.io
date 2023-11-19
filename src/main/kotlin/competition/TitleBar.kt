@@ -2,7 +2,7 @@ package competition
 
 import data.CQuestionState
 import data.CRound
-import data.CScoreType
+import data.ScoreType
 import data.CTopic
 import kotlinx.css.LinearDimension
 import kotlinx.css.pct
@@ -41,7 +41,7 @@ external interface TitleBarProps : RProps {
 class TitleBar : RComponent<TitleBarProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
-      if (props.questionState.selectedGroup.type == CScoreType.PottiSuttru) {
+      if (props.questionState.selectedGroup.type == ScoreType.PottiSuttru) {
         styledDiv {
           css {
             classes = mutableListOf("row m-2")

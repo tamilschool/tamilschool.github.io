@@ -5,7 +5,7 @@ import data.CGroup1RoundType
 import data.Group23Round1Score
 import data.CGroup23Round1Type
 import data.CKuralMeaning
-import data.CScoreType
+import data.ScoreType
 import data.CThirukkural
 import kotlinx.html.js.onClickFunction
 import react.*
@@ -15,7 +15,7 @@ external interface FirstRoundKuralDisplayProps : RProps {
     var thirukkural: CThirukkural
     var group23Round1Score: Group23Round1Score?
     var group1Round1Score: Group1Round1Score?
-    var scoreType: CScoreType
+    var scoreType: ScoreType
     var selectedKuralMeaning: Set<CKuralMeaning>
     var onDeleteKuralClick: (Int) -> Unit
     var onG1Click: (CGroup1RoundType, Number) -> Unit

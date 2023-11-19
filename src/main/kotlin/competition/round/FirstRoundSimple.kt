@@ -4,7 +4,7 @@ import data.Group1Round1Score
 import data.Group23Round1Score
 import data.CKuralMeaning
 import data.CQuestionState
-import data.CScoreType
+import data.ScoreType
 import data.CThirukkural
 import kotlinx.css.*
 import competition.kuralDisplay
@@ -98,7 +98,7 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
                         bottom = 0.px
                         overflowY = Overflow.auto
                     }
-                    if (props.questionState.selectedGroup.type == CScoreType.PottiSuttru) {
+                    if (props.questionState.selectedGroup.type == ScoreType.PottiSuttru) {
                         props.questionState.scoreState.group23Score.round1.values.forEach { score ->
                             firstRoundKuralDisplay {
                                 key = score.thirukkural.kuralNo.toString()
