@@ -1,6 +1,6 @@
 package competition
 
-import data.CKuralMeaning
+import data.KuralMeaning
 import kotlinx.css.LinearDimension
 import kotlinx.css.height
 import kotlinx.css.pct
@@ -13,7 +13,7 @@ import styled.styledDiv
 
 external interface KuralPorulSelectionProps : RProps {
     var buttonSize: LinearDimension
-    var selectedKuralMeaning: Set<CKuralMeaning>
+    var selectedKuralMeaning: Set<KuralMeaning>
     var onMuVaradhaClick: () -> Unit
     var onSalamanPapaClick: () -> Unit
     var onMuKarunanidhiClick: () -> Unit
@@ -29,13 +29,13 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
             styledButton {
                 css {
                     val btnStyle =
-                        if (props.selectedKuralMeaning.contains(CKuralMeaning.MuVaradha)) "btn-success"
+                        if (props.selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) "btn-success"
                         else "btn btn-outline-success"
                     classes = mutableListOf("btn $btnStyle mr-2")
                     width = props.buttonSize
                     height = 100.pct
                 }
-                +CKuralMeaning.MuVaradha.tamil
+                +KuralMeaning.MuVaradha.tamil
                 attrs {
                     onClickFunction = {
                         props.onMuVaradhaClick()
@@ -45,13 +45,13 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
             styledButton {
                 css {
                     val btnStyle =
-                        if (props.selectedKuralMeaning.contains(CKuralMeaning.SalamanPapa)) "btn-success"
+                        if (props.selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) "btn-success"
                         else "btn btn-outline-success"
                     classes = mutableListOf("btn $btnStyle mr-2")
                     width = props.buttonSize
                     height = 100.pct
                 }
-                +CKuralMeaning.SalamanPapa.tamil
+                +KuralMeaning.SalamanPapa.tamil
                 attrs {
                     onClickFunction = {
                         props.onSalamanPapaClick()
@@ -61,13 +61,13 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
             styledButton {
                 css {
                     val btnStyle =
-                        if (props.selectedKuralMeaning.contains(CKuralMeaning.MuKarunanidhi)) "btn-success"
+                        if (props.selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) "btn-success"
                         else "btn btn-outline-success"
                     classes = mutableListOf("btn $btnStyle")
                     width = props.buttonSize
                     height = 100.pct
                 }
-                +CKuralMeaning.MuKarunanidhi.tamil
+                +KuralMeaning.MuKarunanidhi.tamil
                 attrs {
                     onClickFunction = {
                         props.onMuKarunanidhiClick()

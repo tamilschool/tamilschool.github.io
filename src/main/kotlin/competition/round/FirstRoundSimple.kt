@@ -2,7 +2,7 @@ package competition.round
 
 import data.Group1Round1Score
 import data.Group23Round1Score
-import data.CKuralMeaning
+import data.KuralMeaning
 import data.CQuestionState
 import data.ScoreType
 import data.Thirukkural
@@ -17,7 +17,7 @@ import styled.styledDiv
 external interface FirstRoundSimpleProps : RProps {
     var questionState: CQuestionState
     var searchResultKural: Thirukkural?
-    var selectedKuralMeaning: Set<CKuralMeaning>
+    var selectedKuralMeaning: Set<KuralMeaning>
     var onMuVaradhaClick: () -> Unit
     var onSalamanPapaClick: () -> Unit
     var onMuKarunanidhiClick: () -> Unit

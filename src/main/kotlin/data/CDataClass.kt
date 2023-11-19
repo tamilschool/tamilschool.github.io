@@ -1,29 +1,5 @@
 package data
 
-import kotlinx.serialization.Serializable
-
-interface CIKuralMeaning {
-    fun getMeaning(thirukkural: Thirukkural): String
-}
-
-enum class CKuralMeaning(val tamil: String): CIKuralMeaning {
-    MuVaradha("மு. வரதராசனார்") {
-        override fun getMeaning(thirukkural: Thirukkural): String {
-            return thirukkural.porulMuVaradha
-        }
-    },
-    SalamanPapa("சாலமன் பாப்பையா") {
-        override fun getMeaning(thirukkural: Thirukkural): String {
-            return thirukkural.porulSalamanPapa
-        }
-    },
-    MuKarunanidhi("மு. கருணாநிதி") {
-        override fun getMeaning(thirukkural: Thirukkural): String {
-            return thirukkural.porulMuKarunanidhi
-        }
-    };
-}
-
 data class CQuestionState(
   var selectedGroup: Group,
   var selectedRound: Round,

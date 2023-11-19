@@ -4,7 +4,7 @@ import kotlinx.css.*
 import react.*
 import competition.round.firstRoundSimple
 import competition.scoreCard.scoreInfo
-import data.CKuralMeaning
+import data.KuralMeaning
 import data.CQuestionState
 import data.Round
 import data.Thirukkural
@@ -29,7 +29,7 @@ external interface PersonProps: RProps {
     var onSearchByKuralNoClick: (Int) -> Unit
     var onAddKuralClick: () -> Unit
     var onDeleteKuralClick: (Int) -> Unit
-    var selectedKuralMeaning: Set<CKuralMeaning>
+    var selectedKuralMeaning: Set<KuralMeaning>
     var onMuVaradhaClick: () -> Unit
     var onSalamanPapaClick: () -> Unit
     var onMuKarunanidhiClick: () -> Unit

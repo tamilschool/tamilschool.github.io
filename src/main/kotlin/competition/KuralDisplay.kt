@@ -1,6 +1,6 @@
 package competition
 
-import data.CKuralMeaning
+import data.KuralMeaning
 import data.Thirukkural
 import react.*
 import styled.css
@@ -62,7 +62,7 @@ class KuralDisplay : RComponent<KuralDisplayProps, RState>() {
                     css {
                         classes = mutableListOf("card-footer pb-0")
                     }
-                    CKuralMeaning.values().forEach {
+                    KuralMeaning.values().forEach {
                         styledP {
                             css {
                                 classes = mutableListOf("card-text m-0")

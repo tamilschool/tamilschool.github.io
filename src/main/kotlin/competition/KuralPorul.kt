@@ -1,6 +1,6 @@
 package competition
 
-import data.CKuralMeaning
+import data.KuralMeaning
 import data.Thirukkural
 import kotlinx.css.LinearDimension
 import kotlinx.css.rem
@@ -18,7 +18,7 @@ external interface KuralPorulProps: RProps {
 
 class KuralPorul : RComponent<KuralPorulProps, RState>() {
     override fun RBuilder.render() {
-        CKuralMeaning.values().forEach {
+        KuralMeaning.values().forEach {
             questionWithName {
                 question = it.getMeaning(props.selectedThirukkural)
                 name = it.tamil

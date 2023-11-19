@@ -8,7 +8,7 @@ import competition.signout.signOutConfirm
 import data.CAthikaramState
 import data.CFirstWordState
 import data.Group
-import data.CKuralMeaning
+import data.KuralMeaning
 import data.CLastWordState
 import data.CQuestionState
 import data.Round
@@ -75,7 +75,7 @@ external interface CompetitionAppState : RState {
   var questionState: CQuestionState
   var activeGroup: Group?
   var searchResultKural: Thirukkural?
-  var selectedKuralMeaning: MutableSet<CKuralMeaning>
+  var selectedKuralMeaning: MutableSet<KuralMeaning>
 }
 
 class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
@@ -86,7 +86,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       setState {
         allKurals = source
         questionState = createQuestionState(Group.IA, allKurals)
-        selectedKuralMeaning = mutableSetOf(CKuralMeaning.SalamanPapa)
+        selectedKuralMeaning = mutableSetOf(KuralMeaning.SalamanPapa)
         showSignOutConfirm = false
         loaded = true
         println("No of athikarams: ${questionState.athikaramState.targets.size}")
@@ -328,15 +328,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onMuVaradhaClick = {
                     setState {
                       selectedKuralMeaning =
-                        if (selectedKuralMeaning.contains(CKuralMeaning.MuVaradha)) {
+                        if (selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.remove(CKuralMeaning.MuVaradha)
+                          tempList.remove(KuralMeaning.MuVaradha)
                           tempList
                         } else {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.add(CKuralMeaning.MuVaradha)
+                          tempList.add(KuralMeaning.MuVaradha)
                           tempList
                         }
                     }
@@ -344,15 +344,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onSalamanPapaClick = {
                     setState {
                       selectedKuralMeaning =
-                        if (selectedKuralMeaning.contains(CKuralMeaning.SalamanPapa)) {
+                        if (selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.remove(CKuralMeaning.SalamanPapa)
+                          tempList.remove(KuralMeaning.SalamanPapa)
                           tempList
                         } else {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.add(CKuralMeaning.SalamanPapa)
+                          tempList.add(KuralMeaning.SalamanPapa)
                           tempList
                         }
                     }
@@ -360,15 +360,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onMuKarunanidhiClick = {
                     setState {
                       selectedKuralMeaning =
-                        if (selectedKuralMeaning.contains(CKuralMeaning.MuKarunanidhi)) {
+                        if (selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.remove(CKuralMeaning.MuKarunanidhi)
+                          tempList.remove(KuralMeaning.MuKarunanidhi)
                           tempList
                         } else {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.add(CKuralMeaning.MuKarunanidhi)
+                          tempList.add(KuralMeaning.MuKarunanidhi)
                           tempList
                         }
                     }
