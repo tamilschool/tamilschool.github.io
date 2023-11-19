@@ -1,7 +1,7 @@
 package competition
 
 import data.CQuestionState
-import data.CRound
+import data.Round
 import data.ScoreType
 import data.CTopic
 import kotlinx.css.LinearDimension
@@ -28,7 +28,7 @@ external interface TitleBarProps : RProps {
   var smallBtnWidth: LinearDimension
   var mediumBtnWidth: LinearDimension
   var largeBtnWidth: LinearDimension
-  var onRoundClick: (CRound) -> Unit
+  var onRoundClick: (Round) -> Unit
   var onTopicClick: (CTopic) -> Unit
   var onTimerClick: () -> Unit
   var onPreviousClick: () -> Unit
@@ -64,7 +64,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                     role = "tablist"
                   }
                 }
-                for (round in CRound.values()) {
+                for (round in Round.values()) {
                   linkItem {
                     name = round.tamil
                     isActive = props.questionState.selectedRound == round
@@ -73,7 +73,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                 }
               }
             }
-            if (props.questionState.selectedRound == CRound.II) {
+            if (props.questionState.selectedRound == Round.II) {
               styledDiv {
                 css {
                   classes = mutableListOf("btn-group")
@@ -99,7 +99,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
               }
             }
           }
-          if (props.questionState.selectedRound == CRound.II) {
+          if (props.questionState.selectedRound == Round.II) {
             styledDiv {
               css {
                 props.secondOptionalRowStyle?.let { classes = mutableListOf(it) }
@@ -125,7 +125,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
             }
           }
         }
-        if (props.questionState.selectedRound == CRound.II) {
+        if (props.questionState.selectedRound == Round.II) {
           if (props.questionState.timerState.isLive) {
             styledDiv {
               css {

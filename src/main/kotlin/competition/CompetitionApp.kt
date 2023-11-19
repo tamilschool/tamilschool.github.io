@@ -11,7 +11,7 @@ import data.Group
 import data.CKuralMeaning
 import data.CLastWordState
 import data.CQuestionState
-import data.CRound
+import data.Round
 import data.CScoreState
 import data.ScoreType
 import data.CThirukkural
@@ -100,7 +100,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     val targetKurals = thirukkurals.filter { it.group.contains(group) }
     return CQuestionState(
       selectedGroup = group,
-      selectedRound = CRound.I,
+      selectedRound = Round.I,
       selectedTopic = CTopic.Athikaram,
       round2Kurals = targetKurals,
       athikaramState = CAthikaramState(targetKurals),
@@ -210,7 +210,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                     setState {
                       if (questionState.selectedRound != round) {
                         questionState.selectedRound = round
-                        if (round == CRound.I) {
+                        if (round == Round.I) {
                           questionState.timerState.isLive = false
                         }
                       }

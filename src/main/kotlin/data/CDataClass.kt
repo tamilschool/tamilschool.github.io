@@ -2,11 +2,6 @@ package data
 
 import kotlinx.serialization.Serializable
 
-enum class CRound(val tamil: String) {
-    I("சுற்று 1"),
-    II("சுற்று 2")
-}
-
 enum class CTopic(val tamil: String) {
     Athikaram("அதிகாரம்"),
     Porul("பொருள்"),
@@ -94,7 +89,7 @@ data class CThirukkural(
 
 data class CQuestionState(
   var selectedGroup: Group,
-  var selectedRound: CRound,
+  var selectedRound: Round,
   var selectedTopic: CTopic,
   var round2Kurals: List<CThirukkural>,
   var athikaramState: CAthikaramState,

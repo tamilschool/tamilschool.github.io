@@ -6,7 +6,7 @@ import competition.round.firstRoundSimple
 import competition.scoreCard.scoreInfo
 import data.CKuralMeaning
 import data.CQuestionState
-import data.CRound
+import data.Round
 import data.CThirukkural
 import data.CTopic
 import data.Group1Round1Score
@@ -18,7 +18,7 @@ import styled.styledImg
 external interface PersonProps: RProps {
     var questionState: CQuestionState
     var searchResultKural: CThirukkural?
-    var onRoundClick: (CRound) -> Unit
+    var onRoundClick: (Round) -> Unit
     var onTimerClick: () -> Unit
     var onTopicClick: (CTopic) -> Unit
     var onNextClick: () -> Unit
@@ -81,7 +81,7 @@ class Person : RComponent<PersonProps, RState>() {
                         classes = mutableListOf("col-9")
                         height = 100.pct
                     }
-                    if (props.questionState.selectedRound == CRound.I) {
+                    if (props.questionState.selectedRound == Round.I) {
                         firstRoundSimple {
                             questionState = props.questionState
                             searchResultKural = props.searchResultKural
