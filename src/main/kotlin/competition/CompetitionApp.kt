@@ -1,10 +1,13 @@
 package competition
 
-import MyHandler
-import MyKey
+import data.MyHandler
+import data.MyKey
 import competition.group.groupSelection
 import competition.signout.signOut
 import competition.signout.signOutConfirm
+import data.account
+import data.domain
+import data.path
 import hotKeys
 import kotlinx.browser.window
 import kotlinx.coroutines.MainScope
@@ -36,11 +39,9 @@ import styled.styledButton
 import styled.styledDiv
 
 suspend fun fetchSource(): List<Thirukkural> {
-  val sourceUrl =
-    "https://raw.githubusercontent.com/dreamuth/dreamuth.github.io/master/resources/thirukkural.json"
+  val sourceUrl = "$domain/$account/$path/thirukkural.json"
   val sourceData = window.fetch(sourceUrl).await().text().await()
-  val groupsUrl =
-    "https://raw.githubusercontent.com/dreamuth/dreamuth.github.io/master/kids/resources/kids-group-2022-23.json"
+  val groupsUrl = "$domain/$account/$path/kids-group.json"
   val groupsData = window.fetch(groupsUrl).await().text().await()
 
   val thirukkurals = parseSource(sourceData, groupsData)

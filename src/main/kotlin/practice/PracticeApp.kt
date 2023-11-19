@@ -1,7 +1,10 @@
 package practice
 
-import MyHandler
-import MyKey
+import data.MyHandler
+import data.MyKey
+import data.account
+import data.domain
+import data.path
 import hotKeys
 import kotlinx.browser.window
 import kotlinx.coroutines.MainScope
@@ -22,12 +25,11 @@ import react.setState
 import styled.css
 import styled.styledButton
 
-private const val sourceRepo = "https://raw.githubusercontent.com/uttran/uttran.github.io"
 
 suspend fun fetchSource(): List<Thirukkural> {
-  val sourceUrl = "$sourceRepo/main/src/main/resources/files/thirukkural.json"
+  val sourceUrl = "$domain/$account/$path/thirukkural.json"
   val sourceData = window.fetch(sourceUrl).await().text().await()
-  val groupsUrl = "$sourceRepo/main/src/main/resources/files/kids-group.json"
+  val groupsUrl = "$domain/$account/$path/kids-group.json"
   val groupsData = window.fetch(groupsUrl).await().text().await()
 
   val thirukkurals = parseSource(sourceData, groupsData)

@@ -1,6 +1,8 @@
 @file:JsModule("react-hotkeys")
 @file:JsNonModule
 
+import data.MyHandler
+import data.MyKey
 import react.RClass
 import react.RProps
 
