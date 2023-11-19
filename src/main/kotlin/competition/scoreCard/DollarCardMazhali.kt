@@ -15,7 +15,7 @@
  */
 package competition.scoreCard
 
-import data.CTopic
+import data.Topic
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.*
@@ -38,7 +38,7 @@ class DollarCardMazhalai : RComponent<DollarCardMazhalaiProps, RState>() {
                     classes = mutableListOf("card-body p-2")
                 }
                 scoreCardEntry {
-                    keyEntry = CTopic.Kural.tamil
+                    keyEntry = Topic.Kural.tamil
                     valueEntry = props.kuralsCount.toString()
                 }
             }

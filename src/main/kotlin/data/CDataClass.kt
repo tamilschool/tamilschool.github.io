@@ -2,20 +2,6 @@ package data
 
 import kotlinx.serialization.Serializable
 
-enum class CTopic(val tamil: String) {
-    Athikaram("அதிகாரம்"),
-    Porul("பொருள்"),
-    Kural("குறள்"),
-    FirstWord("முதல் வார்த்தை"),
-    LastWord("கடைசி வார்த்தை");
-
-    companion object {
-        fun getTopic(tamil: String): CTopic {
-            return values().first { it.tamil == tamil }
-        }
-    }
-}
-
 interface CIKuralMeaning {
     fun getMeaning(thirukkural: CThirukkural): String
 }
@@ -90,7 +76,7 @@ data class CThirukkural(
 data class CQuestionState(
   var selectedGroup: Group,
   var selectedRound: Round,
-  var selectedTopic: CTopic,
+  var selectedTopic: Topic,
   var round2Kurals: List<CThirukkural>,
   var athikaramState: CAthikaramState,
   var kuralState: CThirukkuralState,
@@ -102,20 +88,22 @@ data class CQuestionState(
 ) {
     fun getCurrentQuestion(): String {
         return when(selectedTopic) {
-            CTopic.Athikaram -> athikaramState.getCurrent()
-            CTopic.Porul -> porulState.getCurrent().porul
-            CTopic.Kural -> kuralState.getCurrent().kural.toString()
-            CTopic.FirstWord -> firstWordState.getCurrent()
-            CTopic.LastWord -> lastWordState.getCurrent()
+            Topic.Athikaram -> athikaramState.getCurrent()
+            Topic.Porul -> porulState.getCurrent().porul
+            Topic.Kural -> kuralState.getCurrent().kural.toString()
+            Topic.FirstWord -> firstWordState.getCurrent()
+            Topic.LastWord -> lastWordState.getCurrent()
+            Topic.AllKurals -> "Error"
         }
     }
     private fun getIndexQuestion(index: Int): String {
         return when(selectedTopic) {
-            CTopic.Athikaram -> athikaramState.targets[index]
-            CTopic.Porul -> porulState.targets[index].porul
-            CTopic.Kural -> kuralState.targets[index].kural.toString()
-            CTopic.FirstWord -> firstWordState.targets[index]
-            CTopic.LastWord -> lastWordState.targets[index]
+            Topic.Athikaram -> athikaramState.targets[index]
+            Topic.Porul -> porulState.targets[index].porul
+            Topic.Kural -> kuralState.targets[index].kural.toString()
+            Topic.FirstWord -> firstWordState.targets[index]
+            Topic.LastWord -> lastWordState.targets[index]
+            Topic.AllKurals -> "Error"
         }
     }
     fun isAnswered(): Boolean = scoreState.group23Score.round2[selectedTopic]?.contains(getCurrentQuestion()) ?: false
@@ -211,7 +199,7 @@ data class Group1Round1Score(
 
 data class CGroup23Score(
   val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
-  val round2: Map<CTopic, MutableSet<String>> = CTopic.values().associateWith { mutableSetOf() })
+  val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }.associateWith { mutableSetOf() })
 data class Group23Round1Score(
   var thirukkural: CThirukkural,
   var score: MutableMap<CGroup23Round1Type, Boolean> = CGroup23Round1Type.values().associateWith { false }.toMutableMap())

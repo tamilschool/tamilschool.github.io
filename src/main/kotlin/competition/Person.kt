@@ -8,7 +8,7 @@ import data.CKuralMeaning
 import data.CQuestionState
 import data.Round
 import data.CThirukkural
-import data.CTopic
+import data.Topic
 import data.Group1Round1Score
 import data.Group23Round1Score
 import styled.css
@@ -20,7 +20,7 @@ external interface PersonProps: RProps {
     var searchResultKural: CThirukkural?
     var onRoundClick: (Round) -> Unit
     var onTimerClick: () -> Unit
-    var onTopicClick: (CTopic) -> Unit
+    var onTopicClick: (Topic) -> Unit
     var onNextClick: () -> Unit
     var onWrongClick: () -> Unit
     var onRightClick: () -> Unit

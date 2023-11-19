@@ -17,7 +17,7 @@ import data.ScoreType
 import data.CThirukkural
 import data.CThirukkuralState
 import data.CTimerState
-import data.CTopic
+import data.Topic
 import data.Group1Round1Score
 import data.Group23Round1Score
 import data.account
@@ -101,7 +101,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     return CQuestionState(
       selectedGroup = group,
       selectedRound = Round.I,
-      selectedTopic = CTopic.Athikaram,
+      selectedTopic = Topic.Athikaram,
       round2Kurals = targetKurals,
       athikaramState = CAthikaramState(targetKurals),
       kuralState = CThirukkuralState(targetKurals),
@@ -397,31 +397,34 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
 
   private fun onNextClickHandler(questionState: CQuestionState) {
     when (questionState.selectedTopic) {
-      CTopic.Athikaram -> questionState.athikaramState.goNext()
-      CTopic.Kural -> questionState.kuralState.goNext()
-      CTopic.Porul -> questionState.porulState.goNext()
-      CTopic.FirstWord -> questionState.firstWordState.goNext()
-      CTopic.LastWord -> questionState.lastWordState.goNext()
+      Topic.Athikaram -> questionState.athikaramState.goNext()
+      Topic.Kural -> questionState.kuralState.goNext()
+      Topic.Porul -> questionState.porulState.goNext()
+      Topic.FirstWord -> questionState.firstWordState.goNext()
+      Topic.LastWord -> questionState.lastWordState.goNext()
+      Topic.AllKurals -> {}
     }
   }
 
   private fun onPreviousClickHandler(questionState: CQuestionState) {
     when (questionState.selectedTopic) {
-      CTopic.Athikaram -> questionState.athikaramState.goPrevious()
-      CTopic.Kural -> questionState.kuralState.goPrevious()
-      CTopic.Porul -> questionState.porulState.goPrevious()
-      CTopic.FirstWord -> questionState.firstWordState.goPrevious()
-      CTopic.LastWord -> questionState.lastWordState.goPrevious()
+      Topic.Athikaram -> questionState.athikaramState.goPrevious()
+      Topic.Kural -> questionState.kuralState.goPrevious()
+      Topic.Porul -> questionState.porulState.goPrevious()
+      Topic.FirstWord -> questionState.firstWordState.goPrevious()
+      Topic.LastWord -> questionState.lastWordState.goPrevious()
+      Topic.AllKurals -> {}
     }
   }
 
   private fun onIndexClickHandler(questionState: CQuestionState, index: Int) {
     when (questionState.selectedTopic) {
-      CTopic.Athikaram -> questionState.athikaramState.go(index)
-      CTopic.Kural -> questionState.kuralState.go(index)
-      CTopic.Porul -> questionState.porulState.go(index)
-      CTopic.FirstWord -> questionState.firstWordState.go(index)
-      CTopic.LastWord -> questionState.lastWordState.go(index)
+      Topic.Athikaram -> questionState.athikaramState.go(index)
+      Topic.Kural -> questionState.kuralState.go(index)
+      Topic.Porul -> questionState.porulState.go(index)
+      Topic.FirstWord -> questionState.firstWordState.go(index)
+      Topic.LastWord -> questionState.lastWordState.go(index)
+      Topic.AllKurals -> {}
     }
   }
 }

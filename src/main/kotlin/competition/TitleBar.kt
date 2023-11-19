@@ -3,7 +3,7 @@ package competition
 import data.CQuestionState
 import data.Round
 import data.ScoreType
-import data.CTopic
+import data.Topic
 import kotlinx.css.LinearDimension
 import kotlinx.css.pct
 import kotlinx.css.width
@@ -29,7 +29,7 @@ external interface TitleBarProps : RProps {
   var mediumBtnWidth: LinearDimension
   var largeBtnWidth: LinearDimension
   var onRoundClick: (Round) -> Unit
-  var onTopicClick: (CTopic) -> Unit
+  var onTopicClick: (Topic) -> Unit
   var onTimerClick: () -> Unit
   var onPreviousClick: () -> Unit
   var onWrongClick: () -> Unit
@@ -83,17 +83,16 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                   id = "topicDropDown"
                   names = listOf(
                     listOf(
-                      CTopic.Athikaram.tamil,
-                      CTopic.Porul.tamil,
-                      CTopic.Kural.tamil,
-                      CTopic.FirstWord.tamil,
-                      CTopic.LastWord.tamil
+                      Topic.Athikaram.tamil,
+                      Topic.Porul.tamil,
+                      Topic.Kural.tamil,
+                      Topic.FirstWord.tamil,
+                      Topic.LastWord.tamil
                     ),
-//                                listOf(Topic.AllKurals.tamil)
                   )
                   selectedName = props.questionState.selectedTopic.tamil
                   onDropdownClick = { _, name ->
-                    props.onTopicClick(CTopic.getTopic(name))
+                    props.onTopicClick(Topic.getTopic(name))
                   }
                 }
               }
@@ -140,11 +139,12 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                   styledButton {
                     css {
                       val isActive = when (props.questionState.selectedTopic) {
-                        CTopic.Athikaram -> props.questionState.athikaramState.index == index
-                        CTopic.Kural -> props.questionState.kuralState.index == index
-                        CTopic.Porul -> props.questionState.porulState.index == index
-                        CTopic.FirstWord -> props.questionState.firstWordState.index == index
-                        CTopic.LastWord -> props.questionState.lastWordState.index == index
+                        Topic.Athikaram -> props.questionState.athikaramState.index == index
+                        Topic.Kural -> props.questionState.kuralState.index == index
+                        Topic.Porul -> props.questionState.porulState.index == index
+                        Topic.FirstWord -> props.questionState.firstWordState.index == index
+                        Topic.LastWord -> props.questionState.lastWordState.index == index
+                        Topic.AllKurals -> false
                       }
                       val style = when {
                         isActive -> "primary"
