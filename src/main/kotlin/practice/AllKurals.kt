@@ -26,6 +26,7 @@ class AllKurals : RComponent<AllKuralsProps, RState>() {
             kuralDisplay {
                 selectedThirukkural = thirukkural
                 selectedKuralMeaning = props.selectedKuralMeaning
+                style = "bg-light"
             }
         }
     }

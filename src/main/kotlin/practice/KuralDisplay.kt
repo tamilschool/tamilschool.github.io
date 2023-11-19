@@ -15,13 +15,15 @@ import styled.styledSmall
 external interface KuralDisplayProps: RProps {
     var selectedThirukkural: Thirukkural
     var selectedKuralMeaning: Set<KuralMeaning>
+    var style: String?
 }
 
 class KuralDisplay : RComponent<KuralDisplayProps, RState>() {
     override fun RBuilder.render() {
         styledDiv {
+          val targetStyle = props.style ?: "text-white bg-success"
             css {
-                classes = mutableListOf("card text-white bg-success m-2")
+              classes = mutableListOf("card $targetStyle m-2")
             }
             styledDiv {
                 css {
