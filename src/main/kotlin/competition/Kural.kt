@@ -7,7 +7,7 @@ import react.RState
 import react.ReactElement
 
 external interface KuralProps: RProps {
-    var selectedThirukkural: Thirukkural
+    var selectedThirukkural: CThirukkural
     var isAnswered: Boolean
 }
 

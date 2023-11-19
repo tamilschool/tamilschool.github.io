@@ -23,7 +23,7 @@ import styled.css
 import styled.styledDiv
 
 external interface QuestionMultilineProps: RProps {
-    var question: KuralOnly
+    var question: CKuralOnly
     var isAnswered: Boolean
 }
 

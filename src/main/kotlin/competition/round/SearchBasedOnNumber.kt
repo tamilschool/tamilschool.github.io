@@ -1,7 +1,7 @@
 package competition.round
 
-import competition.QuestionState
-import competition.Thirukkural
+import competition.CQuestionState
+import competition.CThirukkural
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.html.InputType
@@ -14,8 +14,8 @@ import react.dom.defaultValue
 import styled.*
 
 external interface SearchBasedOnNumberProps : RProps {
-    var questionState: QuestionState
-    var searchResultKural: Thirukkural?
+    var questionState: CQuestionState
+    var searchResultKural: CThirukkural?
     var onSearchByKuralNoClick: (Int) -> Unit
     var onAddKuralClick: () -> Unit
 }

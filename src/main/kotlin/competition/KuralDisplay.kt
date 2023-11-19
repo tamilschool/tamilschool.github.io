@@ -7,7 +7,7 @@ import styled.styledP
 import styled.styledSmall
 
 external interface KuralDisplayProps : RProps {
-    var selectedThirukkural: Thirukkural
+    var selectedThirukkural: CThirukkural
     var showMeaning: Boolean
     var style: String?
 }
@@ -60,7 +60,7 @@ class KuralDisplay : RComponent<KuralDisplayProps, RState>() {
                     css {
                         classes = mutableListOf("card-footer pb-0")
                     }
-                    KuralMeaning.values().forEach {
+                    CKuralMeaning.values().forEach {
                         styledP {
                             css {
                                 classes = mutableListOf("card-text m-0")

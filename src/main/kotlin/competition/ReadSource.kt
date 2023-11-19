@@ -3,28 +3,28 @@ package competition
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-fun parseSource(sourceTxt: String, groupsData: String): List<Thirukkural> {
-    val kuralJson = Json.decodeFromString<ThirukkuralCollection>(sourceTxt)
-    val groupsJson = Json.decodeFromString<GroupsCollection>(groupsData)
-    val groupsMap = mutableMapOf<Int, MutableSet<Group>>()
+fun parseSource(sourceTxt: String, groupsData: String): List<CThirukkural> {
+    val kuralJson = Json.decodeFromString<CThirukkuralCollection>(sourceTxt)
+    val groupsJson = Json.decodeFromString<CGroupsCollection>(groupsData)
+    val groupsMap = mutableMapOf<Int, MutableSet<CGroup>>()
 
     groupsJson.II.split(",").forEach {
         val entry = groupsMap.getOrElse(it.toInt()) { mutableSetOf() }
-        entry.add(Group.II)
+        entry.add(CGroup.II)
         groupsMap[it.toInt()] = entry
     }
     groupsJson.III.split(",").forEach {
         val entry = groupsMap.getOrElse(it.toInt()) { mutableSetOf() }
-        entry.add(Group.III)
+        entry.add(CGroup.III)
         groupsMap[it.toInt()] = entry
     }
 
     return kuralJson.kural.map {
-        Thirukkural(
+        CThirukkural(
             athikaramNo = it.adikaramNumber,
             athikaram = it.adikaramName,
             kuralNo = it.number,
-            kural = KuralOnly(it.line1, it.line2),
+            kural = CKuralOnly(it.line1, it.line2),
             porul = it.salamanPapa,
             porulMuVaradha = it.muVaradha,
             porulSalamanPapa = it.salamanPapa,

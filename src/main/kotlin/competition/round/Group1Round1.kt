@@ -1,7 +1,7 @@
 package competition.round
 
 import competition.Group1Round1Score
-import competition.Group1RoundType
+import competition.CGroup1RoundType
 import kotlinx.css.UserSelect
 import kotlinx.css.minWidth
 import kotlinx.css.px
@@ -15,7 +15,7 @@ import styled.styledLabel
 
 external interface Group1Round1Props : RProps {
     var kuralScore: Group1Round1Score
-    var onG1Click: (Group1RoundType, Number) -> Unit
+    var onG1Click: (CGroup1RoundType, Number) -> Unit
 }
 
 class Group1Round1 : RComponent<Group1Round1Props, RState>() {
@@ -35,13 +35,13 @@ class Group1Round1 : RComponent<Group1Round1Props, RState>() {
                 styledButton {
                     key = "kuralPoints-${props.kuralScore.thirukkural.kuralNo}-$i"
                     css {
-                        val style = if (props.kuralScore.score[Group1RoundType.KURAL] == i) "btn-primary" else "btn-outline-primary"
+                        val style = if (props.kuralScore.score[CGroup1RoundType.KURAL] == i) "btn-primary" else "btn-outline-primary"
                         classes = mutableListOf("btn $style text-white btn-sm ml-1 mr-1")
                         minWidth = 40.px
                     }
                     attrs {
                         onClickFunction = {
-                            props.onG1Click(Group1RoundType.KURAL, i)
+                            props.onG1Click(CGroup1RoundType.KURAL, i)
                         }
                     }
                     +"$i"
@@ -58,13 +58,13 @@ class Group1Round1 : RComponent<Group1Round1Props, RState>() {
                 styledButton {
                     key = "porulPoints-${props.kuralScore.thirukkural.kuralNo}-$i"
                     css {
-                        val style = if (props.kuralScore.score[Group1RoundType.PORUL] == i) "btn-primary" else "btn-outline-primary"
+                        val style = if (props.kuralScore.score[CGroup1RoundType.PORUL] == i) "btn-primary" else "btn-outline-primary"
                         classes = mutableListOf("btn $style text-white btn-sm ml-1 mr-1")
                         minWidth = 40.px
                     }
                     attrs {
                         onClickFunction = {
-                            props.onG1Click(Group1RoundType.PORUL, i)
+                            props.onG1Click(CGroup1RoundType.PORUL, i)
                         }
                     }
                     +"$i"
@@ -81,13 +81,13 @@ class Group1Round1 : RComponent<Group1Round1Props, RState>() {
                 styledButton {
                     key = "clarityPoints-${props.kuralScore.thirukkural.kuralNo}-$i"
                     css {
-                        val style = if (props.kuralScore.score[Group1RoundType.CLARITY] == i) "btn-primary" else "btn-outline-primary"
+                        val style = if (props.kuralScore.score[CGroup1RoundType.CLARITY] == i) "btn-primary" else "btn-outline-primary"
                         classes = mutableListOf("btn $style text-white btn-sm ml-1 mr-1")
                         minWidth = 40.px
                     }
                     attrs {
                         onClickFunction = {
-                            props.onG1Click(Group1RoundType.CLARITY, i)
+                            props.onG1Click(CGroup1RoundType.CLARITY, i)
                         }
                     }
                     +"$i"

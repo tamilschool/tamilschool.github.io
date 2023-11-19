@@ -1,6 +1,6 @@
 package competition.group
 
-import competition.Group
+import competition.CGroup
 import kotlinx.css.pct
 import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
@@ -11,7 +11,7 @@ import styled.styledDiv
 import styled.styledImg
 
 external interface GroupSelectionProps: RProps {
-    var onGroupClick: (Group) -> Unit
+    var onGroupClick: (CGroup) -> Unit
 }
 
 class GroupSelection : RComponent<GroupSelectionProps, RState>() {
@@ -24,7 +24,7 @@ class GroupSelection : RComponent<GroupSelectionProps, RState>() {
                 css {
                     classes = mutableListOf("row m-2")
                 }
-                Group.values().forEach { group ->
+                CGroup.values().forEach { group ->
                     styledButton {
                         css {
                             classes = mutableListOf("btn btn-primary mr-2")

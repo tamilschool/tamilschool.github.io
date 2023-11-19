@@ -9,11 +9,11 @@ import styled.styledDiv
 import styled.styledImg
 
 external interface PersonProps: RProps {
-    var questionState: QuestionState
-    var searchResultKural: Thirukkural?
-    var onRoundClick: (Round) -> Unit
+    var questionState: CQuestionState
+    var searchResultKural: CThirukkural?
+    var onRoundClick: (CRound) -> Unit
     var onTimerClick: () -> Unit
-    var onTopicClick: (Topic) -> Unit
+    var onTopicClick: (CTopic) -> Unit
     var onNextClick: () -> Unit
     var onWrongClick: () -> Unit
     var onRightClick: () -> Unit
@@ -22,7 +22,7 @@ external interface PersonProps: RProps {
     var onSearchByKuralNoClick: (Int) -> Unit
     var onAddKuralClick: () -> Unit
     var onDeleteKuralClick: (Int) -> Unit
-    var selectedKuralMeaning: Set<KuralMeaning>
+    var selectedKuralMeaning: Set<CKuralMeaning>
     var onMuVaradhaClick: () -> Unit
     var onSalamanPapaClick: () -> Unit
     var onMuKarunanidhiClick: () -> Unit
@@ -74,7 +74,7 @@ class Person : RComponent<PersonProps, RState>() {
                         classes = mutableListOf("col-9")
                         height = 100.pct
                     }
-                    if (props.questionState.selectedRound == Round.I) {
+                    if (props.questionState.selectedRound == CRound.I) {
                         firstRoundSimple {
                             questionState = props.questionState
                             searchResultKural = props.searchResultKural

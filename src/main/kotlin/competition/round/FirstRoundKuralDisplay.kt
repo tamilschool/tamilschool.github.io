@@ -1,25 +1,25 @@
 package competition.round
 
 import competition.Group1Round1Score
-import competition.Group1RoundType
+import competition.CGroup1RoundType
 import competition.Group23Round1Score
-import competition.Group23Round1Type
-import competition.KuralMeaning
-import competition.ScoreType
-import competition.Thirukkural
+import competition.CGroup23Round1Type
+import competition.CKuralMeaning
+import competition.CScoreType
+import competition.CThirukkural
 import kotlinx.html.js.onClickFunction
 import react.*
 import styled.*
 
 external interface FirstRoundKuralDisplayProps : RProps {
-    var thirukkural: Thirukkural
+    var thirukkural: CThirukkural
     var group23Round1Score: Group23Round1Score?
     var group1Round1Score: Group1Round1Score?
-    var scoreType: ScoreType
-    var selectedKuralMeaning: Set<KuralMeaning>
+    var scoreType: CScoreType
+    var selectedKuralMeaning: Set<CKuralMeaning>
     var onDeleteKuralClick: (Int) -> Unit
-    var onG1Click: (Group1RoundType, Number) -> Unit
-    var onG23Click: (Group23Round1Type, Boolean) -> Unit
+    var onG1Click: (CGroup1RoundType, Number) -> Unit
+    var onG23Click: (CGroup23Round1Type, Boolean) -> Unit
 }
 
 class FirstRoundKuralDisplay : RComponent<FirstRoundKuralDisplayProps, RState>() {

@@ -22,7 +22,7 @@ object ComponentStyles: StyleSheet("ComponentStyles", isStatic = true) {
 }
 
 external interface NavigationProps: RProps {
-    var questionState: QuestionState
+    var questionState: CQuestionState
     var smallBtnWidth: LinearDimension
     var mediumBtnWidth: LinearDimension
     var largeBtnWidth: LinearDimension

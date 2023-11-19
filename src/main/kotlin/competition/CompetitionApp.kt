@@ -38,7 +38,7 @@ import styled.css
 import styled.styledButton
 import styled.styledDiv
 
-suspend fun fetchSource(): List<Thirukkural> {
+suspend fun fetchSource(): List<CThirukkural> {
   val sourceUrl = "$domain/$account/$path/thirukkural.json"
   val sourceData = window.fetch(sourceUrl).await().text().await()
   val groupsUrl = "$domain/$account/$path/kids-group.json"
@@ -56,11 +56,11 @@ external interface CompetitionAppProps : RProps {
 external interface CompetitionAppState : RState {
   var loaded: Boolean
   var showSignOutConfirm: Boolean
-  var allKurals: List<Thirukkural>
-  var questionState: QuestionState
-  var activeGroup: Group?
-  var searchResultKural: Thirukkural?
-  var selectedKuralMeaning: MutableSet<KuralMeaning>
+  var allKurals: List<CThirukkural>
+  var questionState: CQuestionState
+  var activeGroup: CGroup?
+  var searchResultKural: CThirukkural?
+  var selectedKuralMeaning: MutableSet<CKuralMeaning>
 }
 
 class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
@@ -70,8 +70,8 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       val source = fetchSource()
       setState {
         allKurals = source
-        questionState = createQuestionState(Group.IA, allKurals)
-        selectedKuralMeaning = mutableSetOf(KuralMeaning.SalamanPapa)
+        questionState = createQuestionState(CGroup.IA, allKurals)
+        selectedKuralMeaning = mutableSetOf(CKuralMeaning.SalamanPapa)
         showSignOutConfirm = false
         loaded = true
         println("No of athikarams: ${questionState.athikaramState.targets.size}")
@@ -81,20 +81,20 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     }
   }
 
-  private fun createQuestionState(group: Group, thirukkurals: List<Thirukkural>): QuestionState {
+  private fun createQuestionState(group: CGroup, thirukkurals: List<CThirukkural>): CQuestionState {
     val targetKurals = thirukkurals.filter { it.group.contains(group) }
-    return QuestionState(
+    return CQuestionState(
       selectedGroup = group,
-      selectedRound = Round.I,
-      selectedTopic = Topic.Athikaram,
+      selectedRound = CRound.I,
+      selectedTopic = CTopic.Athikaram,
       round2Kurals = targetKurals,
-      athikaramState = AthikaramState(targetKurals),
-      kuralState = ThirukkuralState(targetKurals),
-      porulState = ThirukkuralState(targetKurals),
-      firstWordState = FirstWordState(targetKurals),
-      lastWordState = LastWordState(targetKurals),
-      timerState = TimerState(),
-      scoreState = ScoreState()
+      athikaramState = CAthikaramState(targetKurals),
+      kuralState = CThirukkuralState(targetKurals),
+      porulState = CThirukkuralState(targetKurals),
+      firstWordState = CFirstWordState(targetKurals),
+      lastWordState = CLastWordState(targetKurals),
+      timerState = CTimerState(),
+      scoreState = CScoreState()
     )
   }
 
@@ -195,7 +195,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                     setState {
                       if (questionState.selectedRound != round) {
                         questionState.selectedRound = round
-                        if (round == Round.I) {
+                        if (round == CRound.I) {
                           questionState.timerState.isLive = false
                         }
                       }
@@ -258,7 +258,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onAddKuralClick = {
                     setState {
                       searchResultKural?.let {
-                        if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
+                        if (questionState.selectedGroup.type == CScoreType.PottiSuttru) {
                           if (!questionState.scoreState.group23Score.round1.containsKey(it.kuralNo)) {
                             questionState.scoreState.group23Score.round1[it.kuralNo] =
                               Group23Round1Score(it)
@@ -275,14 +275,14 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   }
                   onDeleteKuralClick = { kuralNo ->
                     setState {
-                      if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
+                      if (questionState.selectedGroup.type == CScoreType.PottiSuttru) {
                         questionState.scoreState.group23Score.round1.remove(kuralNo)
                       } else {
                         questionState.scoreState.group1Score.round1.remove(kuralNo)
                       }
                     }
                     setState {
-                      if (questionState.selectedGroup.type != ScoreType.PottiSuttru) {
+                      if (questionState.selectedGroup.type != CScoreType.PottiSuttru) {
                         if (questionState.scoreState.group1Score.round1.isEmpty()) {
                           questionState.scoreState.group1Score.bonus = 0
                         }
@@ -313,15 +313,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onMuVaradhaClick = {
                     setState {
                       selectedKuralMeaning =
-                        if (selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) {
+                        if (selectedKuralMeaning.contains(CKuralMeaning.MuVaradha)) {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.remove(KuralMeaning.MuVaradha)
+                          tempList.remove(CKuralMeaning.MuVaradha)
                           tempList
                         } else {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.add(KuralMeaning.MuVaradha)
+                          tempList.add(CKuralMeaning.MuVaradha)
                           tempList
                         }
                     }
@@ -329,15 +329,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onSalamanPapaClick = {
                     setState {
                       selectedKuralMeaning =
-                        if (selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) {
+                        if (selectedKuralMeaning.contains(CKuralMeaning.SalamanPapa)) {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.remove(KuralMeaning.SalamanPapa)
+                          tempList.remove(CKuralMeaning.SalamanPapa)
                           tempList
                         } else {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.add(KuralMeaning.SalamanPapa)
+                          tempList.add(CKuralMeaning.SalamanPapa)
                           tempList
                         }
                     }
@@ -345,15 +345,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                   onMuKarunanidhiClick = {
                     setState {
                       selectedKuralMeaning =
-                        if (selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) {
+                        if (selectedKuralMeaning.contains(CKuralMeaning.MuKarunanidhi)) {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.remove(KuralMeaning.MuKarunanidhi)
+                          tempList.remove(CKuralMeaning.MuKarunanidhi)
                           tempList
                         } else {
                           val tempList =
                             selectedKuralMeaning.toMutableSet()
-                          tempList.add(KuralMeaning.MuKarunanidhi)
+                          tempList.add(CKuralMeaning.MuKarunanidhi)
                           tempList
                         }
                     }
@@ -367,46 +367,46 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     }
   }
 
-  private fun resetTimer(questionState: QuestionState, isLive: Boolean) {
+  private fun resetTimer(questionState: CQuestionState, isLive: Boolean) {
     if (isLive) {
       onNextClickHandler(questionState)
     }
-    questionState.timerState = TimerState(isLive = isLive)
-    questionState.athikaramState = AthikaramState(questionState.round2Kurals)
-    questionState.kuralState = ThirukkuralState(questionState.round2Kurals)
-    questionState.porulState = ThirukkuralState(questionState.round2Kurals)
-    questionState.firstWordState = FirstWordState(questionState.round2Kurals)
-    questionState.lastWordState = LastWordState(questionState.round2Kurals)
-    questionState.scoreState = ScoreState()
+    questionState.timerState = CTimerState(isLive = isLive)
+    questionState.athikaramState = CAthikaramState(questionState.round2Kurals)
+    questionState.kuralState = CThirukkuralState(questionState.round2Kurals)
+    questionState.porulState = CThirukkuralState(questionState.round2Kurals)
+    questionState.firstWordState = CFirstWordState(questionState.round2Kurals)
+    questionState.lastWordState = CLastWordState(questionState.round2Kurals)
+    questionState.scoreState = CScoreState()
   }
 
-  private fun onNextClickHandler(questionState: QuestionState) {
+  private fun onNextClickHandler(questionState: CQuestionState) {
     when (questionState.selectedTopic) {
-      Topic.Athikaram -> questionState.athikaramState.goNext()
-      Topic.Kural -> questionState.kuralState.goNext()
-      Topic.Porul -> questionState.porulState.goNext()
-      Topic.FirstWord -> questionState.firstWordState.goNext()
-      Topic.LastWord -> questionState.lastWordState.goNext()
+      CTopic.Athikaram -> questionState.athikaramState.goNext()
+      CTopic.Kural -> questionState.kuralState.goNext()
+      CTopic.Porul -> questionState.porulState.goNext()
+      CTopic.FirstWord -> questionState.firstWordState.goNext()
+      CTopic.LastWord -> questionState.lastWordState.goNext()
     }
   }
 
-  private fun onPreviousClickHandler(questionState: QuestionState) {
+  private fun onPreviousClickHandler(questionState: CQuestionState) {
     when (questionState.selectedTopic) {
-      Topic.Athikaram -> questionState.athikaramState.goPrevious()
-      Topic.Kural -> questionState.kuralState.goPrevious()
-      Topic.Porul -> questionState.porulState.goPrevious()
-      Topic.FirstWord -> questionState.firstWordState.goPrevious()
-      Topic.LastWord -> questionState.lastWordState.goPrevious()
+      CTopic.Athikaram -> questionState.athikaramState.goPrevious()
+      CTopic.Kural -> questionState.kuralState.goPrevious()
+      CTopic.Porul -> questionState.porulState.goPrevious()
+      CTopic.FirstWord -> questionState.firstWordState.goPrevious()
+      CTopic.LastWord -> questionState.lastWordState.goPrevious()
     }
   }
 
-  private fun onIndexClickHandler(questionState: QuestionState, index: Int) {
+  private fun onIndexClickHandler(questionState: CQuestionState, index: Int) {
     when (questionState.selectedTopic) {
-      Topic.Athikaram -> questionState.athikaramState.go(index)
-      Topic.Kural -> questionState.kuralState.go(index)
-      Topic.Porul -> questionState.porulState.go(index)
-      Topic.FirstWord -> questionState.firstWordState.go(index)
-      Topic.LastWord -> questionState.lastWordState.go(index)
+      CTopic.Athikaram -> questionState.athikaramState.go(index)
+      CTopic.Kural -> questionState.kuralState.go(index)
+      CTopic.Porul -> questionState.porulState.go(index)
+      CTopic.FirstWord -> questionState.firstWordState.go(index)
+      CTopic.LastWord -> questionState.lastWordState.go(index)
     }
   }
 }

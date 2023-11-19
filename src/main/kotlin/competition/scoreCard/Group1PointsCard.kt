@@ -15,8 +15,8 @@
  */
 package competition.scoreCard
 
-import competition.Group1RoundType
-import competition.QuestionState
+import competition.CGroup1RoundType
+import competition.CQuestionState
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.*
@@ -24,7 +24,7 @@ import styled.css
 import styled.styledDiv
 
 external interface Group1PointsCardProps: RProps {
-    var questionState: QuestionState
+    var questionState: CQuestionState
 }
 
 class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
@@ -43,7 +43,7 @@ class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
                     css {
                         classes = mutableListOf("card-body p-2")
                     }
-                    for (entry in Group1RoundType.values()) {
+                    for (entry in CGroup1RoundType.values()) {
                         scoreCardEntry {
                             keyEntry = entry.tamil
                             valueEntry = group1Score.round1.values.mapNotNull { it.score[entry]?.toFloat() }.sum().toString()

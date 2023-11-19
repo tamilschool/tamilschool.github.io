@@ -10,7 +10,7 @@ import react.ReactElement
 external interface WordQuestionProps: RProps {
     var question: String
     var isAnswered: Boolean
-    var selectedThirukkurals: List<Thirukkural>
+    var selectedThirukkurals: List<CThirukkural>
 }
 
 class WordQuestion : RComponent<WordQuestionProps, RState>() {

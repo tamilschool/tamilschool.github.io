@@ -2,10 +2,10 @@ package competition.round
 
 import competition.Group1Round1Score
 import competition.Group23Round1Score
-import competition.KuralMeaning
-import competition.QuestionState
-import competition.ScoreType
-import competition.Thirukkural
+import competition.CKuralMeaning
+import competition.CQuestionState
+import competition.CScoreType
+import competition.CThirukkural
 import kotlinx.css.*
 import competition.kuralDisplay
 import competition.kuralPorulSelection
@@ -15,9 +15,9 @@ import styled.styledButton
 import styled.styledDiv
 
 external interface FirstRoundSimpleProps : RProps {
-    var questionState: QuestionState
-    var searchResultKural: Thirukkural?
-    var selectedKuralMeaning: Set<KuralMeaning>
+    var questionState: CQuestionState
+    var searchResultKural: CThirukkural?
+    var selectedKuralMeaning: Set<CKuralMeaning>
     var onMuVaradhaClick: () -> Unit
     var onSalamanPapaClick: () -> Unit
     var onMuKarunanidhiClick: () -> Unit
@@ -98,7 +98,7 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
                         bottom = 0.px
                         overflowY = Overflow.auto
                     }
-                    if (props.questionState.selectedGroup.type == ScoreType.PottiSuttru) {
+                    if (props.questionState.selectedGroup.type == CScoreType.PottiSuttru) {
                         props.questionState.scoreState.group23Score.round1.values.forEach { score ->
                             firstRoundKuralDisplay {
                                 key = score.thirukkural.kuralNo.toString()

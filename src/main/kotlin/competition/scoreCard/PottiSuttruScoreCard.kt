@@ -15,7 +15,7 @@
  */
 package competition.scoreCard
 
-import competition.QuestionState
+import competition.CQuestionState
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.*
@@ -23,7 +23,7 @@ import styled.css
 import styled.styledDiv
 
 external interface PottiSuttruScoreCardProps: RProps {
-    var questionState: QuestionState
+    var questionState: CQuestionState
 }
 
 class PottiSuttruScoreCard : RComponent<PottiSuttruScoreCardProps, RState>() {

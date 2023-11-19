@@ -2,23 +2,23 @@ package competition
 
 import kotlinx.serialization.Serializable
 
-enum class ScoreType {
+enum class CScoreType {
     KuralOnly, KuralPorul, PottiSuttru
 }
 
-enum class Group(val tamilDisplay: String, val englishDisplay: String, val type: ScoreType) {
-    IA("பிரிவு 1 (முன்மழலை/மழலை)", "6 & Below", ScoreType.KuralOnly),
-    IB("பிரிவு 1", "6 & Below", ScoreType.KuralPorul),
-    II("பிரிவு 2", "7 to 9", ScoreType.PottiSuttru),
-    III("பிரிவு 3", "10 & Above", ScoreType.PottiSuttru);
+enum class CGroup(val tamilDisplay: String, val englishDisplay: String, val type: CScoreType) {
+    IA("பிரிவு 1 (முன்மழலை/மழலை)", "6 & Below", CScoreType.KuralOnly),
+    IB("பிரிவு 1", "6 & Below", CScoreType.KuralPorul),
+    II("பிரிவு 2", "7 to 9", CScoreType.PottiSuttru),
+    III("பிரிவு 3", "10 & Above", CScoreType.PottiSuttru);
 }
 
-enum class Round(val tamil: String) {
+enum class CRound(val tamil: String) {
     I("சுற்று 1"),
     II("சுற்று 2")
 }
 
-enum class Topic(val tamil: String) {
+enum class CTopic(val tamil: String) {
     Athikaram("அதிகாரம்"),
     Porul("பொருள்"),
     Kural("குறள்"),
@@ -26,41 +26,41 @@ enum class Topic(val tamil: String) {
     LastWord("கடைசி வார்த்தை");
 
     companion object {
-        fun getTopic(tamil: String): Topic {
+        fun getTopic(tamil: String): CTopic {
             return values().first { it.tamil == tamil }
         }
     }
 }
 
-interface IKuralMeaning {
-    fun getMeaning(thirukkural: Thirukkural): String
+interface CIKuralMeaning {
+    fun getMeaning(thirukkural: CThirukkural): String
 }
 
-enum class KuralMeaning(val tamil: String): IKuralMeaning {
+enum class CKuralMeaning(val tamil: String): CIKuralMeaning {
     MuVaradha("மு. வரதராசனார்") {
-        override fun getMeaning(thirukkural: Thirukkural): String {
+        override fun getMeaning(thirukkural: CThirukkural): String {
             return thirukkural.porulMuVaradha
         }
     },
     SalamanPapa("சாலமன் பாப்பையா") {
-        override fun getMeaning(thirukkural: Thirukkural): String {
+        override fun getMeaning(thirukkural: CThirukkural): String {
             return thirukkural.porulSalamanPapa
         }
     },
     MuKarunanidhi("மு. கருணாநிதி") {
-        override fun getMeaning(thirukkural: Thirukkural): String {
+        override fun getMeaning(thirukkural: CThirukkural): String {
             return thirukkural.porulMuKarunanidhi
         }
     };
 }
 
 @Serializable
-data class ThirukkuralCollection(
-    val kural: List<ThirukkuralData>
+data class CThirukkuralCollection(
+    val kural: List<CThirukkuralData>
 )
 
 @Serializable
-data class ThirukkuralData(
+data class CThirukkuralData(
     val number: Int,
     val line1: String,
     val line2: String,
@@ -86,98 +86,98 @@ data class ThirukkuralData(
 )
 
 @Serializable
-data class GroupsCollection(val II: String, val III: String)
+data class CGroupsCollection(val II: String, val III: String)
 
-data class KuralOnly(val firstLine: String, val secondLine: String)
+data class CKuralOnly(val firstLine: String, val secondLine: String)
 
-data class Thirukkural(
-    val athikaramNo: Int,
-    val athikaram: String,
-    val kuralNo: Int,
-    val kural: KuralOnly,
-    val porul: String,
-    val porulMuVaradha: String,
-    val porulSalamanPapa: String,
-    val porulMuKarunanidhi: String,
-    val words: List<String>,
-    val group: Set<Group>
+data class CThirukkural(
+  val athikaramNo: Int,
+  val athikaram: String,
+  val kuralNo: Int,
+  val kural: CKuralOnly,
+  val porul: String,
+  val porulMuVaradha: String,
+  val porulSalamanPapa: String,
+  val porulMuKarunanidhi: String,
+  val words: List<String>,
+  val group: Set<CGroup>
 )
 
-data class QuestionState(
-    var selectedGroup: Group,
-    var selectedRound: Round,
-    var selectedTopic: Topic,
-    var round2Kurals: List<Thirukkural>,
-    var athikaramState: AthikaramState,
-    var kuralState: ThirukkuralState,
-    var porulState: ThirukkuralState,
-    var firstWordState: FirstWordState,
-    var lastWordState: LastWordState,
-    var timerState: TimerState,
-    var scoreState: ScoreState
+data class CQuestionState(
+  var selectedGroup: CGroup,
+  var selectedRound: CRound,
+  var selectedTopic: CTopic,
+  var round2Kurals: List<CThirukkural>,
+  var athikaramState: CAthikaramState,
+  var kuralState: CThirukkuralState,
+  var porulState: CThirukkuralState,
+  var firstWordState: CFirstWordState,
+  var lastWordState: CLastWordState,
+  var timerState: CTimerState,
+  var scoreState: CScoreState
 ) {
     fun getCurrentQuestion(): String {
         return when(selectedTopic) {
-            Topic.Athikaram -> athikaramState.getCurrent()
-            Topic.Porul -> porulState.getCurrent().porul
-            Topic.Kural -> kuralState.getCurrent().kural.toString()
-            Topic.FirstWord -> firstWordState.getCurrent()
-            Topic.LastWord -> lastWordState.getCurrent()
+            CTopic.Athikaram -> athikaramState.getCurrent()
+            CTopic.Porul -> porulState.getCurrent().porul
+            CTopic.Kural -> kuralState.getCurrent().kural.toString()
+            CTopic.FirstWord -> firstWordState.getCurrent()
+            CTopic.LastWord -> lastWordState.getCurrent()
         }
     }
     private fun getIndexQuestion(index: Int): String {
         return when(selectedTopic) {
-            Topic.Athikaram -> athikaramState.targets[index]
-            Topic.Porul -> porulState.targets[index].porul
-            Topic.Kural -> kuralState.targets[index].kural.toString()
-            Topic.FirstWord -> firstWordState.targets[index]
-            Topic.LastWord -> lastWordState.targets[index]
+            CTopic.Athikaram -> athikaramState.targets[index]
+            CTopic.Porul -> porulState.targets[index].porul
+            CTopic.Kural -> kuralState.targets[index].kural.toString()
+            CTopic.FirstWord -> firstWordState.targets[index]
+            CTopic.LastWord -> lastWordState.targets[index]
         }
     }
     fun isAnswered(): Boolean = scoreState.group23Score.round2[selectedTopic]?.contains(getCurrentQuestion()) ?: false
     fun isAnswered(index: Int): Boolean = scoreState.group23Score.round2[selectedTopic]?.contains(getIndexQuestion(index)) ?: false
 }
 
-data class TimerState(
+data class CTimerState(
     var isLive: Boolean = false,
     var isPaused: Boolean = false,
     var time: Long = 901)
 
 const val maxQuestions = 10
 
-data class AthikaramState(
+data class CAthikaramState(
     override var targets: List<String>,
     override var index: Int
-) : HistoryState<String> {
-    constructor(targets: List<Thirukkural>) : this(getAthikarams(targets, maxQuestions), 0)
+) : CHistoryState<String> {
+    constructor(targets: List<CThirukkural>) : this(cGetAthikarams(targets, maxQuestions), 0)
 }
 
-data class ThirukkuralState(
-    override var targets: List<Thirukkural>,
-    override var index: Int
-) : HistoryState<Thirukkural> {
-    constructor(targets: List<Thirukkural>) : this(targets.shuffled().take(maxQuestions).toList(), 0)
+data class CThirukkuralState(
+  override var targets: List<CThirukkural>,
+  override var index: Int
+) : CHistoryState<CThirukkural> {
+    constructor(targets: List<CThirukkural>) : this(targets.shuffled().take(maxQuestions).toList(), 0)
 }
 
-data class FirstWordState(
+data class CFirstWordState(
     override var targets: List<String>,
     override var index: Int
-) : HistoryState<String> {
-    constructor(targets: List<Thirukkural>) : this(getFirstWords(targets, maxQuestions), 0)
+) : CHistoryState<String> {
+    constructor(targets: List<CThirukkural>) : this(cGetFirstWords(targets, maxQuestions), 0)
 }
 
-data class LastWordState(
+data class CLastWordState(
     override var targets: List<String>,
     override var index: Int
-) : HistoryState<String> {
-    constructor(targets: List<Thirukkural>) : this(getLastWords(targets, maxQuestions), 0)
+) : CHistoryState<String> {
+    constructor(targets: List<CThirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
 }
 
-fun getAthikarams(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
-fun getFirstWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
-fun getLastWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)
+fun cGetAthikarams(thirukkurals: List<CThirukkural>, max: Int) = thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
+fun cGetFirstWords(thirukkurals: List<CThirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
+fun cGetLastWords(thirukkurals: List<CThirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)
 
-interface HistoryState<T> {
+interface CHistoryState<T> {
     var index: Int
     var targets: List<T>
     fun getCurrent(): T = targets[index]
@@ -203,31 +203,31 @@ interface HistoryState<T> {
     }
 }
 
-enum class Group23Round1Type {
+enum class CGroup23Round1Type {
     KURAL, PORUL;
 }
 
-enum class Group1RoundType(val tamil: String) {
+enum class CGroup1RoundType(val tamil: String) {
     KURAL("குறள்"),
     PORUL("பொருள்"),
     CLARITY("உச்சரிப்பு")
 }
 
-data class ScoreState(
-    val group1Score: Group1Score = Group1Score(),
-    val group23Score: Group23Score = Group23Score()
+data class CScoreState(
+  val group1Score: CGroup1Score = CGroup1Score(),
+  val group23Score: CGroup23Score = CGroup23Score()
 )
 
-data class Group1Score(
+data class CGroup1Score(
     var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
     var bonus: Number = 0F)
 data class Group1Round1Score(
-    var thirukkural: Thirukkural,
-    var score: MutableMap<Group1RoundType, Number> = Group1RoundType.values().associateWith { 0F }.toMutableMap())
+  var thirukkural: CThirukkural,
+  var score: MutableMap<CGroup1RoundType, Number> = CGroup1RoundType.values().associateWith { 0F }.toMutableMap())
 
-data class Group23Score(
+data class CGroup23Score(
     val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
-    val round2: Map<Topic, MutableSet<String>> = Topic.values().associateWith { mutableSetOf() })
+    val round2: Map<CTopic, MutableSet<String>> = CTopic.values().associateWith { mutableSetOf() })
 data class Group23Round1Score(
-    var thirukkural: Thirukkural,
-    var score: MutableMap<Group23Round1Type, Boolean> = Group23Round1Type.values().associateWith { false }.toMutableMap())
+  var thirukkural: CThirukkural,
+  var score: MutableMap<CGroup23Round1Type, Boolean> = CGroup23Round1Type.values().associateWith { false }.toMutableMap())

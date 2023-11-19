@@ -9,14 +9,14 @@ import react.RState
 import react.ReactElement
 
 external interface KuralPorulProps: RProps {
-    var selectedThirukkural: Thirukkural
+    var selectedThirukkural: CThirukkural
     var buttonSize: LinearDimension
     var isAnswered: Boolean
 }
 
 class KuralPorul : RComponent<KuralPorulProps, RState>() {
     override fun RBuilder.render() {
-        KuralMeaning.values().forEach {
+        CKuralMeaning.values().forEach {
             questionWithName {
                 question = it.getMeaning(props.selectedThirukkural)
                 name = it.tamil
