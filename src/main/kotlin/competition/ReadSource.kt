@@ -1,7 +1,7 @@
 package competition
 
 import data.Group
-import data.CGroupsCollection
+import data.GroupsCollection
 import data.KuralOnly
 import data.Thirukkural
 import data.ThirukkuralCollection
@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 
 fun parseSource(sourceTxt: String, groupsData: String): List<Thirukkural> {
     val kuralJson = Json.decodeFromString<ThirukkuralCollection>(sourceTxt)
-    val groupsJson = Json.decodeFromString<CGroupsCollection>(groupsData)
+    val groupsJson = Json.decodeFromString<GroupsCollection>(groupsData)
     val groupsMap = mutableMapOf<Int, MutableSet<Group>>()
 
     groupsJson.II.split(",").forEach {

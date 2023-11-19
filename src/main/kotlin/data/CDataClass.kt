@@ -24,9 +24,6 @@ enum class CKuralMeaning(val tamil: String): CIKuralMeaning {
     };
 }
 
-@Serializable
-data class CGroupsCollection(val II: String, val III: String)
-
 data class CQuestionState(
   var selectedGroup: Group,
   var selectedRound: Round,
