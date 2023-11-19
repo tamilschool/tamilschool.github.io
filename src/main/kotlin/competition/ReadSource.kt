@@ -4,12 +4,12 @@ import data.Group
 import data.CGroupsCollection
 import data.KuralOnly
 import data.Thirukkural
-import data.CThirukkuralCollection
+import data.ThirukkuralCollection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 fun parseSource(sourceTxt: String, groupsData: String): List<Thirukkural> {
-    val kuralJson = Json.decodeFromString<CThirukkuralCollection>(sourceTxt)
+    val kuralJson = Json.decodeFromString<ThirukkuralCollection>(sourceTxt)
     val groupsJson = Json.decodeFromString<CGroupsCollection>(groupsData)
     val groupsMap = mutableMapOf<Int, MutableSet<Group>>()
 

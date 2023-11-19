@@ -25,37 +25,6 @@ enum class CKuralMeaning(val tamil: String): CIKuralMeaning {
 }
 
 @Serializable
-data class CThirukkuralCollection(
-    val kural: List<CThirukkuralData>
-)
-
-@Serializable
-data class CThirukkuralData(
-    val number: Int,
-    val line1: String,
-    val line2: String,
-    val translation: String,
-    val muVaradha: String,
-    val salamanPapa: String,
-    val muKarunanidhi: String,
-    val explanation: String,
-    val couplet: String,
-    val transliteration1: String,
-    val transliteration2: String,
-    val paulName: String,
-    val paulTransliteration: String,
-    val paulTranslation: String,
-    val iyalName: String,
-    val iyalTransliteration: String,
-    val iyalTranslation: String,
-    val adikaramName: String,
-    val adikaramNumber: Int,
-    val adikaramTamilDesc: String,
-    val adikaramTransliteration: String,
-    val adikaramTranslation: String
-)
-
-@Serializable
 data class CGroupsCollection(val II: String, val III: String)
 
 data class CQuestionState(
