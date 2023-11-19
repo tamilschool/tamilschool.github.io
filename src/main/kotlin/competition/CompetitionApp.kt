@@ -14,7 +14,7 @@ import data.CQuestionState
 import data.Round
 import data.CScoreState
 import data.ScoreType
-import data.CThirukkural
+import data.Thirukkural
 import data.CThirukkuralState
 import data.CTimerState
 import data.Topic
@@ -53,7 +53,7 @@ import styled.css
 import styled.styledButton
 import styled.styledDiv
 
-suspend fun fetchSource(): List<CThirukkural> {
+suspend fun fetchSource(): List<Thirukkural> {
   val sourceUrl = "$domain/$account/$path/thirukkural.json"
   val sourceData = window.fetch(sourceUrl).await().text().await()
   val groupsUrl = "$domain/$account/$path/kids-group.json"
@@ -71,10 +71,10 @@ external interface CompetitionAppProps : RProps {
 external interface CompetitionAppState : RState {
   var loaded: Boolean
   var showSignOutConfirm: Boolean
-  var allKurals: List<CThirukkural>
+  var allKurals: List<Thirukkural>
   var questionState: CQuestionState
   var activeGroup: Group?
-  var searchResultKural: CThirukkural?
+  var searchResultKural: Thirukkural?
   var selectedKuralMeaning: MutableSet<CKuralMeaning>
 }
 
@@ -96,7 +96,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     }
   }
 
-  private fun createQuestionState(group: Group, thirukkurals: List<CThirukkural>): CQuestionState {
+  private fun createQuestionState(group: Group, thirukkurals: List<Thirukkural>): CQuestionState {
     val targetKurals = thirukkurals.filter { it.group.contains(group) }
     return CQuestionState(
       selectedGroup = group,

@@ -1,7 +1,7 @@
 package competition
 
 import data.CKuralMeaning
-import data.CThirukkural
+import data.Thirukkural
 import kotlinx.css.LinearDimension
 import kotlinx.css.rem
 import react.RBuilder
@@ -11,7 +11,7 @@ import react.RState
 import react.ReactElement
 
 external interface KuralPorulProps: RProps {
-    var selectedThirukkural: CThirukkural
+    var selectedThirukkural: Thirukkural
     var buttonSize: LinearDimension
     var isAnswered: Boolean
 }

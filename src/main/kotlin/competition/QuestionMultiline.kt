@@ -16,7 +16,7 @@ package competition
  * limitations under the License.
  */
 
-import data.CKuralOnly
+import data.KuralOnly
 import kotlinx.css.fontSize
 import kotlinx.css.rem
 import react.*
@@ -24,7 +24,7 @@ import styled.css
 import styled.styledDiv
 
 external interface QuestionMultilineProps: RProps {
-    var question: CKuralOnly
+    var question: KuralOnly
     var isAnswered: Boolean
 }
 

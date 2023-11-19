@@ -1,7 +1,7 @@
 package competition
 
 import data.CKuralMeaning
-import data.CThirukkural
+import data.Thirukkural
 import react.*
 import styled.css
 import styled.styledDiv
@@ -9,7 +9,7 @@ import styled.styledP
 import styled.styledSmall
 
 external interface KuralDisplayProps : RProps {
-    var selectedThirukkural: CThirukkural
+    var selectedThirukkural: Thirukkural
     var showMeaning: Boolean
     var style: String?
 }

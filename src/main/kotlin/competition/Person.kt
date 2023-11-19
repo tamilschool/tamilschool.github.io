@@ -7,7 +7,7 @@ import competition.scoreCard.scoreInfo
 import data.CKuralMeaning
 import data.CQuestionState
 import data.Round
-import data.CThirukkural
+import data.Thirukkural
 import data.Topic
 import data.Group1Round1Score
 import data.Group23Round1Score
@@ -17,7 +17,7 @@ import styled.styledImg
 
 external interface PersonProps: RProps {
     var questionState: CQuestionState
-    var searchResultKural: CThirukkural?
+    var searchResultKural: Thirukkural?
     var onRoundClick: (Round) -> Unit
     var onTimerClick: () -> Unit
     var onTopicClick: (Topic) -> Unit

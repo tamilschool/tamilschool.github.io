@@ -5,7 +5,7 @@ import data.Group23Round1Score
 import data.CKuralMeaning
 import data.CQuestionState
 import data.ScoreType
-import data.CThirukkural
+import data.Thirukkural
 import kotlinx.css.*
 import competition.kuralDisplay
 import competition.kuralPorulSelection
@@ -16,7 +16,7 @@ import styled.styledDiv
 
 external interface FirstRoundSimpleProps : RProps {
     var questionState: CQuestionState
-    var searchResultKural: CThirukkural?
+    var searchResultKural: Thirukkural?
     var selectedKuralMeaning: Set<CKuralMeaning>
     var onMuVaradhaClick: () -> Unit
     var onSalamanPapaClick: () -> Unit

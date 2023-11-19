@@ -2,13 +2,13 @@ package competition
 
 import data.Group
 import data.CGroupsCollection
-import data.CKuralOnly
-import data.CThirukkural
+import data.KuralOnly
+import data.Thirukkural
 import data.CThirukkuralCollection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-fun parseSource(sourceTxt: String, groupsData: String): List<CThirukkural> {
+fun parseSource(sourceTxt: String, groupsData: String): List<Thirukkural> {
     val kuralJson = Json.decodeFromString<CThirukkuralCollection>(sourceTxt)
     val groupsJson = Json.decodeFromString<CGroupsCollection>(groupsData)
     val groupsMap = mutableMapOf<Int, MutableSet<Group>>()
@@ -25,11 +25,11 @@ fun parseSource(sourceTxt: String, groupsData: String): List<CThirukkural> {
     }
 
     return kuralJson.kural.map {
-        CThirukkural(
+        Thirukkural(
             athikaramNo = it.adikaramNumber,
             athikaram = it.adikaramName,
             kuralNo = it.number,
-            kural = CKuralOnly(it.line1, it.line2),
+            kural = KuralOnly(it.line1, it.line2),
             porul = it.salamanPapa,
             porulMuVaradha = it.muVaradha,
             porulSalamanPapa = it.salamanPapa,

@@ -1,6 +1,6 @@
 package competition
 
-import data.CThirukkural
+import data.Thirukkural
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -8,7 +8,7 @@ import react.RState
 import react.ReactElement
 
 external interface KuralProps: RProps {
-    var selectedThirukkural: CThirukkural
+    var selectedThirukkural: Thirukkural
     var isAnswered: Boolean
 }
 

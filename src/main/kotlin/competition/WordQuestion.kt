@@ -1,6 +1,6 @@
 package competition
 
-import data.CThirukkural
+import data.Thirukkural
 import kotlinx.css.rem
 import react.RBuilder
 import react.RComponent
@@ -11,7 +11,7 @@ import react.ReactElement
 external interface WordQuestionProps: RProps {
     var question: String
     var isAnswered: Boolean
-    var selectedThirukkurals: List<CThirukkural>
+    var selectedThirukkurals: List<Thirukkural>
 }
 
 class WordQuestion : RComponent<WordQuestionProps, RState>() {

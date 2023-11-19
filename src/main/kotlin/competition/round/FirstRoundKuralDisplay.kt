@@ -6,13 +6,13 @@ import data.Group23Round1Score
 import data.CGroup23Round1Type
 import data.CKuralMeaning
 import data.ScoreType
-import data.CThirukkural
+import data.Thirukkural
 import kotlinx.html.js.onClickFunction
 import react.*
 import styled.*
 
 external interface FirstRoundKuralDisplayProps : RProps {
-    var thirukkural: CThirukkural
+    var thirukkural: Thirukkural
     var group23Round1Score: Group23Round1Score?
     var group1Round1Score: Group1Round1Score?
     var scoreType: ScoreType

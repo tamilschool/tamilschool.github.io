@@ -3,22 +3,22 @@ package data
 import kotlinx.serialization.Serializable
 
 interface CIKuralMeaning {
-    fun getMeaning(thirukkural: CThirukkural): String
+    fun getMeaning(thirukkural: Thirukkural): String
 }
 
 enum class CKuralMeaning(val tamil: String): CIKuralMeaning {
     MuVaradha("மு. வரதராசனார்") {
-        override fun getMeaning(thirukkural: CThirukkural): String {
+        override fun getMeaning(thirukkural: Thirukkural): String {
             return thirukkural.porulMuVaradha
         }
     },
     SalamanPapa("சாலமன் பாப்பையா") {
-        override fun getMeaning(thirukkural: CThirukkural): String {
+        override fun getMeaning(thirukkural: Thirukkural): String {
             return thirukkural.porulSalamanPapa
         }
     },
     MuKarunanidhi("மு. கருணாநிதி") {
-        override fun getMeaning(thirukkural: CThirukkural): String {
+        override fun getMeaning(thirukkural: Thirukkural): String {
             return thirukkural.porulMuKarunanidhi
         }
     };
@@ -58,26 +58,11 @@ data class CThirukkuralData(
 @Serializable
 data class CGroupsCollection(val II: String, val III: String)
 
-data class CKuralOnly(val firstLine: String, val secondLine: String)
-
-data class CThirukkural(
-  val athikaramNo: Int,
-  val athikaram: String,
-  val kuralNo: Int,
-  val kural: CKuralOnly,
-  val porul: String,
-  val porulMuVaradha: String,
-  val porulSalamanPapa: String,
-  val porulMuKarunanidhi: String,
-  val words: List<String>,
-  val group: Set<Group>
-)
-
 data class CQuestionState(
   var selectedGroup: Group,
   var selectedRound: Round,
   var selectedTopic: Topic,
-  var round2Kurals: List<CThirukkural>,
+  var round2Kurals: List<Thirukkural>,
   var athikaramState: CAthikaramState,
   var kuralState: CThirukkuralState,
   var porulState: CThirukkuralState,
@@ -121,33 +106,33 @@ data class CAthikaramState(
     override var targets: List<String>,
     override var index: Int
 ) : CHistoryState<String> {
-    constructor(targets: List<CThirukkural>) : this(cGetAthikarams(targets, maxQuestions), 0)
+    constructor(targets: List<Thirukkural>) : this(cGetAthikarams(targets, maxQuestions), 0)
 }
 
 data class CThirukkuralState(
-  override var targets: List<CThirukkural>,
+  override var targets: List<Thirukkural>,
   override var index: Int
-) : CHistoryState<CThirukkural> {
-    constructor(targets: List<CThirukkural>) : this(targets.shuffled().take(maxQuestions).toList(), 0)
+) : CHistoryState<Thirukkural> {
+    constructor(targets: List<Thirukkural>) : this(targets.shuffled().take(maxQuestions).toList(), 0)
 }
 
 data class CFirstWordState(
     override var targets: List<String>,
     override var index: Int
 ) : CHistoryState<String> {
-    constructor(targets: List<CThirukkural>) : this(cGetFirstWords(targets, maxQuestions), 0)
+    constructor(targets: List<Thirukkural>) : this(cGetFirstWords(targets, maxQuestions), 0)
 }
 
 data class CLastWordState(
     override var targets: List<String>,
     override var index: Int
 ) : CHistoryState<String> {
-    constructor(targets: List<CThirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
+    constructor(targets: List<Thirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
 }
 
-fun cGetAthikarams(thirukkurals: List<CThirukkural>, max: Int) = thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
-fun cGetFirstWords(thirukkurals: List<CThirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
-fun cGetLastWords(thirukkurals: List<CThirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)
+fun cGetAthikarams(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
+fun cGetFirstWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
+fun cGetLastWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)
 
 interface CHistoryState<T> {
     var index: Int
@@ -194,12 +179,12 @@ data class CGroup1Score(
   var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
   var bonus: Number = 0F)
 data class Group1Round1Score(
-  var thirukkural: CThirukkural,
+  var thirukkural: Thirukkural,
   var score: MutableMap<CGroup1RoundType, Number> = CGroup1RoundType.values().associateWith { 0F }.toMutableMap())
 
 data class CGroup23Score(
   val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
   val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }.associateWith { mutableSetOf() })
 data class Group23Round1Score(
-  var thirukkural: CThirukkural,
+  var thirukkural: Thirukkural,
   var score: MutableMap<CGroup23Round1Type, Boolean> = CGroup23Round1Type.values().associateWith { false }.toMutableMap())
