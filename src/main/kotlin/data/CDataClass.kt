@@ -72,6 +72,20 @@ data class CLastWordState(
     constructor(targets: List<Thirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
 }
 
+fun printFirstWords(thirukkurals: List<Thirukkural>) {
+  val firstWords = thirukkurals.map { it.words.first() }.distinct()
+  println("First Words: ${firstWords.size}")
+  println(firstWords)
+  println()
+}
+
+fun printLastWords(thirukkurals: List<Thirukkural>) {
+  val lastWords = thirukkurals.map { it.words.last() }.distinct()
+  println("Last Words: ${lastWords.size}")
+  println(lastWords)
+  println()
+}
+
 fun cGetAthikarams(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
 fun cGetFirstWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
 fun cGetLastWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)

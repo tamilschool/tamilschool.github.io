@@ -154,6 +154,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                       classes = mutableListOf("btn btn-$style")
                     }
                     attrs {
+                      disabled = props.questionState.timerState.time <= 0
                       onClickFunction = { props.onIndexClick(index) }
                     }
                     +((index + 1).toString())
