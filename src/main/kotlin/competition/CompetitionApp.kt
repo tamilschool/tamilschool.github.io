@@ -22,9 +22,8 @@ import data.Group1Round1Score
 import data.Group23Round1Score
 import data.account
 import data.domain
+import data.maxQuestions
 import data.path
-import data.printFirstWords
-import data.printLastWords
 import hotKeys
 import kotlinx.browser.window
 import kotlinx.coroutines.MainScope
@@ -100,28 +99,34 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
 
   private fun createQuestionState(group: Group, thirukkurals: List<Thirukkural>): CQuestionState {
     val targetKurals = thirukkurals.filter { it.group.contains(group) }
-    printFirstWords(targetKurals)
-    printLastWords(targetKurals)
     println("Total Kurals: ${targetKurals.size}")
+
     val lastWordState = CLastWordState(targetKurals)
     var remainingKurals = targetKurals.filter { !lastWordState.targets.contains(it.words.last()) }
     println("Remaining Kurals after last word: ${remainingKurals.size}")
+
     val firstWordState = CFirstWordState(remainingKurals)
     remainingKurals = remainingKurals.filter { !firstWordState.targets.contains(it.words.first()) }
     println("Remaining Kurals after first word: ${remainingKurals.size}")
+
     val kuralState = CThirukkuralState(remainingKurals)
     remainingKurals = remainingKurals.filter { !kuralState.targets.contains(it) }
     println("Remaining Kurals after kural: ${remainingKurals.size}")
+
     val porulState = CThirukkuralState(remainingKurals)
     remainingKurals = remainingKurals.filter { !porulState.targets.contains(it) }
     println("Remaining Kurals after porul: ${remainingKurals.size}")
+
+    val athikaramState = CAthikaramState(remainingKurals)
+    remainingKurals = remainingKurals.filter { !athikaramState.targets.contains(it.athikaram) }
+    println("Remaining Kurals after athikaram: ${remainingKurals.size}")
 
     return CQuestionState(
       selectedGroup = group,
       selectedRound = Round.I,
       selectedTopic = Topic.Athikaram,
       round2Kurals = targetKurals,
-      athikaramState = CAthikaramState(targetKurals),
+      athikaramState = athikaramState,
       kuralState = kuralState,
       porulState = porulState,
       firstWordState = firstWordState,
