@@ -11,7 +11,7 @@ data class CQuestionState(
   var firstWordState: CFirstWordState,
   var lastWordState: CLastWordState,
   var timerState: CTimerState,
-  var scoreState: CScoreState
+  var scoreState: ScoreState
 ) {
     fun getCurrentQuestion(): String {
         return when(selectedTopic) {
@@ -40,9 +40,9 @@ data class CQuestionState(
 data class CTimerState(
     var isLive: Boolean = false,
     var isPaused: Boolean = false,
-    var time: Long = 901)
+    var time: Long = 1201)
 
-const val maxQuestions = 10
+const val maxQuestions = 15
 
 data class CAthikaramState(
     override var targets: List<String>,
@@ -102,31 +102,39 @@ interface CHistoryState<T> {
     }
 }
 
-enum class CGroup23Round1Type {
+enum class Group23Round1Type {
     KURAL, PORUL;
 }
 
-enum class CGroup1RoundType(val tamil: String) {
+enum class Group1RoundType(val tamil: String) {
     KURAL("குறள்"),
     PORUL("பொருள்"),
     CLARITY("உச்சரிப்பு")
 }
 
-data class CScoreState(
-  val group1Score: CGroup1Score = CGroup1Score(),
-  val group23Score: CGroup23Score = CGroup23Score()
+data class ScoreState(
+  val group1Score: Group1Score = Group1Score(),
+  val group23Score: Group23Score = Group23Score()
 )
 
-data class CGroup1Score(
+data class Group1Score(
   var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
   var bonus: Number = 0F)
 data class Group1Round1Score(
   var thirukkural: Thirukkural,
-  var score: MutableMap<CGroup1RoundType, Number> = CGroup1RoundType.values().associateWith { 0F }.toMutableMap())
+  var score: MutableMap<Group1RoundType, Number> = Group1RoundType.values().associateWith { 0F }.toMutableMap())
 
-data class CGroup23Score(
+data class Group23Score(
   val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
-  val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }.associateWith { mutableSetOf() })
+  val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }.associateWith { mutableSetOf() }) {
+  fun getKuralCount(): Int = round1.values.count { it.score[Group23Round1Type.KURAL] == true }
+  fun getPorulCount(): Int = round1.values.count { it.score[Group23Round1Type.PORUL] == true }
+  fun getDollars(): Float = (getKuralCount().toFloat() + getPorulCount().toFloat()) / 2
+  fun getAnsweredKuralList(): String = round1.filter { it.value.score.values.contains(true) }.keys.joinToString(",")
+  fun getScore(topic: Topic): Int = round2[topic]?.count() ?: 0
+  fun getTotal(): Int = round2.values.flatten().count()
+  }
+
 data class Group23Round1Score(
   var thirukkural: Thirukkural,
-  var score: MutableMap<CGroup23Round1Type, Boolean> = CGroup23Round1Type.values().associateWith { false }.toMutableMap())
+  var score: MutableMap<Group23Round1Type, Boolean> = Group23Round1Type.values().associateWith { false }.toMutableMap())

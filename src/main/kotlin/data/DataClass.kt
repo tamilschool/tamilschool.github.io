@@ -128,7 +128,7 @@ data class QuestionState(
 data class TimerState(
   var isLive: Boolean = false,
   var isPaused: Boolean = false,
-  var time: Long = 180,
+  var time: Long = 240,
   var count: Int = 0)
 
 data class AthikaramState(

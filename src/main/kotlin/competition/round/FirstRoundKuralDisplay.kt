@@ -1,9 +1,9 @@
 package competition.round
 
 import data.Group1Round1Score
-import data.CGroup1RoundType
+import data.Group1RoundType
 import data.Group23Round1Score
-import data.CGroup23Round1Type
+import data.Group23Round1Type
 import data.KuralMeaning
 import data.ScoreType
 import data.Thirukkural
@@ -18,8 +18,8 @@ external interface FirstRoundKuralDisplayProps : RProps {
     var scoreType: ScoreType
     var selectedKuralMeaning: Set<KuralMeaning>
     var onDeleteKuralClick: (Int) -> Unit
-    var onG1Click: (CGroup1RoundType, Number) -> Unit
-    var onG23Click: (CGroup23Round1Type, Boolean) -> Unit
+    var onG1Click: (Group1RoundType, Number) -> Unit
+    var onG23Click: (Group23Round1Type, Boolean) -> Unit
 }
 
 class FirstRoundKuralDisplay : RComponent<FirstRoundKuralDisplayProps, RState>() {

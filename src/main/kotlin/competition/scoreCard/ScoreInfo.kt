@@ -15,8 +15,8 @@
  */
 package competition.scoreCard
 
-import data.CGroup1RoundType
-import data.CGroup23Round1Type
+import data.Group1RoundType
+import data.Group23Round1Type
 import data.CQuestionState
 import data.ScoreType
 import react.*
@@ -36,8 +36,8 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
             when (props.questionState.selectedGroup.type) {
                 ScoreType.PottiSuttru -> {
                     dollarCard {
-                        kuralsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[CGroup23Round1Type.KURAL] == true }
-                        porulsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[CGroup23Round1Type.PORUL] == true }
+                        kuralsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.KURAL] == true }
+                        porulsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.PORUL] == true }
                     }
                     pottiSuttruScoreCard {
                         questionState = props.questionState
@@ -45,8 +45,8 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
                 }
                 ScoreType.KuralPorul -> {
                     dollarCard {
-                        kuralsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[CGroup1RoundType.KURAL] }.count { it.toFloat() > 0 }
-                        porulsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[CGroup1RoundType.PORUL] }.count { it.toFloat() > 0 }
+                        kuralsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }.count { it.toFloat() > 0 }
+                        porulsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.PORUL] }.count { it.toFloat() > 0 }
                     }
                     group1PointsCard {
                         questionState = props.questionState
@@ -55,7 +55,7 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
                 else -> {
                     dollarCardMazhalai {
                         kuralsCount =
-                            props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[CGroup1RoundType.KURAL] }.count { it.toFloat() > 0 }
+                            props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }.count { it.toFloat() > 0 }
                     }
                     group1PointsCard {
                         questionState = props.questionState

@@ -1,7 +1,7 @@
 package competition.round
 
 import data.Group23Round1Score
-import data.CGroup23Round1Type
+import data.Group23Round1Type
 import kotlinx.css.UserSelect
 import kotlinx.css.userSelect
 import kotlinx.html.InputType
@@ -16,7 +16,7 @@ import styled.styledLabel
 
 external interface Group23Round1Props : RProps {
     var kuralScore: Group23Round1Score
-    var onG23Click: (CGroup23Round1Type, Boolean) -> Unit
+    var onG23Click: (Group23Round1Type, Boolean) -> Unit
 }
 
 class Group23Round1 : RComponent<Group23Round1Props, RState>() {
@@ -37,13 +37,13 @@ class Group23Round1 : RComponent<Group23Round1Props, RState>() {
                     attrs {
                         id = "kuralCheck" + props.kuralScore.thirukkural.kuralNo
                         type = InputType.checkBox
-                        val targetValue = props.kuralScore.score[CGroup23Round1Type.KURAL] == true
+                        val targetValue = props.kuralScore.score[Group23Round1Type.KURAL] == true
                         checked = targetValue
                         println("திருக்குறள் $targetValue")
                         onChangeFunction = { event ->
                             val target = event.target as HTMLInputElement
                             println("on check திருக்குறள் : ${props.kuralScore.thirukkural.kuralNo} :  ${target.checked}")
-                            props.onG23Click(CGroup23Round1Type.KURAL, target.checked)
+                            props.onG23Click(Group23Round1Type.KURAL, target.checked)
                         }
                     }
                 }
@@ -70,10 +70,10 @@ class Group23Round1 : RComponent<Group23Round1Props, RState>() {
                     attrs {
                         id = "meaningCheck" + props.kuralScore.thirukkural.kuralNo
                         type = InputType.checkBox
-                        checked = props.kuralScore.score[CGroup23Round1Type.PORUL] == true
+                        checked = props.kuralScore.score[Group23Round1Type.PORUL] == true
                         onChangeFunction = { event ->
                             val target = event.target as HTMLInputElement
-                            props.onG23Click(CGroup23Round1Type.PORUL, target.checked)
+                            props.onG23Click(Group23Round1Type.PORUL, target.checked)
                         }
                     }
                 }

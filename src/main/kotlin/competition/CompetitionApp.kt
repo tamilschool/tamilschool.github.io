@@ -12,7 +12,7 @@ import data.KuralMeaning
 import data.CLastWordState
 import data.CQuestionState
 import data.Round
-import data.CScoreState
+import data.ScoreState
 import data.ScoreType
 import data.Thirukkural
 import data.CThirukkuralState
@@ -132,8 +132,55 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       firstWordState = firstWordState,
       lastWordState = lastWordState,
       timerState = CTimerState(),
-      scoreState = CScoreState()
+      scoreState = ScoreState()
     )
+  }
+
+  private fun play(kurals: List<Thirukkural>) {
+    println("Last Words")
+    var remaining = kurals
+    println("Total Kurals: ${remaining.size}")
+    val lastWordMap: Map<String, List<Thirukkural>> = kurals.map { it.words.last() }
+      .distinct()
+      .map { it to kurals.filter { kural -> kural.words.last() == it } }
+      .sortedByDescending { it.second.size }
+      .take(maxQuestions)
+      .toMap()
+
+    lastWordMap.forEach { (word, kurals) ->
+      println("$word: ${kurals.size}")
+    }
+    remaining = remaining.filter { !lastWordMap.keys.contains(it.words.last()) }
+    println("Remaining Kurals after last word: ${remaining.size}")
+
+    println("First Words")
+    val firstWordMap: Map<String, List<Thirukkural>> = remaining.map { it.words.first() }
+      .distinct()
+      .map { it to remaining.filter { kural -> kural.words.first() == it } }
+      .sortedByDescending { it.second.size }
+      .take(maxQuestions)
+      .toMap()
+
+    firstWordMap.forEach { (word, kurals) ->
+      println("$word: ${kurals.size}")
+    }
+    remaining = remaining.filter { !firstWordMap.keys.contains(it.words.first()) }
+    println("Remaining Kurals after first word: ${remaining.size}")
+
+    println("Athiraram")
+    val athikaramMap: Map<String, List<Thirukkural>> = remaining.map { it.athikaram }
+      .distinct()
+      .map { it to remaining.filter { kural -> kural.athikaram == it } }
+      .sortedByDescending { it.second.size }
+      .take(maxQuestions)
+      .toMap()
+
+    athikaramMap.forEach { (word, kurals) ->
+      println("$word: ${kurals.size}")
+    }
+    remaining = remaining.filter { !athikaramMap.keys.contains(it.athikaram) }
+    println("Remaining Kurals after athikaram: ${remaining.size}")
+
   }
 
   private fun timerHandler(): () -> Unit = {
@@ -415,7 +462,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     questionState.porulState = CThirukkuralState(questionState.round2Kurals)
     questionState.firstWordState = CFirstWordState(questionState.round2Kurals)
     questionState.lastWordState = CLastWordState(questionState.round2Kurals)
-    questionState.scoreState = CScoreState()
+    questionState.scoreState = ScoreState()
   }
 
   private fun onNextClickHandler(questionState: CQuestionState) {

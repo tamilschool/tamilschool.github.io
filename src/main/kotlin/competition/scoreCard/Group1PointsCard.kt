@@ -15,7 +15,7 @@
  */
 package competition.scoreCard
 
-import data.CGroup1RoundType
+import data.Group1RoundType
 import data.CQuestionState
 import kotlinx.css.rem
 import kotlinx.css.width
@@ -43,7 +43,7 @@ class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
                     css {
                         classes = mutableListOf("card-body p-2")
                     }
-                    for (entry in CGroup1RoundType.values()) {
+                    for (entry in Group1RoundType.values()) {
                         scoreCardEntry {
                             keyEntry = entry.tamil
                             valueEntry = group1Score.round1.values.mapNotNull { it.score[entry]?.toFloat() }.sum().toString()

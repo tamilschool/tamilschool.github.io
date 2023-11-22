@@ -135,7 +135,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                   classes = mutableListOf("btn-group")
                   width = 100.pct
                 }
-                for (index in 0..9) {
+                for (index in 0..14) {
                   styledButton {
                     css {
                       val isActive = when (props.questionState.selectedTopic) {
