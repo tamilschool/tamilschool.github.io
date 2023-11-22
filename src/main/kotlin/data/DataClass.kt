@@ -46,7 +46,7 @@ interface IKuralMeaning {
   fun getMeaning(thirukkural: Thirukkural): String
 }
 
-enum class KuralMeaning(val tamil: String): IKuralMeaning {
+enum class KuralMeaning(val tamil: String) : IKuralMeaning {
   MuVaradha("மு. வரதராசனார்") {
     override fun getMeaning(thirukkural: Thirukkural): String {
       return thirukkural.porulMuVaradha
@@ -129,7 +129,8 @@ data class TimerState(
   var isLive: Boolean = false,
   var isPaused: Boolean = false,
   var time: Long = 240,
-  var count: Int = 0)
+  var count: Int = 0
+)
 
 data class AthikaramState(
   override var index: Int,
@@ -145,17 +146,20 @@ data class AthikaramState(
     mutableSetOf(),
     getAthikarams(thirukkurals)
   )
+
   fun getCurrent(): String = athikarams[index]
   fun goNext(): Int {
     answers.add(getCurrent())
     goNext(athikarams.size)
     return answers.size
   }
+
   fun goPrevious() = goPrevious(athikarams.size)
   fun getAnswers(): List<Thirukkural> = thirukkurals.filter { it.athikaram == getCurrent() }
 }
 
-private fun getAthikarams(thirukkurals: List<Thirukkural>) = thirukkurals.map { it.athikaram }.distinct()
+private fun getAthikarams(thirukkurals: List<Thirukkural>) =
+  thirukkurals.map { it.athikaram }.distinct()
 
 data class ThirukkuralState(
   override var index: Int,
@@ -164,14 +168,17 @@ data class ThirukkuralState(
   override var answers: MutableSet<String>,
   val kurals: List<Thirukkural>
 ) : HistoryState {
-  constructor(thirukkurals: List<Thirukkural>): this(
-    nextIndex(0, thirukkurals.size), thirukkurals, mutableListOf(), mutableSetOf(), thirukkurals)
+  constructor(thirukkurals: List<Thirukkural>) : this(
+    nextIndex(0, thirukkurals.size), thirukkurals, mutableListOf(), mutableSetOf(), thirukkurals
+  )
+
   fun getCurrent(): Thirukkural = kurals[index]
   fun goNext(): Int {
     answers.add(getCurrent().porul)
     goNext(kurals.size)
     return answers.size
   }
+
   fun goPrevious() = goPrevious(kurals.size)
 }
 
@@ -182,19 +189,21 @@ data class FirstWordState(
   override var answers: MutableSet<String>,
   val words: List<String>
 ) : HistoryState {
-  constructor(thirukkurals: List<Thirukkural>): this(
+  constructor(thirukkurals: List<Thirukkural>) : this(
     nextIndex(0, getFirstWords(thirukkurals).size),
     thirukkurals,
     mutableListOf(),
     mutableSetOf(),
     getFirstWords(thirukkurals)
   )
+
   fun getCurrent(): String = words[index]
   fun goNext(): Int {
     answers.add(getCurrent())
     goNext(words.size)
     return answers.size
   }
+
   fun goPrevious() = goPrevious(words.size)
   fun getAnswers(): List<Thirukkural> = thirukkurals.filter { it.words.first() == getCurrent() }
 }
@@ -206,25 +215,30 @@ data class LastWordState(
   override var answers: MutableSet<String>,
   val words: List<String>
 ) : HistoryState {
-  constructor(thirukkurals: List<Thirukkural>): this(
+  constructor(thirukkurals: List<Thirukkural>) : this(
     nextIndex(0, getLastWords(thirukkurals).size),
     thirukkurals,
     mutableListOf(),
     mutableSetOf(),
     getLastWords(thirukkurals)
   )
+
   fun getCurrent(): String = words[index]
   fun goNext(): Int {
     answers.add(getCurrent())
     goNext(words.size)
     return answers.size
   }
+
   fun goPrevious() = goPrevious(words.size)
   fun getAnswers(): List<Thirukkural> = thirukkurals.filter { it.words.last() == getCurrent() }
 }
 
-private fun getFirstWords(thirukkurals: List<Thirukkural>) = thirukkurals.map { it.words.first() }.distinct()
-private fun getLastWords(thirukkurals: List<Thirukkural>) = thirukkurals.map { it.words.last() }.distinct()
+private fun getFirstWords(thirukkurals: List<Thirukkural>) =
+  thirukkurals.map { it.words.first() }.distinct()
+
+private fun getLastWords(thirukkurals: List<Thirukkural>) =
+  thirukkurals.map { it.words.last() }.distinct()
 
 interface HistoryState {
   var index: Int
@@ -242,6 +256,7 @@ interface HistoryState {
     println("${this::class} Current: $index to New: $nextIndex of Total: $maxIndex")
     index = nextIndex
   }
+
   fun goPrevious(maxIndex: Int) {
     if (history.isEmpty()) {
       history = generateRandomList(maxIndex)
@@ -254,6 +269,7 @@ interface HistoryState {
     println("${this::class} Current: $index to New: $nextIndex of Total: $maxIndex")
     index = nextIndex
   }
+
   fun clearAnswers() = answers.clear()
 }
 

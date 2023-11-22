@@ -25,34 +25,34 @@ import react.ReactElement
 import styled.css
 import styled.styledDiv
 
-external interface QuestionMultilineProps: RProps {
-    var question: KuralOnly
+external interface QuestionMultilineProps : RProps {
+  var question: KuralOnly
 }
 
 class QuestionMultiline : RComponent<QuestionMultilineProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                classes = mutableListOf("card bg-warning m-2 text-center")
-            }
-            styledDiv {
-                css {
-                    classes = mutableListOf("card-header")
-                    fontSize = 1.1.rem
-                }
-                styledDiv {
-                    +props.question.firstLine
-                }
-                styledDiv {
-                    +props.question.secondLine
-                }
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("card bg-warning m-2 text-center")
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("card-header")
+          fontSize = 1.1.rem
         }
+        styledDiv {
+          +props.question.firstLine
+        }
+        styledDiv {
+          +props.question.secondLine
+        }
+      }
     }
+  }
 }
 
 fun RBuilder.questionMultiline(handler: QuestionMultilineProps.() -> Unit): ReactElement {
-    return child(QuestionMultiline::class) {
-        this.attrs(handler)
-    }
+  return child(QuestionMultiline::class) {
+    this.attrs(handler)
+  }
 }

@@ -10,6 +10,6 @@ import react.RProps
 external val hotKeys: RClass<HotKeysProps>
 
 external interface HotKeysProps : RProps {
-    var keyMap: MyKey
-    var handlers: MyHandler
+  var keyMap: MyKey
+  var handlers: MyHandler
 }

@@ -1,7 +1,14 @@
 package competition
 
 import data.CQuestionState
-import kotlinx.css.*
+import kotlinx.css.LinearDimension
+import kotlinx.css.borderBottomLeftRadius
+import kotlinx.css.borderBottomRightRadius
+import kotlinx.css.borderTopLeftRadius
+import kotlinx.css.borderTopRightRadius
+import kotlinx.css.px
+import kotlinx.css.rem
+import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.role
 import react.RBuilder
@@ -9,7 +16,11 @@ import react.RComponent
 import react.RProps
 import react.RState
 import react.ReactElement
-import styled.*
+import styled.StyleSheet
+import styled.css
+import styled.styledButton
+import styled.styledDiv
+import styled.styledImg
 
 object ComponentStyles : StyleSheet("ComponentStyles", isStatic = true) {
   val rightRounded by css {
@@ -50,7 +61,8 @@ class Navigation : RComponent<NavigationProps, RState>() {
         }
       }
       val timerState = props.questionState.timerState
-      val seconds = if (timerState.time % 60 < 10) "0" + timerState.time % 60 else timerState.time % 60
+      val seconds =
+        if (timerState.time % 60 < 10) "0" + timerState.time % 60 else timerState.time % 60
       when {
         timerState.isLive && timerState.isPaused -> +"தொடர் [${timerState.time / 60 % 60} : $seconds]"
         timerState.isLive -> +"${timerState.time / 60 % 60} : $seconds "

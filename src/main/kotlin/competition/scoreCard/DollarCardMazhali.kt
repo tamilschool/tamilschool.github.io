@@ -18,45 +18,49 @@ package competition.scoreCard
 import data.Topic
 import kotlinx.css.rem
 import kotlinx.css.width
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledDiv
 
 external interface DollarCardMazhalaiProps : RProps {
-    var kuralsCount: Int
+  var kuralsCount: Int
 }
 
 class DollarCardMazhalai : RComponent<DollarCardMazhalaiProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                classes = mutableListOf("card text-white bg-dark m-2")
-                width = 16.rem
-            }
-            styledDiv {
-                css {
-                    classes = mutableListOf("card-body p-2")
-                }
-                scoreCardEntry {
-                    keyEntry = Topic.Kural.tamil
-                    valueEntry = props.kuralsCount.toString()
-                }
-            }
-            styledDiv {
-                css {
-                    classes = mutableListOf("card-footer p-2")
-                }
-                scoreCardEntry {
-                    keyEntry = "மொத்தம்"
-                    valueEntry = " $ ${props.kuralsCount}"
-                }
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("card text-white bg-dark m-2")
+        width = 16.rem
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("card-body p-2")
         }
+        scoreCardEntry {
+          keyEntry = Topic.Kural.tamil
+          valueEntry = props.kuralsCount.toString()
+        }
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("card-footer p-2")
+        }
+        scoreCardEntry {
+          keyEntry = "மொத்தம்"
+          valueEntry = " $ ${props.kuralsCount}"
+        }
+      }
     }
+  }
 }
 
 fun RBuilder.dollarCardMazhalai(handler: DollarCardMazhalaiProps.() -> Unit): ReactElement {
-    return child(DollarCardMazhalai::class) {
-        this.attrs(handler)
-    }
+  return child(DollarCardMazhalai::class) {
+    this.attrs(handler)
+  }
 }

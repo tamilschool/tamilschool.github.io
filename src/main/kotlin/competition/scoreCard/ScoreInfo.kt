@@ -15,59 +15,72 @@
  */
 package competition.scoreCard
 
+import data.CQuestionState
 import data.Group1RoundType
 import data.Group23Round1Type
-import data.CQuestionState
 import data.ScoreType
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledDiv
 
-external interface ScoreInfoProps: RProps {
-    var questionState: CQuestionState
+external interface ScoreInfoProps : RProps {
+  var questionState: CQuestionState
 }
 
 class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                classes = mutableListOf("row")
-            }
-            when (props.questionState.selectedGroup.type) {
-                ScoreType.PottiSuttru -> {
-                    dollarCard {
-                        kuralsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.KURAL] == true }
-                        porulsCount = props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.PORUL] == true }
-                    }
-                    pottiSuttruScoreCard {
-                        questionState = props.questionState
-                    }
-                }
-                ScoreType.KuralPorul -> {
-                    dollarCard {
-                        kuralsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }.count { it.toFloat() > 0 }
-                        porulsCount = props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.PORUL] }.count { it.toFloat() > 0 }
-                    }
-                    group1PointsCard {
-                        questionState = props.questionState
-                    }
-                }
-                else -> {
-                    dollarCardMazhalai {
-                        kuralsCount =
-                            props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }.count { it.toFloat() > 0 }
-                    }
-                    group1PointsCard {
-                        questionState = props.questionState
-                    }
-                }
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("row")
+      }
+      when (props.questionState.selectedGroup.type) {
+        ScoreType.PottiSuttru -> {
+          dollarCard {
+            kuralsCount =
+              props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.KURAL] == true }
+            porulsCount =
+              props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.PORUL] == true }
+          }
+          pottiSuttruScoreCard {
+            questionState = props.questionState
+          }
         }
+
+        ScoreType.KuralPorul -> {
+          dollarCard {
+            kuralsCount =
+              props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }
+                .count { it.toFloat() > 0 }
+            porulsCount =
+              props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.PORUL] }
+                .count { it.toFloat() > 0 }
+          }
+          group1PointsCard {
+            questionState = props.questionState
+          }
+        }
+
+        else -> {
+          dollarCardMazhalai {
+            kuralsCount =
+              props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }
+                .count { it.toFloat() > 0 }
+          }
+          group1PointsCard {
+            questionState = props.questionState
+          }
+        }
+      }
     }
+  }
 }
 
 fun RBuilder.scoreInfo(handler: ScoreInfoProps.() -> Unit): ReactElement {
-    return child(ScoreInfo::class) {
-        this.attrs(handler)
-    }
+  return child(ScoreInfo::class) {
+    this.attrs(handler)
+  }
 }

@@ -18,50 +18,54 @@ package competition.scoreCard
 import data.Topic
 import kotlinx.css.rem
 import kotlinx.css.width
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledDiv
 
 external interface DollarCardProps : RProps {
-    var kuralsCount: Int
-    var porulsCount: Int
+  var kuralsCount: Int
+  var porulsCount: Int
 }
 
 class DollarCard : RComponent<DollarCardProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                classes = mutableListOf("card text-white bg-dark m-2")
-                width = 16.rem
-            }
-            styledDiv {
-                css {
-                    classes = mutableListOf("card-body p-2")
-                }
-                scoreCardEntry {
-                    keyEntry = Topic.Kural.tamil
-                    valueEntry = props.kuralsCount.toString()
-                }
-                scoreCardEntry {
-                    keyEntry = Topic.Porul.tamil
-                    valueEntry = props.porulsCount.toString()
-                }
-            }
-            styledDiv {
-                css {
-                    classes = mutableListOf("card-footer p-2")
-                }
-                scoreCardEntry {
-                    keyEntry = "மொத்தம்"
-                    valueEntry = " $ ${((props.kuralsCount.toFloat() + props.porulsCount.toFloat()) / 2)}"
-                }
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("card text-white bg-dark m-2")
+        width = 16.rem
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("card-body p-2")
         }
+        scoreCardEntry {
+          keyEntry = Topic.Kural.tamil
+          valueEntry = props.kuralsCount.toString()
+        }
+        scoreCardEntry {
+          keyEntry = Topic.Porul.tamil
+          valueEntry = props.porulsCount.toString()
+        }
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("card-footer p-2")
+        }
+        scoreCardEntry {
+          keyEntry = "மொத்தம்"
+          valueEntry = " $ ${((props.kuralsCount.toFloat() + props.porulsCount.toFloat()) / 2)}"
+        }
+      }
     }
+  }
 }
 
 fun RBuilder.dollarCard(handler: DollarCardProps.() -> Unit): ReactElement {
-    return child(DollarCard::class) {
-        this.attrs(handler)
-    }
+  return child(DollarCard::class) {
+    this.attrs(handler)
+  }
 }

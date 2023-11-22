@@ -9,7 +9,11 @@ import kotlinx.css.pct
 import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.role
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledButton
 import styled.styledDiv

@@ -48,7 +48,7 @@ suspend fun fetchSource(): List<Thirukkural> {
   return thirukkurals
 }
 
-external interface PracticeAppProps: RProps {
+external interface PracticeAppProps : RProps {
   var onChange: () -> Unit
 }
 

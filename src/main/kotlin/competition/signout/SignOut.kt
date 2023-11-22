@@ -16,35 +16,43 @@
 
 package competition.signout
 
-import kotlinx.css.*
+import kotlinx.css.Position
+import kotlinx.css.position
+import kotlinx.css.px
+import kotlinx.css.right
+import kotlinx.css.top
 import kotlinx.html.js.onClickFunction
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledButton
 
-external interface SignOutProps: RProps {
-    var onSignOutHandler: () -> Unit
+external interface SignOutProps : RProps {
+  var onSignOutHandler: () -> Unit
 }
 
 class SignOut : RComponent<SignOutProps, RState>() {
-    override fun RBuilder.render() {
-        styledButton {
-            css {
-                classes = mutableListOf("btn btn-outline-primary mr-2")
-                position = Position.fixed
-                top = 6.px
-                right = 4.px
-            }
-            attrs {
-                onClickFunction = { props.onSignOutHandler() }
-            }
-            +"முகப்பு"
-        }
+  override fun RBuilder.render() {
+    styledButton {
+      css {
+        classes = mutableListOf("btn btn-outline-primary mr-2")
+        position = Position.fixed
+        top = 6.px
+        right = 4.px
+      }
+      attrs {
+        onClickFunction = { props.onSignOutHandler() }
+      }
+      +"முகப்பு"
     }
+  }
 }
 
 fun RBuilder.signOut(handler: SignOutProps.() -> Unit): ReactElement {
-    return child(SignOut::class) {
-        this.attrs(handler)
-    }
+  return child(SignOut::class) {
+    this.attrs(handler)
+  }
 }

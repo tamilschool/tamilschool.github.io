@@ -15,40 +15,44 @@
  */
 package competition.scoreCard
 
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledDiv
 import styled.styledP
 
-external interface ScoreCardEntryProps: RProps {
-    var keyEntry: String
-    var valueEntry: String
+external interface ScoreCardEntryProps : RProps {
+  var keyEntry: String
+  var valueEntry: String
 }
 
 class ScoreCardEntry : RComponent<ScoreCardEntryProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                classes = mutableListOf("d-flex justify-content-between align-items-center")
-            }
-            styledP {
-                css {
-                    classes = mutableListOf("card-text mb-0")
-                }
-                +"${props.keyEntry}: "
-            }
-            styledP {
-                css {
-                    classes = mutableListOf("card-text")
-                }
-                +props.valueEntry
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("d-flex justify-content-between align-items-center")
+      }
+      styledP {
+        css {
+          classes = mutableListOf("card-text mb-0")
         }
+        +"${props.keyEntry}: "
+      }
+      styledP {
+        css {
+          classes = mutableListOf("card-text")
+        }
+        +props.valueEntry
+      }
     }
+  }
 }
 
 fun RBuilder.scoreCardEntry(handler: ScoreCardEntryProps.() -> Unit): ReactElement {
-    return child(ScoreCardEntry::class) {
-        this.attrs(handler)
-    }
+  return child(ScoreCardEntry::class) {
+    this.attrs(handler)
+  }
 }

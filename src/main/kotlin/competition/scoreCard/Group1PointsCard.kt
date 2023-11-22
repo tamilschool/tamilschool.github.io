@@ -15,66 +15,75 @@
  */
 package competition.scoreCard
 
-import data.Group1RoundType
 import data.CQuestionState
+import data.Group1RoundType
 import kotlinx.css.rem
 import kotlinx.css.width
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledDiv
 
-external interface Group1PointsCardProps: RProps {
-    var questionState: CQuestionState
+external interface Group1PointsCardProps : RProps {
+  var questionState: CQuestionState
 }
 
 class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                classes = mutableListOf("")
-            }
-            val group1Score = props.questionState.scoreState.group1Score
-            styledDiv {
-                css {
-                    classes = mutableListOf("card text-white bg-dark m-2")
-                    width = 16.rem
-                }
-                styledDiv {
-                    css {
-                        classes = mutableListOf("card-body p-2")
-                    }
-                    for (entry in Group1RoundType.values()) {
-                        scoreCardEntry {
-                            keyEntry = entry.tamil
-                            valueEntry = group1Score.round1.values.mapNotNull { it.score[entry]?.toFloat() }.sum().toString()
-                        }
-                    }
-                }
-                styledDiv {
-                    css {
-                        classes = mutableListOf("card-footer p-2")
-                    }
-                    scoreCardEntry {
-                        keyEntry = "வெகுமதி"
-                        valueEntry = group1Score.bonus.toString()
-                    }
-                }
-                styledDiv {
-                    css {
-                        classes = mutableListOf("card-body p-2")
-                    }
-                    scoreCardEntry {
-                        keyEntry = "மொத்தம்"
-                        valueEntry = (group1Score.round1.values.map { it.score.values }.flatten().map { it.toFloat() }.sum() + group1Score.bonus.toFloat()).toString()
-                    }
-                }
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("")
+      }
+      val group1Score = props.questionState.scoreState.group1Score
+      styledDiv {
+        css {
+          classes = mutableListOf("card text-white bg-dark m-2")
+          width = 16.rem
         }
+        styledDiv {
+          css {
+            classes = mutableListOf("card-body p-2")
+          }
+          for (entry in Group1RoundType.values()) {
+            scoreCardEntry {
+              keyEntry = entry.tamil
+              valueEntry =
+                group1Score.round1.values.mapNotNull { it.score[entry]?.toFloat() }.sum().toString()
+            }
+          }
+        }
+        styledDiv {
+          css {
+            classes = mutableListOf("card-footer p-2")
+          }
+          scoreCardEntry {
+            keyEntry = "வெகுமதி"
+            valueEntry = group1Score.bonus.toString()
+          }
+        }
+        styledDiv {
+          css {
+            classes = mutableListOf("card-body p-2")
+          }
+          scoreCardEntry {
+            keyEntry = "மொத்தம்"
+            valueEntry =
+              (group1Score.round1.values.map { it.score.values }
+                .flatten()
+                .map { it.toFloat() }
+                .sum() + group1Score.bonus.toFloat()).toString()
+          }
+        }
+      }
     }
+  }
 }
 
 fun RBuilder.group1PointsCard(handler: Group1PointsCardProps.() -> Unit): ReactElement {
-    return child(Group1PointsCard::class) {
-        this.attrs(handler)
-    }
+  return child(Group1PointsCard::class) {
+    this.attrs(handler)
+  }
 }

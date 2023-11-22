@@ -13,103 +13,116 @@ data class CQuestionState(
   var timerState: CTimerState,
   var scoreState: ScoreState
 ) {
-    fun getCurrentQuestion(): String {
-        return when(selectedTopic) {
-            Topic.Athikaram -> athikaramState.getCurrent()
-            Topic.Porul -> porulState.getCurrent().porul
-            Topic.Kural -> kuralState.getCurrent().kural.toString()
-            Topic.FirstWord -> firstWordState.getCurrent()
-            Topic.LastWord -> lastWordState.getCurrent()
-            Topic.AllKurals -> "Error"
-        }
+  fun getCurrentQuestion(): String {
+    return when (selectedTopic) {
+      Topic.Athikaram -> athikaramState.getCurrent()
+      Topic.Porul -> porulState.getCurrent().porul
+      Topic.Kural -> kuralState.getCurrent().kural.toString()
+      Topic.FirstWord -> firstWordState.getCurrent()
+      Topic.LastWord -> lastWordState.getCurrent()
+      Topic.AllKurals -> "Error"
     }
-    private fun getIndexQuestion(index: Int): String {
-        return when(selectedTopic) {
-            Topic.Athikaram -> athikaramState.targets[index]
-            Topic.Porul -> porulState.targets[index].porul
-            Topic.Kural -> kuralState.targets[index].kural.toString()
-            Topic.FirstWord -> firstWordState.targets[index]
-            Topic.LastWord -> lastWordState.targets[index]
-            Topic.AllKurals -> "Error"
-        }
+  }
+
+  private fun getIndexQuestion(index: Int): String {
+    return when (selectedTopic) {
+      Topic.Athikaram -> athikaramState.targets[index]
+      Topic.Porul -> porulState.targets[index].porul
+      Topic.Kural -> kuralState.targets[index].kural.toString()
+      Topic.FirstWord -> firstWordState.targets[index]
+      Topic.LastWord -> lastWordState.targets[index]
+      Topic.AllKurals -> "Error"
     }
-    fun isAnswered(): Boolean = scoreState.group23Score.round2[selectedTopic]?.contains(getCurrentQuestion()) ?: false
-    fun isAnswered(index: Int): Boolean = scoreState.group23Score.round2[selectedTopic]?.contains(getIndexQuestion(index)) ?: false
+  }
+
+  fun isAnswered(): Boolean =
+    scoreState.group23Score.round2[selectedTopic]?.contains(getCurrentQuestion()) ?: false
+
+  fun isAnswered(index: Int): Boolean =
+    scoreState.group23Score.round2[selectedTopic]?.contains(getIndexQuestion(index)) ?: false
 }
 
 data class CTimerState(
-    var isLive: Boolean = false,
-    var isPaused: Boolean = false,
-    var time: Long = 1201)
+  var isLive: Boolean = false,
+  var isPaused: Boolean = false,
+  var time: Long = 1201
+)
 
 const val maxQuestions = 15
 
 data class CAthikaramState(
-    override var targets: List<String>,
-    override var index: Int
+  override var targets: List<String>,
+  override var index: Int
 ) : CHistoryState<String> {
-    constructor(targets: List<Thirukkural>) : this(cGetAthikarams(targets, maxQuestions), 0)
+  constructor(targets: List<Thirukkural>) : this(cGetAthikarams(targets, maxQuestions), 0)
 }
 
 data class CThirukkuralState(
   override var targets: List<Thirukkural>,
   override var index: Int
 ) : CHistoryState<Thirukkural> {
-    constructor(targets: List<Thirukkural>) : this(targets.shuffled().take(maxQuestions).toList(), 0)
+  constructor(targets: List<Thirukkural>) : this(targets.shuffled().take(maxQuestions).toList(), 0)
 }
 
 data class CFirstWordState(
-    override var targets: List<String>,
-    override var index: Int
+  override var targets: List<String>,
+  override var index: Int
 ) : CHistoryState<String> {
-    constructor(targets: List<Thirukkural>) : this(cGetFirstWords(targets, maxQuestions), 0)
+  constructor(targets: List<Thirukkural>) : this(cGetFirstWords(targets, maxQuestions), 0)
 }
 
 data class CLastWordState(
-    override var targets: List<String>,
-    override var index: Int
+  override var targets: List<String>,
+  override var index: Int
 ) : CHistoryState<String> {
-    constructor(targets: List<Thirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
+  constructor(targets: List<Thirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
 }
 
-fun cGetAthikarams(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
-fun cGetFirstWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
-fun cGetLastWords(thirukkurals: List<Thirukkural>, max: Int) = thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)
+fun cGetAthikarams(thirukkurals: List<Thirukkural>, max: Int) =
+  thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
+
+fun cGetFirstWords(thirukkurals: List<Thirukkural>, max: Int) =
+  thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)
+
+fun cGetLastWords(thirukkurals: List<Thirukkural>, max: Int) =
+  thirukkurals.shuffled().map { it.words.last() }.distinct().take(max)
 
 interface CHistoryState<T> {
-    var index: Int
-    var targets: List<T>
-    fun getCurrent(): T = targets[index]
-    fun goNext() {
-        index++
-        if (index == targets.size) {
-            index = 0
-        }
-        println("${this::class} Moved to : $index of Total: ${targets.size}")
+  var index: Int
+  var targets: List<T>
+  fun getCurrent(): T = targets[index]
+  fun goNext() {
+    index++
+    if (index == targets.size) {
+      index = 0
     }
-    fun goPrevious() {
-        --index
-        if (index < 0) {
-            index = targets.size - 1
-        }
-        println("${this::class} Moved to : $index of Total: ${targets.size}")
+    println("${this::class} Moved to : $index of Total: ${targets.size}")
+  }
+
+  fun goPrevious() {
+    --index
+    if (index < 0) {
+      index = targets.size - 1
     }
-    fun go(targetIndex: Int) {
-        if (index >=0 && index < targets.size) {
-            index = targetIndex
-            println("${this::class} Moved to : $index of Total: ${targets.size}")
-        }
+    println("${this::class} Moved to : $index of Total: ${targets.size}")
+  }
+
+  fun go(targetIndex: Int) {
+    if (index >= 0 && index < targets.size) {
+      index = targetIndex
+      println("${this::class} Moved to : $index of Total: ${targets.size}")
     }
+  }
 }
 
 enum class Group23Round1Type {
-    KURAL, PORUL;
+  KURAL, PORUL;
 }
 
 enum class Group1RoundType(val tamil: String) {
-    KURAL("குறள்"),
-    PORUL("பொருள்"),
-    CLARITY("உச்சரிப்பு")
+  KURAL("குறள்"),
+  PORUL("பொருள்"),
+  CLARITY("உச்சரிப்பு")
 }
 
 data class ScoreState(
@@ -119,22 +132,32 @@ data class ScoreState(
 
 data class Group1Score(
   var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
-  var bonus: Number = 0F)
+  var bonus: Number = 0F
+)
+
 data class Group1Round1Score(
   var thirukkural: Thirukkural,
-  var score: MutableMap<Group1RoundType, Number> = Group1RoundType.values().associateWith { 0F }.toMutableMap())
+  var score: MutableMap<Group1RoundType, Number> = Group1RoundType.values().associateWith { 0F }
+    .toMutableMap()
+)
 
 data class Group23Score(
   val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
-  val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }.associateWith { mutableSetOf() }) {
+  val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }
+    .associateWith { mutableSetOf() }
+) {
   fun getKuralCount(): Int = round1.values.count { it.score[Group23Round1Type.KURAL] == true }
   fun getPorulCount(): Int = round1.values.count { it.score[Group23Round1Type.PORUL] == true }
   fun getDollars(): Float = (getKuralCount().toFloat() + getPorulCount().toFloat()) / 2
-  fun getAnsweredKuralList(): String = round1.filter { it.value.score.values.contains(true) }.keys.joinToString(",")
+  fun getAnsweredKuralList(): String =
+    round1.filter { it.value.score.values.contains(true) }.keys.joinToString(",")
+
   fun getScore(topic: Topic): Int = round2[topic]?.count() ?: 0
   fun getTotal(): Int = round2.values.flatten().count()
-  }
+}
 
 data class Group23Round1Score(
   var thirukkural: Thirukkural,
-  var score: MutableMap<Group23Round1Type, Boolean> = Group23Round1Type.values().associateWith { false }.toMutableMap())
+  var score: MutableMap<Group23Round1Type, Boolean> = Group23Round1Type.values()
+    .associateWith { false }.toMutableMap()
+)

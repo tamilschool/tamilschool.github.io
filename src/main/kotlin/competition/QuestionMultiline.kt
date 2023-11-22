@@ -19,40 +19,44 @@ package competition
 import data.KuralOnly
 import kotlinx.css.fontSize
 import kotlinx.css.rem
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledDiv
 
-external interface QuestionMultilineProps: RProps {
-    var question: KuralOnly
-    var isAnswered: Boolean
+external interface QuestionMultilineProps : RProps {
+  var question: KuralOnly
+  var isAnswered: Boolean
 }
 
 class QuestionMultiline : RComponent<QuestionMultilineProps, RState>() {
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                val style = if (props.isAnswered) "success text-white" else "warning"
-                classes = mutableListOf("card bg-$style m-2 text-center")
-            }
-            styledDiv {
-                css {
-                    classes = mutableListOf("card-header")
-                    fontSize = 1.1.rem
-                }
-                styledDiv {
-                    +props.question.firstLine
-                }
-                styledDiv {
-                    +props.question.secondLine
-                }
-            }
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        val style = if (props.isAnswered) "success text-white" else "warning"
+        classes = mutableListOf("card bg-$style m-2 text-center")
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("card-header")
+          fontSize = 1.1.rem
         }
+        styledDiv {
+          +props.question.firstLine
+        }
+        styledDiv {
+          +props.question.secondLine
+        }
+      }
     }
+  }
 }
 
 fun RBuilder.questionMultiline(handler: QuestionMultilineProps.() -> Unit): ReactElement {
-    return child(QuestionMultiline::class) {
-        this.attrs(handler)
-    }
+  return child(QuestionMultiline::class) {
+    this.attrs(handler)
+  }
 }

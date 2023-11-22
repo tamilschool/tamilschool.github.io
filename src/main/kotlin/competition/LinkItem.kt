@@ -31,42 +31,42 @@ import styled.css
 import styled.styledA
 import styled.styledLi
 
-external interface LinkItemProps: RProps {
-    var name: String
-    var isActive: Boolean
-    var isDisabled: Boolean
-    var onClickFunction: () -> Unit
+external interface LinkItemProps : RProps {
+  var name: String
+  var isActive: Boolean
+  var isDisabled: Boolean
+  var onClickFunction: () -> Unit
 }
 
 class LinkItem : RComponent<LinkItemProps, RState>() {
-    override fun RBuilder.render() {
-        styledLi {
-            css {
-                classes = mutableListOf("nav-item")
-            }
-            styledA {
-                css {
-                    val activeStyle = if (props.isActive) "active" else ""
-                    classes = mutableListOf("nav-link $activeStyle")
-                    color = Color("#555")
-                    put("data-toggle", "pill")
-                    if (props.isDisabled) {
-                        opacity = 0.65
-                    }
-                    attrs {
-                        id = props.name
-                        role = "button"
-                        onClickFunction = { props.onClickFunction() }
-                    }
-                }
-                +props.name
-            }
+  override fun RBuilder.render() {
+    styledLi {
+      css {
+        classes = mutableListOf("nav-item")
+      }
+      styledA {
+        css {
+          val activeStyle = if (props.isActive) "active" else ""
+          classes = mutableListOf("nav-link $activeStyle")
+          color = Color("#555")
+          put("data-toggle", "pill")
+          if (props.isDisabled) {
+            opacity = 0.65
+          }
+          attrs {
+            id = props.name
+            role = "button"
+            onClickFunction = { props.onClickFunction() }
+          }
         }
+        +props.name
+      }
     }
+  }
 }
 
 fun RBuilder.linkItem(handler: LinkItemProps.() -> Unit): ReactElement {
-    return child(LinkItem::class) {
-        this.attrs(handler)
-    }
+  return child(LinkItem::class) {
+    this.attrs(handler)
+  }
 }

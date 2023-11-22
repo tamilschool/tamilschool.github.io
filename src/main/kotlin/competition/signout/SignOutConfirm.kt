@@ -21,97 +21,101 @@ import kotlinx.css.pct
 import kotlinx.css.rem
 import kotlinx.css.width
 import kotlinx.html.js.onClickFunction
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import styled.css
 import styled.styledButton
 import styled.styledDiv
 import styled.styledP
 
-external interface SignOutConfirmProps: RProps {
-    var onNoClickHandler: () -> Unit
-    var onYesClickHandler: () -> Unit
+external interface SignOutConfirmProps : RProps {
+  var onNoClickHandler: () -> Unit
+  var onYesClickHandler: () -> Unit
 }
 
 class SignOutConfirm : RComponent<SignOutConfirmProps, RState>() {
-    override fun RBuilder.render() {
+  override fun RBuilder.render() {
+    styledDiv {
+      css {
+        classes = mutableListOf("container-md")
+      }
+      styledDiv {
+        css {
+          classes = mutableListOf("row")
+        }
         styledDiv {
+          css {
+            classes = mutableListOf("d-flex justify-content-center align-items-center pb-5")
+            width = 100.pct
+          }
+          styledDiv {
             css {
-                classes = mutableListOf("container-md")
+              classes = mutableListOf("card bg-light m-2")
             }
             styledDiv {
-                css {
-                    classes = mutableListOf("row")
-                }
-                styledDiv {
-                    css {
-                        classes = mutableListOf("d-flex justify-content-center align-items-center pb-5")
-                        width = 100.pct
-                    }
-                    styledDiv {
-                        css {
-                            classes = mutableListOf("card bg-light m-2")
-                        }
-                        styledDiv {
-                            css {
-                                classes = mutableListOf("card-header")
-                                fontSize = 1.5.rem
-                            }
-                            +"Going back to Home"
-                        }
-                        styledDiv {
-                            css {
-                                classes = mutableListOf("card-body")
-                            }
-                            styledP {
-                                css {
-                                    classes = mutableListOf("card-text")
-                                }
-                                +"Once you click yes, you can't see the scores of this student"
-                            }
-                            styledP {
-                                css {
-                                    classes = mutableListOf("card-text")
-                                }
-                                +"Do you really want to proceed?"
-                            }
-                        }
-                        styledDiv {
-                            css {
-                                classes = mutableListOf("card-footer")
-                            }
-                            styledDiv {
-                                css {
-                                    classes = mutableListOf("d-flex flex-row-reverse bd-highlight")
-                                }
-                                styledButton {
-                                    css {
-                                        classes = mutableListOf("btn btn-primary")
-                                    }
-                                    +"No"
-                                    attrs {
-                                        onClickFunction = { props.onNoClickHandler() }
-                                    }
-                                }
-                                styledButton {
-                                    css {
-                                        classes = mutableListOf("btn btn-secondary mr-2")
-                                    }
-                                    +"Yes"
-                                    attrs {
-                                        onClickFunction = { props.onYesClickHandler() }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+              css {
+                classes = mutableListOf("card-header")
+                fontSize = 1.5.rem
+              }
+              +"Going back to Home"
             }
+            styledDiv {
+              css {
+                classes = mutableListOf("card-body")
+              }
+              styledP {
+                css {
+                  classes = mutableListOf("card-text")
+                }
+                +"Once you click yes, you can't see the scores of this student"
+              }
+              styledP {
+                css {
+                  classes = mutableListOf("card-text")
+                }
+                +"Do you really want to proceed?"
+              }
+            }
+            styledDiv {
+              css {
+                classes = mutableListOf("card-footer")
+              }
+              styledDiv {
+                css {
+                  classes = mutableListOf("d-flex flex-row-reverse bd-highlight")
+                }
+                styledButton {
+                  css {
+                    classes = mutableListOf("btn btn-primary")
+                  }
+                  +"No"
+                  attrs {
+                    onClickFunction = { props.onNoClickHandler() }
+                  }
+                }
+                styledButton {
+                  css {
+                    classes = mutableListOf("btn btn-secondary mr-2")
+                  }
+                  +"Yes"
+                  attrs {
+                    onClickFunction = { props.onYesClickHandler() }
+                  }
+                }
+              }
+            }
+          }
         }
+      }
     }
+  }
 }
 
 fun RBuilder.signOutConfirm(handler: SignOutConfirmProps.() -> Unit): ReactElement {
-    return child(SignOutConfirm::class) {
-        this.attrs(handler)
-    }
+  return child(SignOutConfirm::class) {
+    this.attrs(handler)
+  }
 }
