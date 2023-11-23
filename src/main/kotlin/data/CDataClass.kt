@@ -60,7 +60,7 @@ data class CAthikaramState(
   override var targets: List<String>,
   override var index: Int
 ) : CHistoryState<String> {
-  constructor(targets: List<Thirukkural>) : this(cGetAthikarams(targets, maxQuestions), 0)
+  constructor(targets: List<Thirukkural>, expected: List<String>) : this(cGetAthikarams(targets, maxQuestions, expected), 0)
 }
 
 data class CThirukkuralState(
@@ -84,8 +84,12 @@ data class CLastWordState(
   constructor(targets: List<Thirukkural>) : this(cGetLastWords(targets, maxQuestions), 0)
 }
 
-fun cGetAthikarams(thirukkurals: List<Thirukkural>, max: Int) =
-  thirukkurals.shuffled().map { it.athikaram }.distinct().take(max)
+fun cGetAthikarams(thirukkurals: List<Thirukkural>, max: Int, expected: List<String>) =
+  expected + thirukkurals.shuffled()
+    .map { it.athikaram }
+    .distinct()
+    .filter { !expected.contains(it) }
+    .take(max - expected.size)
 
 fun cGetFirstWords(thirukkurals: List<Thirukkural>, max: Int) =
   thirukkurals.shuffled().map { it.words.first() }.distinct().take(max)

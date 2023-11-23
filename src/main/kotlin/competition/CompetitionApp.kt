@@ -98,34 +98,48 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
   }
 
   private fun createQuestionState(group: Group, thirukkurals: List<Thirukkural>): CQuestionState {
-    val targetKurals = thirukkurals.filter { it.group.contains(group) }
-    println("Total Kurals: ${targetKurals.size}")
+    val allKurals = thirukkurals.filter { it.group.contains(group) }
+    val total = allKurals.size
+//    println("Total Kurals: ${allKurals.size}")
+//    play(allKurals)
+//    play2(allKurals)
+//    play3(allKurals)
 
-    val lastWordState = CLastWordState(targetKurals)
-    var remainingKurals = targetKurals.filter { !lastWordState.targets.contains(it.words.last()) }
-    println("Remaining Kurals after last word: ${remainingKurals.size}")
+    var remainingKurals = allKurals
+    val lastWordState = CLastWordState(remainingKurals)
+    remainingKurals = remainingKurals.filter { !lastWordState.targets.contains(it.words.last()) }
+    val afterLastWord = remainingKurals.size
 
     val firstWordState = CFirstWordState(remainingKurals)
     remainingKurals = remainingKurals.filter { !firstWordState.targets.contains(it.words.first()) }
-    println("Remaining Kurals after first word: ${remainingKurals.size}")
+    val afterFirstWord = remainingKurals.size
 
     val kuralState = CThirukkuralState(remainingKurals)
     remainingKurals = remainingKurals.filter { !kuralState.targets.contains(it) }
-    println("Remaining Kurals after kural: ${remainingKurals.size}")
+    val afterKural = remainingKurals.size
 
     val porulState = CThirukkuralState(remainingKurals)
     remainingKurals = remainingKurals.filter { !porulState.targets.contains(it) }
-    println("Remaining Kurals after porul: ${remainingKurals.size}")
+    val afterPorul = remainingKurals.size
 
-    val athikaramState = CAthikaramState(remainingKurals)
+    val expAthikarams = remainingKurals.map { it.athikaram }.distinct().shuffled().take(maxQuestions)
+    val athikaramState = CAthikaramState(allKurals, expAthikarams)
     remainingKurals = remainingKurals.filter { !athikaramState.targets.contains(it.athikaram) }
-    println("Remaining Kurals after athikaram: ${remainingKurals.size}")
+    val afterAthikaram = remainingKurals.size
+
+    println("Total: $total, Last: " +
+        "${total - afterLastWord}, First: " +
+        "${afterLastWord - afterFirstWord}, Kural: " +
+        "${afterFirstWord - afterKural}, Porul: " +
+        "${afterKural - afterPorul}, Athikaram: " +
+        "${afterPorul - afterAthikaram}")
+    println("Remaining kurals : $afterAthikaram")
 
     return CQuestionState(
       selectedGroup = group,
       selectedRound = Round.I,
       selectedTopic = Topic.Athikaram,
-      round2Kurals = targetKurals,
+      round2Kurals = allKurals,
       athikaramState = athikaramState,
       kuralState = kuralState,
       porulState = porulState,
@@ -134,6 +148,54 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       timerState = CTimerState(),
       scoreState = ScoreState()
     )
+  }
+
+  private fun play3(allKurals: List<Thirukkural>) {
+    println("Total,Last,First,Kural,Porul,Athikaram,AfterLast,AfterFirst,AfterKural,AfterPorul,AfterAthikaram")
+    for(i in 1..10000) {
+      play2(allKurals)
+    }
+  }
+
+  private fun play2(allKurals: List<Thirukkural>) {
+    var remainingKurals = allKurals
+    val total = allKurals.size
+
+    val lastWordState = CLastWordState(remainingKurals)
+    remainingKurals = remainingKurals.filter { !lastWordState.targets.contains(it.words.last()) }
+//    println("Remaining Kurals after last word: ${remainingKurals.size}")
+    val afterLastWord = remainingKurals.size
+
+    val firstWordState = CFirstWordState(remainingKurals)
+    remainingKurals = remainingKurals.filter { !firstWordState.targets.contains(it.words.first()) }
+//    println("Remaining Kurals after first word: ${remainingKurals.size}")
+    val afterFirstWord = remainingKurals.size
+
+    val kuralState = CThirukkuralState(remainingKurals)
+    remainingKurals = remainingKurals.filter { !kuralState.targets.contains(it) }
+//    println("Remaining Kurals after kural: ${remainingKurals.size}")
+    val afterKural = remainingKurals.size
+
+    val porulState = CThirukkuralState(remainingKurals)
+    remainingKurals = remainingKurals.filter { !porulState.targets.contains(it) }
+//    println("Remaining Kurals after porul: ${remainingKurals.size}")
+    val afterPorul = remainingKurals.size
+
+    val expAthikarams = remainingKurals.map { it.athikaram }.distinct().shuffled().take(maxQuestions)
+//    println("Expected Athikarams: ${expAthikarams.size}")
+
+    val athikaramState = CAthikaramState(allKurals, expAthikarams)
+    remainingKurals = remainingKurals.filter { !athikaramState.targets.contains(it.athikaram) }
+//    println("Remaining Kurals after athikaram: ${remainingKurals.size}")
+    val afterAthikaram = remainingKurals.size
+//    println("Total: $total, [${total - afterFirstWord}]-last: $afterLastWord, afterFirstWord: $afterFirstWord, afterKural: $afterKural, afterPorul: $afterPorul, afterAthikaram: $afterAthikaram")
+    println("$total," +
+        "${total - afterLastWord}," +
+        "${afterLastWord - afterFirstWord}," +
+        "${afterFirstWord - afterKural}," +
+        "${afterKural - afterPorul}," +
+        "${afterPorul - afterAthikaram}," +
+        "$afterLastWord,$afterFirstWord,$afterKural,$afterPorul,$afterAthikaram")
   }
 
   private fun play(kurals: List<Thirukkural>) {
@@ -298,7 +360,6 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
                     setState {
                       val timerState = questionState.timerState
                       when {
-                        timerState.isLive && timerState.time <= 0 -> resetTimer(questionState, true)
                         timerState.isLive && timerState.isPaused -> timerState.isPaused = false
                         timerState.isLive && !timerState.isPaused -> timerState.isPaused = true
                         else -> timerState.isLive = true
@@ -450,19 +511,6 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
         }
       }
     }
-  }
-
-  private fun resetTimer(questionState: CQuestionState, isLive: Boolean) {
-    if (isLive) {
-      onNextClickHandler(questionState)
-    }
-    questionState.timerState = CTimerState(isLive = isLive)
-    questionState.athikaramState = CAthikaramState(questionState.round2Kurals)
-    questionState.kuralState = CThirukkuralState(questionState.round2Kurals)
-    questionState.porulState = CThirukkuralState(questionState.round2Kurals)
-    questionState.firstWordState = CFirstWordState(questionState.round2Kurals)
-    questionState.lastWordState = CLastWordState(questionState.round2Kurals)
-    questionState.scoreState = ScoreState()
   }
 
   private fun onNextClickHandler(questionState: CQuestionState) {
