@@ -27,8 +27,6 @@ dependencies {
     implementation(npm("styled-components", "~5.1.1"))
     implementation(npm("inline-style-prefixer", "~6.0.0"))
 
-    implementation(npm("react-hotkeys", "~2.0.0"))
-
     //Coroutines (chapter 8)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
