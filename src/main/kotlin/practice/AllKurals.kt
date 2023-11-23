@@ -26,12 +26,11 @@ class AllKurals : RComponent<AllKuralsProps, RState>() {
       onSalamanPapaClick = props.onSalamanPapaClick
       onMuKarunanidhiClick = props.onMuKarunanidhiClick
     }
-    props.allThirukkurals.forEach { thirukkural ->
-      kuralDisplay {
-        selectedThirukkural = thirukkural
-        selectedKuralMeaning = props.selectedKuralMeaning
-        style = "bg-light"
-      }
+    multipleKuralDisplay {
+      selectedThirukkurals = props.allThirukkurals
+      selectedKuralMeaning = props.selectedKuralMeaning
+      showAnswer = true
+      style = "bg-light"
     }
   }
 }

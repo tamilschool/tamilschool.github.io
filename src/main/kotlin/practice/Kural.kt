@@ -19,11 +19,10 @@ class Kural : RComponent<KuralProps, RState>() {
     questionMultiline {
       question = props.selectedThirukkural.kural
     }
-    if (props.showAnswer) {
-      kuralDisplay {
-        selectedThirukkural = props.selectedThirukkural
-        selectedKuralMeaning = props.selectedKuralMeaning
-      }
+    multipleKuralDisplay {
+      selectedThirukkurals = listOf(props.selectedThirukkural)
+      selectedKuralMeaning = props.selectedKuralMeaning
+      showAnswer = props.showAnswer
     }
   }
 }

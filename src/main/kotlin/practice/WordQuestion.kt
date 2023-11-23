@@ -22,13 +22,10 @@ class WordQuestion : RComponent<WordQuestionProps, RState>() {
       question = props.question
       fontSize = 1.1.rem
     }
-    if (props.showAnswer) {
-      props.selectedThirukkurals.forEach { thirukkural ->
-        kuralDisplay {
-          selectedThirukkural = thirukkural
-          selectedKuralMeaning = props.selectedKuralMeaning
-        }
-      }
+    multipleKuralDisplay {
+      selectedThirukkurals = props.selectedThirukkurals
+      selectedKuralMeaning = props.selectedKuralMeaning
+      showAnswer = props.showAnswer
     }
   }
 }

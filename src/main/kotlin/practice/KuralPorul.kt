@@ -36,11 +36,10 @@ class KuralPorul : RComponent<KuralPorulProps, RState>() {
         fontSize = 1.1.rem
       }
     }
-    if (props.showAnswer) {
-      kuralDisplay {
-        selectedThirukkural = props.selectedThirukkural
-        selectedKuralMeaning = props.selectedKuralMeaning
-      }
+    multipleKuralDisplay {
+      selectedThirukkurals = listOf(props.selectedThirukkural)
+      selectedKuralMeaning = props.selectedKuralMeaning
+      showAnswer = props.showAnswer
     }
   }
 }

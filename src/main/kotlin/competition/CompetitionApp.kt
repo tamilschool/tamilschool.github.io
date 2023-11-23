@@ -122,17 +122,20 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     remainingKurals = remainingKurals.filter { !porulState.targets.contains(it) }
     val afterPorul = remainingKurals.size
 
-    val expAthikarams = remainingKurals.map { it.athikaram }.distinct().shuffled().take(maxQuestions)
+    val expAthikarams =
+      remainingKurals.map { it.athikaram }.distinct().shuffled().take(maxQuestions)
     val athikaramState = CAthikaramState(allKurals, expAthikarams)
     remainingKurals = remainingKurals.filter { !athikaramState.targets.contains(it.athikaram) }
     val afterAthikaram = remainingKurals.size
 
-    println("Total: $total, Last: " +
-        "${total - afterLastWord}, First: " +
-        "${afterLastWord - afterFirstWord}, Kural: " +
-        "${afterFirstWord - afterKural}, Porul: " +
-        "${afterKural - afterPorul}, Athikaram: " +
-        "${afterPorul - afterAthikaram}")
+    println(
+      "Total: $total, Last: " +
+          "${total - afterLastWord}, First: " +
+          "${afterLastWord - afterFirstWord}, Kural: " +
+          "${afterFirstWord - afterKural}, Porul: " +
+          "${afterKural - afterPorul}, Athikaram: " +
+          "${afterPorul - afterAthikaram}"
+    )
     println("Remaining kurals : $afterAthikaram")
 
     return CQuestionState(
@@ -152,7 +155,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
 
   private fun play3(allKurals: List<Thirukkural>) {
     println("Total,Last,First,Kural,Porul,Athikaram,AfterLast,AfterFirst,AfterKural,AfterPorul,AfterAthikaram")
-    for(i in 1..10000) {
+    for (i in 1..10000) {
       play2(allKurals)
     }
   }
@@ -181,7 +184,8 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
 //    println("Remaining Kurals after porul: ${remainingKurals.size}")
     val afterPorul = remainingKurals.size
 
-    val expAthikarams = remainingKurals.map { it.athikaram }.distinct().shuffled().take(maxQuestions)
+    val expAthikarams =
+      remainingKurals.map { it.athikaram }.distinct().shuffled().take(maxQuestions)
 //    println("Expected Athikarams: ${expAthikarams.size}")
 
     val athikaramState = CAthikaramState(allKurals, expAthikarams)
@@ -189,13 +193,15 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
 //    println("Remaining Kurals after athikaram: ${remainingKurals.size}")
     val afterAthikaram = remainingKurals.size
 //    println("Total: $total, [${total - afterFirstWord}]-last: $afterLastWord, afterFirstWord: $afterFirstWord, afterKural: $afterKural, afterPorul: $afterPorul, afterAthikaram: $afterAthikaram")
-    println("$total," +
-        "${total - afterLastWord}," +
-        "${afterLastWord - afterFirstWord}," +
-        "${afterFirstWord - afterKural}," +
-        "${afterKural - afterPorul}," +
-        "${afterPorul - afterAthikaram}," +
-        "$afterLastWord,$afterFirstWord,$afterKural,$afterPorul,$afterAthikaram")
+    println(
+      "$total," +
+          "${total - afterLastWord}," +
+          "${afterLastWord - afterFirstWord}," +
+          "${afterFirstWord - afterKural}," +
+          "${afterKural - afterPorul}," +
+          "${afterPorul - afterAthikaram}," +
+          "$afterLastWord,$afterFirstWord,$afterKural,$afterPorul,$afterAthikaram"
+    )
   }
 
   private fun play(kurals: List<Thirukkural>) {
