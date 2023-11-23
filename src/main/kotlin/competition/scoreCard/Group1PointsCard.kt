@@ -50,8 +50,7 @@ class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
           for (entry in Group1RoundType.values()) {
             scoreCardEntry {
               keyEntry = entry.tamil
-              valueEntry =
-                group1Score.round1.values.mapNotNull { it.score[entry]?.toFloat() }.sum().toString()
+              valueEntry = group1Score.getScore(entry).toString()
             }
           }
         }
@@ -70,11 +69,7 @@ class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
           }
           scoreCardEntry {
             keyEntry = "மொத்தம்"
-            valueEntry =
-              (group1Score.round1.values.map { it.score.values }
-                .flatten()
-                .map { it.toFloat() }
-                .sum() + group1Score.bonus.toFloat()).toString()
+            valueEntry = group1Score.getTotal().toString()
           }
         }
       }

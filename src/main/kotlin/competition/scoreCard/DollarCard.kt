@@ -29,6 +29,7 @@ import styled.styledDiv
 external interface DollarCardProps : RProps {
   var kuralsCount: Int
   var porulsCount: Int
+  var dollars: Float
 }
 
 class DollarCard : RComponent<DollarCardProps, RState>() {
@@ -61,7 +62,7 @@ class DollarCard : RComponent<DollarCardProps, RState>() {
           }
           scoreCardEntry {
             keyEntry = "மொத்தம்"
-            valueEntry = " $ ${((props.kuralsCount.toFloat() + props.porulsCount.toFloat()) / 2)}"
+            valueEntry = " $ ${props.dollars}"
           }
         }
       }

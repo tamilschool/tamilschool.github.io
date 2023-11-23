@@ -146,9 +146,9 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
                 onDeleteKuralClick = props.onDeleteKuralClick
                 onG1Click = { type, value ->
                   if (score.score[type] == value) {
-                    score.score[type] = 0
+                    score.score[type] = 0F
                   } else {
-                    score.score[type] = value
+                    score.score[type] = value as Float
                   }
                   props.onG1Click(score.thirukkural.kuralNo, score)
                 }

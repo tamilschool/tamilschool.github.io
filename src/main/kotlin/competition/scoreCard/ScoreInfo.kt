@@ -40,10 +40,9 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
       when (props.questionState.selectedGroup.type) {
         ScoreType.PottiSuttru -> {
           dollarCard {
-            kuralsCount =
-              props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.KURAL] == true }
-            porulsCount =
-              props.questionState.scoreState.group23Score.round1.values.count { it.score[Group23Round1Type.PORUL] == true }
+            kuralsCount = props.questionState.scoreState.group23Score.getKuralCount()
+            porulsCount = props.questionState.scoreState.group23Score.getPorulCount()
+            dollars = props.questionState.scoreState.group23Score.getDollars()
           }
           pottiSuttruScoreCard {
             questionState = props.questionState
@@ -52,12 +51,9 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
 
         ScoreType.KuralPorul -> {
           dollarCard {
-            kuralsCount =
-              props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }
-                .count { it.toFloat() > 0 }
-            porulsCount =
-              props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.PORUL] }
-                .count { it.toFloat() > 0 }
+            kuralsCount = props.questionState.scoreState.group1Score.getKuralCount()
+            porulsCount = props.questionState.scoreState.group1Score.getPorulCount()
+            dollars = props.questionState.scoreState.group1Score.getDollars(ScoreType.KuralPorul)
           }
           group1PointsCard {
             questionState = props.questionState
@@ -66,9 +62,7 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
 
         else -> {
           dollarCardMazhalai {
-            kuralsCount =
-              props.questionState.scoreState.group1Score.round1.values.mapNotNull { it.score[Group1RoundType.KURAL] }
-                .count { it.toFloat() > 0 }
+            kuralsCount = props.questionState.scoreState.group1Score.getKuralCount()
           }
           group1PointsCard {
             questionState = props.questionState

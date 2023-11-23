@@ -138,12 +138,38 @@ data class ScoreState(
 
 data class Group1Score(
   var round1: MutableMap<Int, Group1Round1Score> = mutableMapOf(),
-  var bonus: Number = 0F
-)
+  var bonus: Number = 0
+) {
+  fun getKuralCount(): Int {
+    return round1.values
+      .mapNotNull { it.score[Group1RoundType.KURAL] }
+      .count { it > 0 }
+  }
+
+  fun getPorulCount(): Int {
+    return round1.values
+      .mapNotNull { it.score[Group1RoundType.PORUL] }
+      .count { it > 0 }
+  }
+
+  fun getDollars(scoreType: ScoreType): Float {
+    return when (scoreType) {
+      ScoreType.KuralOnly -> getKuralCount().toFloat()
+      else -> (getKuralCount().toFloat() + getPorulCount().toFloat()) / 2
+    }
+  }
+
+  fun getAnsweredKuralList(): String =
+    round1.filter { it.value.score.values.sum() > 0 }.keys.joinToString(",")
+
+  fun getScore(type: Group1RoundType): Float = round1.values.mapNotNull { it.score[type] }.sum()
+  fun getTotal(): Float =
+    getScore(Group1RoundType.KURAL) + getScore(Group1RoundType.PORUL) + getScore(Group1RoundType.CLARITY) + bonus.toFloat()
+}
 
 data class Group1Round1Score(
   var thirukkural: Thirukkural,
-  var score: MutableMap<Group1RoundType, Number> = Group1RoundType.values().associateWith { 0F }
+  var score: MutableMap<Group1RoundType, Float> = Group1RoundType.values().associateWith { 0F }
     .toMutableMap()
 )
 

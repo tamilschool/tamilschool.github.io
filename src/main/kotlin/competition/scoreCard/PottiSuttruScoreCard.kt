@@ -59,7 +59,7 @@ class PottiSuttruScoreCard : RComponent<PottiSuttruScoreCardProps, RState>() {
           }
           scoreCardEntry {
             keyEntry = "மொத்தம்"
-            valueEntry = group23Score.round2.values.flatten().size.toString()
+            valueEntry = group23Score.getTotal().toString()
           }
         }
       }
