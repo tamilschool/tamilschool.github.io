@@ -35,29 +35,34 @@ class DollarCard : RComponent<DollarCardProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card text-white bg-dark m-2")
-        width = 16.rem
+        classes = mutableListOf("")
       }
       styledDiv {
         css {
-          classes = mutableListOf("card-body p-2")
+          classes = mutableListOf("card text-white bg-dark m-2")
+          width = 16.rem
         }
-        scoreCardEntry {
-          keyEntry = Topic.Kural.tamil
-          valueEntry = props.kuralsCount.toString()
+        styledDiv {
+          css {
+            classes = mutableListOf("card-body p-2")
+          }
+          scoreCardEntry {
+            keyEntry = Topic.Kural.tamil
+            valueEntry = props.kuralsCount.toString()
+          }
+          scoreCardEntry {
+            keyEntry = Topic.Porul.tamil
+            valueEntry = props.porulsCount.toString()
+          }
         }
-        scoreCardEntry {
-          keyEntry = Topic.Porul.tamil
-          valueEntry = props.porulsCount.toString()
-        }
-      }
-      styledDiv {
-        css {
-          classes = mutableListOf("card-footer p-2")
-        }
-        scoreCardEntry {
-          keyEntry = "மொத்தம்"
-          valueEntry = " $ ${((props.kuralsCount.toFloat() + props.porulsCount.toFloat()) / 2)}"
+        styledDiv {
+          css {
+            classes = mutableListOf("card-footer p-2")
+          }
+          scoreCardEntry {
+            keyEntry = "மொத்தம்"
+            valueEntry = " $ ${((props.kuralsCount.toFloat() + props.porulsCount.toFloat()) / 2)}"
+          }
         }
       }
     }

@@ -40,6 +40,11 @@ data class CQuestionState(
 
   fun isAnswered(index: Int): Boolean =
     scoreState.group23Score.round2[selectedTopic]?.contains(getIndexQuestion(index)) ?: false
+
+  fun maxQuestionsAnswered(): Boolean {
+    val currentAnsweredCount: Int = scoreState.group23Score.round2[selectedTopic]?.size ?: 0
+    return !isAnswered() && (currentAnsweredCount >= maxAnswers)
+  }
 }
 
 data class CTimerState(
@@ -49,6 +54,7 @@ data class CTimerState(
 )
 
 const val maxQuestions = 15
+const val maxAnswers = 10
 
 data class CAthikaramState(
   override var targets: List<String>,
@@ -143,7 +149,8 @@ data class Group1Round1Score(
 
 data class Group23Score(
   val round1: MutableMap<Int, Group23Round1Score> = mutableMapOf(),
-  val round2: Map<Topic, MutableSet<String>> = Topic.values().filter { it != Topic.AllKurals }
+  val round2: Map<Topic, MutableSet<String>> = Topic.values()
+    .filter { it != Topic.AllKurals }
     .associateWith { mutableSetOf() }
 ) {
   fun getKuralCount(): Int = round1.values.count { it.score[Group23Round1Type.KURAL] == true }

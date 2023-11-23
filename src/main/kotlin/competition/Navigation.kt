@@ -102,8 +102,9 @@ class Navigation : RComponent<NavigationProps, RState>() {
           width = 80.px
           +ComponentStyles.leftRounded
           attrs {
-            disabled =
-              !props.questionState.timerState.isLive || props.questionState.timerState.isPaused
+            disabled = !props.questionState.timerState.isLive
+                || props.questionState.timerState.isPaused
+                || props.questionState.maxQuestionsAnswered()
           }
         }
         attrs {
@@ -118,8 +119,9 @@ class Navigation : RComponent<NavigationProps, RState>() {
           +ComponentStyles.rightRounded
           width = 80.px
           attrs {
-            disabled =
-              !props.questionState.timerState.isLive || props.questionState.timerState.isPaused
+            disabled = !props.questionState.timerState.isLive
+                || props.questionState.timerState.isPaused
+                || props.questionState.maxQuestionsAnswered()
           }
         }
         attrs {
