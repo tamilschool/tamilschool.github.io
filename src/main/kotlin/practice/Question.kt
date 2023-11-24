@@ -2,6 +2,8 @@ package practice
 
 import kotlinx.css.LinearDimension
 import kotlinx.css.fontSize
+import kotlinx.css.pct
+import kotlinx.css.width
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -20,6 +22,7 @@ class Question : RComponent<QuestionProps, RState>() {
     styledDiv {
       css {
         classes = mutableListOf("card bg-warning m-2 text-center")
+        width = 100.pct
       }
       styledDiv {
         css {

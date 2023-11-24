@@ -53,6 +53,8 @@ class App : RComponent<RProps, AppState>() {
         styledDiv {
           css {
             classes = mutableListOf("container-lg pl-0 pr-0")
+            display = Display.flex
+            flexDirection = FlexDirection.column
             height = 100.pct
           }
           if (state.practice) {

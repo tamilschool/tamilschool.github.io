@@ -28,6 +28,7 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
     styledDiv {
       css {
         classes = mutableListOf("d-flex flex-row m-2")
+        width = 100.pct
       }
 
       styledButton {

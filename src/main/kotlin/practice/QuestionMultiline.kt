@@ -16,7 +16,9 @@ package practice/*
 
 import data.KuralOnly
 import kotlinx.css.fontSize
+import kotlinx.css.pct
 import kotlinx.css.rem
+import kotlinx.css.width
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -34,6 +36,7 @@ class QuestionMultiline : RComponent<QuestionMultilineProps, RState>() {
     styledDiv {
       css {
         classes = mutableListOf("card bg-warning m-2 text-center")
+        width = 100.pct
       }
       styledDiv {
         css {

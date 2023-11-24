@@ -4,6 +4,7 @@ import data.Group
 import data.KuralMeaning
 import data.QuestionState
 import data.Topic
+import kotlinx.css.height
 import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.css.width
@@ -81,12 +82,18 @@ class Person : RComponent<PersonProps, RState>() {
       }
     }
     if (props.questionState.timerState.isLive || props.questionState.selectedTopic == Topic.AllKurals) {
-      topicContent {
-        questionState = props.questionState
-        selectedKuralMeaning = props.selectedKuralMeaning
-        onMuVaradhaClick = props.onMuVaradhaClick
-        onSalamanPapaClick = props.onSalamanPapaClick
-        onMuKarunanidhiClick = props.onMuKarunanidhiClick
+      styledDiv {
+        css {
+          height = 100.pct
+          width = 100.pct
+        }
+        topicContent {
+          questionState = props.questionState
+          selectedKuralMeaning = props.selectedKuralMeaning
+          onMuVaradhaClick = props.onMuVaradhaClick
+          onSalamanPapaClick = props.onSalamanPapaClick
+          onMuKarunanidhiClick = props.onMuKarunanidhiClick
+        }
       }
     } else {
       styledDiv {
