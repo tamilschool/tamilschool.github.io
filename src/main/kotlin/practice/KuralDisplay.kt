@@ -23,7 +23,7 @@ class KuralDisplay : RComponent<KuralDisplayProps, RState>() {
     styledDiv {
       val targetStyle = props.style ?: "text-white bg-success"
       css {
-        classes = mutableListOf("card $targetStyle m-2")
+        classes = mutableListOf("card $targetStyle mt-2")
       }
       styledDiv {
         css {

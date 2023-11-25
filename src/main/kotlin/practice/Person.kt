@@ -98,7 +98,7 @@ class Person : RComponent<PersonProps, RState>() {
     } else {
       styledDiv {
         css {
-          classes = mutableListOf("m-2")
+          classes = mutableListOf("mt-2")
         }
         styledImg {
           attrs.src = "img/thiruvalluvar.jpg"

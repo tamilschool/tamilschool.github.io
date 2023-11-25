@@ -31,6 +31,7 @@ class MultipleKuralDisplay : RComponent<MultipleKuralDisplayProps, RState>() {
     if (props.showAnswer) {
       styledDiv {
         css {
+          classes = mutableListOf("mt-2")
           position = Position.absolute
           top = 0.px
           right = 0.px

@@ -21,7 +21,7 @@ class QuestionWithName : RComponent<QuestionWithNameProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card bg-warning m-2 text-center")
+        classes = mutableListOf("card bg-warning mt-2 text-center")
       }
       styledDiv {
         css {

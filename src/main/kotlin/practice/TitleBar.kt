@@ -41,7 +41,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("row m-2")
+        classes = mutableListOf("row m-0")
       }
       styledDiv {
         css {

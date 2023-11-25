@@ -27,7 +27,7 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("d-flex flex-row m-2")
+        classes = mutableListOf("d-flex flex-row mt-2")
         width = 100.pct
       }
 

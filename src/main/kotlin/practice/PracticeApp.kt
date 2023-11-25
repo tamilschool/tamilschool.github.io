@@ -17,7 +17,13 @@ import kotlinx.browser.window
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
+import kotlinx.css.Display
+import kotlinx.css.FlexDirection
 import kotlinx.css.Position
+import kotlinx.css.display
+import kotlinx.css.flexDirection
+import kotlinx.css.height
+import kotlinx.css.pct
 import kotlinx.css.position
 import kotlinx.css.px
 import kotlinx.css.right
@@ -31,6 +37,7 @@ import react.ReactElement
 import react.setState
 import styled.css
 import styled.styledButton
+import styled.styledDiv
 
 
 suspend fun fetchSource(): List<Thirukkural> {
@@ -103,104 +110,112 @@ class PracticeApp : RComponent<PracticeAppProps, PracticeAppState>() {
 
   override fun RBuilder.render() {
     if (state.loaded) {
-      styledButton {
+      styledDiv {
         css {
-          classes = mutableListOf("btn btn-outline-primary btn-sm d-none d-sm-block")
-          position = Position.fixed
-          top = 9.px
-          right = 9.px
+          classes = mutableListOf("container-lg pl-0 pr-0")
+          display = Display.flex
+          flexDirection = FlexDirection.column
+          height = 100.pct
         }
-        attrs {
-          onClickFunction = {
-            props.onChange()
+        styledButton {
+          css {
+            classes = mutableListOf("btn btn-outline-primary btn-sm d-none d-sm-block")
+            position = Position.fixed
+            top = 9.px
+            right = 9.px
           }
-        }
-        +"திருக்குறள் போட்டி"
-      }
-      person {
-        questionState = state.questionState
-        selectedKuralMeaning = state.selectedKuralMeaning
-        onGroupClick = { group ->
-          setState {
-            if (questionState.selectedGroup != group) {
-              questionState = createQuestionState(group, thirukkurals[group].orEmpty())
+          attrs {
+            onClickFunction = {
+              props.onChange()
             }
           }
+          +"திருக்குறள் போட்டி"
         }
-        onTopicClick = { topic ->
-          setState {
-            if (questionState.selectedTopic != topic) {
-              questionState.showAnswer = false
-              questionState.selectedTopic = topic
-              resetTimer(questionState, false)
+        person {
+          questionState = state.questionState
+          selectedKuralMeaning = state.selectedKuralMeaning
+          onGroupClick = { group ->
+            setState {
+              if (questionState.selectedGroup != group) {
+                questionState = createQuestionState(group, thirukkurals[group].orEmpty())
+              }
             }
           }
-        }
-        onShowAnswerClick = {
-          setState {
-            onShowAnswerHandler(questionState, !questionState.showAnswer)
-          }
-        }
-        onTimerClick = {
-          setState {
-            val timerState = questionState.timerState
-            when {
-              timerState.isLive && timerState.time <= 0 -> resetTimer(questionState, true)
-              timerState.isLive && timerState.isPaused -> timerState.isPaused = false
-              timerState.isLive && !timerState.isPaused -> timerState.isPaused = true
-              else -> timerState.isLive = true
+          onTopicClick = { topic ->
+            setState {
+              if (questionState.selectedTopic != topic) {
+                questionState.showAnswer = false
+                questionState.selectedTopic = topic
+                resetTimer(questionState, false)
+              }
             }
           }
-        }
-        onPreviousClick = {
-          setState {
-            onPreviousClickHandler(questionState)
-          }
-        }
-        onNextClick = {
-          setState {
-            onNextClickHandler(questionState)
-          }
-        }
-        onMuVaradhaClick = {
-          setState {
-            selectedKuralMeaning = if (selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) {
-              val tempList = selectedKuralMeaning.toMutableSet()
-              tempList.remove(KuralMeaning.MuVaradha)
-              tempList
-            } else {
-              val tempList = selectedKuralMeaning.toMutableSet()
-              tempList.add(KuralMeaning.MuVaradha)
-              tempList
+          onShowAnswerClick = {
+            setState {
+              onShowAnswerHandler(questionState, !questionState.showAnswer)
             }
           }
-        }
-        onSalamanPapaClick = {
-          setState {
-            selectedKuralMeaning =
-              if (selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) {
+          onTimerClick = {
+            setState {
+              val timerState = questionState.timerState
+              when {
+                timerState.isLive && timerState.time <= 0 -> resetTimer(questionState, true)
+                timerState.isLive && timerState.isPaused -> timerState.isPaused = false
+                timerState.isLive && !timerState.isPaused -> timerState.isPaused = true
+                else -> timerState.isLive = true
+              }
+            }
+          }
+          onPreviousClick = {
+            setState {
+              onPreviousClickHandler(questionState)
+            }
+          }
+          onNextClick = {
+            setState {
+              onNextClickHandler(questionState)
+            }
+          }
+          onMuVaradhaClick = {
+            setState {
+              selectedKuralMeaning = if (selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) {
                 val tempList = selectedKuralMeaning.toMutableSet()
-                tempList.remove(KuralMeaning.SalamanPapa)
+                tempList.remove(KuralMeaning.MuVaradha)
                 tempList
               } else {
                 val tempList = selectedKuralMeaning.toMutableSet()
-                tempList.add(KuralMeaning.SalamanPapa)
+                tempList.add(KuralMeaning.MuVaradha)
                 tempList
               }
+            }
           }
-        }
-        onMuKarunanidhiClick = {
-          setState {
-            selectedKuralMeaning =
-              if (selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) {
-                val tempList = selectedKuralMeaning.toMutableSet()
-                tempList.remove(KuralMeaning.MuKarunanidhi)
-                tempList
-              } else {
-                val tempList = selectedKuralMeaning.toMutableSet()
-                tempList.add(KuralMeaning.MuKarunanidhi)
-                tempList
-              }
+          onSalamanPapaClick = {
+            setState {
+              selectedKuralMeaning =
+                if (selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) {
+                  val tempList = selectedKuralMeaning.toMutableSet()
+                  tempList.remove(KuralMeaning.SalamanPapa)
+                  tempList
+                } else {
+                  val tempList = selectedKuralMeaning.toMutableSet()
+                  tempList.add(KuralMeaning.SalamanPapa)
+                  tempList
+                }
+            }
+          }
+          onMuKarunanidhiClick = {
+            setState {
+              selectedKuralMeaning =
+                if (selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) {
+                  val tempList = selectedKuralMeaning.toMutableSet()
+                  tempList.remove(KuralMeaning.MuKarunanidhi)
+                  tempList
+                } else {
+                  val tempList = selectedKuralMeaning.toMutableSet()
+                  tempList.add(KuralMeaning.MuKarunanidhi)
+                  tempList
+                }
+            }
           }
         }
       }

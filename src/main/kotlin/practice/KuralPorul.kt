@@ -62,6 +62,7 @@ class KuralPorul : RComponent<KuralPorulProps, RState>() {
       }
       styledDiv {
         css {
+          classes = mutableListOf("mt-2")
           height = 100.pct
           position = Position.relative
         }

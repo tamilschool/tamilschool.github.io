@@ -52,7 +52,7 @@ class App : RComponent<RProps, AppState>() {
         }
         styledDiv {
           css {
-            classes = mutableListOf("container-lg pl-0 pr-0")
+            classes = mutableListOf("container-fluid p-2")
             display = Display.flex
             flexDirection = FlexDirection.column
             height = 100.pct
