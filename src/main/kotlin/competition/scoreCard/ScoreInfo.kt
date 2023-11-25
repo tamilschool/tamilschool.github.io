@@ -19,6 +19,8 @@ import data.CQuestionState
 import data.Group1RoundType
 import data.Group23Round1Type
 import data.ScoreType
+import kotlinx.css.pct
+import kotlinx.css.width
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -35,7 +37,8 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("row")
+        classes = mutableListOf("row m-0 pt-2")
+        width = 100.pct
       }
       when (props.questionState.selectedGroup.type) {
         ScoreType.PottiSuttru -> {

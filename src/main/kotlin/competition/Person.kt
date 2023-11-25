@@ -60,39 +60,40 @@ class Person : RComponent<PersonProps, RState>() {
         flexDirection = FlexDirection.column
       }
       styledDiv {
-        // Desktop
         css {
-          classes = mutableListOf("row ml-2")
-        }
-        titleBar {
-          questionState = props.questionState
-          firstRowStyle = "col pl-0 pr-0"
-          personButtonWidth = 200.px
-          topicButtonWidth = 200.px
-          secondRowStyle = "col-md-auto pr-0"
-          smallBtnWidth = 50.px
-          mediumBtnWidth = 100.px
-          largeBtnWidth = 160.px
-          onRoundClick = props.onRoundClick
-          onTopicClick = props.onTopicClick
-          onTimerClick = props.onTimerClick
-          onPreviousClick = props.onPreviousClick
-          onWrongClick = props.onWrongClick
-          onRightClick = props.onRightClick
-          onNextClick = props.onNextClick
-          onIndexClick = props.onIndexClick
-        }
-      }
-      styledDiv {
-        css {
-          classes = mutableListOf("row")
+          classes = mutableListOf("row m-2")
           height = 100.pct
           position = Position.relative
         }
         styledDiv {
           css {
-            classes = mutableListOf("col-9")
+            classes = mutableListOf("col-10 p-0")
             height = 100.pct
+          }
+          if (props.questionState.selectedRound == Round.II) {
+            styledDiv {
+              css {
+                classes = mutableListOf("")
+              }
+              titleBar {
+                questionState = props.questionState
+                firstRowStyle = "col pl-0 pr-0"
+                personButtonWidth = 200.px
+                topicButtonWidth = 200.px
+                secondRowStyle = "col-md-auto pr-0"
+                smallBtnWidth = 50.px
+                mediumBtnWidth = 100.px
+                largeBtnWidth = 160.px
+                onRoundClick = props.onRoundClick
+                onTopicClick = props.onTopicClick
+                onTimerClick = props.onTimerClick
+                onPreviousClick = props.onPreviousClick
+                onWrongClick = props.onWrongClick
+                onRightClick = props.onRightClick
+                onNextClick = props.onNextClick
+                onIndexClick = props.onIndexClick
+              }
+            }
           }
           if (props.questionState.selectedRound == Round.I) {
             firstRoundSimple {
@@ -108,6 +109,14 @@ class Person : RComponent<PersonProps, RState>() {
               onG1Click = props.onG1Click
               onG23Click = props.onG23Click
               onG1BonusClick = props.onG1BonusClick
+              onRoundClick = props.onRoundClick
+              onTopicClick = props.onTopicClick
+              onTimerClick = props.onTimerClick
+              onPreviousClick = props.onPreviousClick
+              onWrongClick = props.onWrongClick
+              onRightClick = props.onRightClick
+              onNextClick = props.onNextClick
+              onIndexClick = props.onIndexClick
             }
           } else {
             if (props.questionState.timerState.isLive) {
@@ -131,7 +140,7 @@ class Person : RComponent<PersonProps, RState>() {
         }
         styledDiv {
           css {
-            classes = mutableListOf("col-3")
+            classes = mutableListOf("col-2 p-0")
           }
           scoreInfo {
             questionState = props.questionState

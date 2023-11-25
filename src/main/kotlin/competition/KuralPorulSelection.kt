@@ -29,15 +29,16 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
       css {
         classes = mutableListOf("d-flex flex-row m-2")
       }
+      val btnSize = if (props.buttonSize == 100.pct) "" else "btn-sm"
 
       styledButton {
         css {
           val btnStyle =
             if (props.selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) "btn-success"
             else "btn btn-outline-success"
-          classes = mutableListOf("btn $btnStyle mr-2")
+          classes = mutableListOf("btn $btnStyle $btnSize mr-2")
           width = props.buttonSize
-          height = 100.pct
+          height = LinearDimension.inherit
         }
         +KuralMeaning.MuVaradha.tamil
         attrs {
@@ -51,9 +52,9 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
           val btnStyle =
             if (props.selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) "btn-success"
             else "btn btn-outline-success"
-          classes = mutableListOf("btn $btnStyle mr-2")
+          classes = mutableListOf("btn $btnStyle $btnSize mr-2")
           width = props.buttonSize
-          height = 100.pct
+          height = LinearDimension.inherit
         }
         +KuralMeaning.SalamanPapa.tamil
         attrs {
@@ -67,9 +68,9 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
           val btnStyle =
             if (props.selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) "btn-success"
             else "btn btn-outline-success"
-          classes = mutableListOf("btn $btnStyle")
+          classes = mutableListOf("btn $btnSize $btnStyle")
           width = props.buttonSize
-          height = 100.pct
+          height = LinearDimension.inherit
         }
         +KuralMeaning.MuKarunanidhi.tamil
         attrs {

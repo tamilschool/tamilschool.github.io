@@ -16,6 +16,7 @@
 package competition.scoreCard
 
 import data.CQuestionState
+import kotlinx.css.pct
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.RBuilder
@@ -35,12 +36,12 @@ class PottiSuttruScoreCard : RComponent<PottiSuttruScoreCardProps, RState>() {
     styledDiv {
       css {
         classes = mutableListOf("")
+        width = 100.pct
       }
       val group23Score = props.questionState.scoreState.group23Score
       styledDiv {
         css {
-          classes = mutableListOf("card text-white bg-dark m-2")
-          width = 16.rem
+          classes = mutableListOf("card text-white bg-dark")
         }
         styledDiv {
           css {

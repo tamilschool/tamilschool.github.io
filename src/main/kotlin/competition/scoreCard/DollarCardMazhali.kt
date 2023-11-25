@@ -16,6 +16,7 @@
 package competition.scoreCard
 
 import data.Topic
+import kotlinx.css.pct
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.RBuilder
@@ -34,8 +35,8 @@ class DollarCardMazhalai : RComponent<DollarCardMazhalaiProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card text-white bg-dark m-2")
-        width = 16.rem
+        classes = mutableListOf("card text-white bg-dark pb-2")
+        width = 100.pct
       }
       styledDiv {
         css {

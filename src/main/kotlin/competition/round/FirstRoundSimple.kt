@@ -2,12 +2,15 @@ package competition.round
 
 import competition.kuralDisplay
 import competition.kuralPorulSelection
+import competition.titleBar
 import data.CQuestionState
 import data.Group1Round1Score
 import data.Group23Round1Score
 import data.KuralMeaning
+import data.Round
 import data.ScoreType
 import data.Thirukkural
+import data.Topic
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.Overflow
@@ -44,69 +47,106 @@ external interface FirstRoundSimpleProps : RProps {
   var onG1Click: (Int, Group1Round1Score) -> Unit
   var onG23Click: (Int, Group23Round1Score) -> Unit
   var onG1BonusClick: (Number) -> Unit
+  var onRoundClick: (Round) -> Unit
+  var onTopicClick: (Topic) -> Unit
+  var onTimerClick: () -> Unit
+  var onPreviousClick: () -> Unit
+  var onWrongClick: () -> Unit
+  var onRightClick: () -> Unit
+  var onNextClick: () -> Unit
+  var onIndexClick: (Int) -> Unit
 }
 
 class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
+        classes = mutableListOf("row m-0")
         height = 100.pct
-        display = Display.flex
-        flexDirection = FlexDirection.column
       }
-      kuralPorulSelection {
-        buttonSize = 33.pct
-        selectedKuralMeaning = props.selectedKuralMeaning
-        onMuVaradhaClick = props.onMuVaradhaClick
-        onSalamanPapaClick = props.onSalamanPapaClick
-        onMuKarunanidhiClick = props.onMuKarunanidhiClick
-      }
-      searchBasedOnNumber {
-        questionState = props.questionState
-        searchResultKural = props.searchResultKural
-        onSearchByKuralNoClick = props.onSearchByKuralNoClick
-        onAddKuralClick = props.onAddKuralClick
-      }
-      props.searchResultKural?.let { validKural ->
-        kuralDisplay {
-          selectedThirukkural = validKural
-          style = "text-dark bg-warning"
+      styledDiv {
+        css {
+          classes = mutableListOf("col-5 p-0")
+        }
+        styledDiv {
+          // Desktop
+          css {
+            classes = mutableListOf("")
+          }
+          titleBar {
+            questionState = props.questionState
+            firstRowStyle = "col pl-0 pr-0"
+            personButtonWidth = 200.px
+            topicButtonWidth = 200.px
+            secondRowStyle = "col-md-auto pr-0"
+            smallBtnWidth = 50.px
+            mediumBtnWidth = 100.px
+            largeBtnWidth = 160.px
+            onRoundClick = props.onRoundClick
+            onTopicClick = props.onTopicClick
+            onTimerClick = props.onTimerClick
+            onPreviousClick = props.onPreviousClick
+            onWrongClick = props.onWrongClick
+            onRightClick = props.onRightClick
+            onNextClick = props.onNextClick
+            onIndexClick = props.onIndexClick
+          }
+        }
+        kuralPorulSelection {
+          buttonSize = 33.pct
+          selectedKuralMeaning = props.selectedKuralMeaning
+          onMuVaradhaClick = props.onMuVaradhaClick
+          onSalamanPapaClick = props.onSalamanPapaClick
+          onMuKarunanidhiClick = props.onMuKarunanidhiClick
+        }
+        searchBasedOnNumber {
+          questionState = props.questionState
+          searchResultKural = props.searchResultKural
+          onSearchByKuralNoClick = props.onSearchByKuralNoClick
+          onAddKuralClick = props.onAddKuralClick
+        }
+        props.searchResultKural?.let { validKural ->
+          kuralDisplay {
+            selectedThirukkural = validKural
+            style = "text-dark bg-warning"
+          }
+        }
+        styledDiv {
+          css {
+            classes = mutableListOf("d-flex flex-wrap")
+          }
+          for (kural in props.questionState.scoreState.group1Score.round1) {
+            styledButton {
+              css {
+                val style =
+                  if (kural.value.score.values.map { it.toFloat() }.sum() > 0) "btn-success"
+                  else "btn-outline-success"
+                classes = mutableListOf("btn $style m-2")
+              }
+              attrs {
+                disabled = true
+              }
+              +"${kural.key}"
+            }
+          }
+          for (kural in props.questionState.scoreState.group23Score.round1) {
+            styledButton {
+              css {
+                val style =
+                  if (kural.value.score.values.count { it } > 0) "btn-success" else "btn-outline-success"
+                classes = mutableListOf("btn $style m-2")
+              }
+              attrs {
+                disabled = true
+              }
+              +"${kural.key}"
+            }
+          }
         }
       }
       styledDiv {
         css {
-          classes = mutableListOf("d-flex flex-wrap")
-        }
-        for (kural in props.questionState.scoreState.group1Score.round1) {
-          styledButton {
-            css {
-              val style =
-                if (kural.value.score.values.map { it.toFloat() }.sum() > 0) "btn-success"
-                else "btn-outline-success"
-              classes = mutableListOf("btn $style m-2")
-            }
-            attrs {
-              disabled = true
-            }
-            +"${kural.key}"
-          }
-        }
-        for (kural in props.questionState.scoreState.group23Score.round1) {
-          styledButton {
-            css {
-              val style =
-                if (kural.value.score.values.count { it } > 0) "btn-success" else "btn-outline-success"
-              classes = mutableListOf("btn $style m-2")
-            }
-            attrs {
-              disabled = true
-            }
-            +"${kural.key}"
-          }
-        }
-      }
-      styledDiv {
-        css {
+          classes = mutableListOf("col-7 p-0")
           height = 100.pct
           position = Position.relative
         }

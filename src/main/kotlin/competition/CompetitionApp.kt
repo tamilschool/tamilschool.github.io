@@ -26,20 +26,13 @@ import kotlinx.browser.window
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
-import kotlinx.css.BoxSizing
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
 import kotlinx.css.Position
-import kotlinx.css.boxSizing
-import kotlinx.css.display
-import kotlinx.css.flexDirection
 import kotlinx.css.height
 import kotlinx.css.pct
 import kotlinx.css.position
 import kotlinx.css.px
 import kotlinx.css.right
 import kotlinx.css.top
-import kotlinx.css.vh
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
@@ -262,241 +255,234 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        height = 100.vh
-        display = Display.flex
-        flexDirection = FlexDirection.column
-        boxSizing = BoxSizing.borderBox
-      }
-      styledDiv {
         css {
           height = 100.pct
           position = Position.relative
         }
-        styledDiv {
-          css {
-            classes = mutableListOf("container-lg pl-0 pr-0")
-            css {
-              height = 100.pct
-              position = Position.relative
+      }
+      if (state.loaded) {
+        if (state.showSignOutConfirm) {
+          signOutConfirm {
+            onNoClickHandler = {
+              setState {
+                showSignOutConfirm = false
+              }
+            }
+            onYesClickHandler = {
+              setState {
+                showSignOutConfirm = false
+                activeGroup = null
+              }
             }
           }
-          if (state.loaded) {
-            if (state.showSignOutConfirm) {
-              signOutConfirm {
-                onNoClickHandler = {
-                  setState {
-                    showSignOutConfirm = false
-                  }
+        }
+        if (state.activeGroup == null) {
+          styledButton {
+            css {
+              classes = mutableListOf("btn btn-outline-primary btn-sm d-none d-sm-block")
+              position = Position.fixed
+              top = 9.px
+              right = 9.px
+            }
+            attrs {
+              onClickFunction = {
+                props.onChange()
+              }
+            }
+            +"திருக்குறள் பயிற்சி"
+          }
+          styledDiv {
+            css {
+              classes = mutableListOf("container-lg pl-0 pr-0")
+              css {
+                height = 100.pct
+                position = Position.relative
+              }
+            }
+            groupSelection {
+              onGroupClick = { group ->
+                setState {
+                  questionState = createQuestionState(group, allKurals)
+                  activeGroup = group
                 }
-                onYesClickHandler = {
-                  setState {
-                    showSignOutConfirm = false
-                    activeGroup = null
+              }
+            }
+          }
+        } else if (!state.showSignOutConfirm) {
+          signOut {
+            onSignOutHandler = {
+              setState {
+                showSignOutConfirm = true
+              }
+            }
+          }
+          person {
+            questionState = state.questionState
+            searchResultKural = state.searchResultKural
+            selectedKuralMeaning = state.selectedKuralMeaning
+            onRoundClick = { round ->
+              setState {
+                if (questionState.selectedRound != round) {
+                  questionState.selectedRound = round
+                  if (round == Round.I) {
+                    questionState.timerState.isLive = false
                   }
                 }
               }
             }
-            if (state.activeGroup == null) {
-              styledButton {
-                css {
-                  classes = mutableListOf("btn btn-outline-primary btn-sm d-none d-sm-block")
-                  position = Position.fixed
-                  top = 9.px
-                  right = 9.px
-                }
-                attrs {
-                  onClickFunction = {
-                    props.onChange()
-                  }
-                }
-                +"திருக்குறள் பயிற்சி"
-              }
-              groupSelection {
-                onGroupClick = { group ->
-                  setState {
-                    questionState = createQuestionState(group, allKurals)
-                    activeGroup = group
-                  }
+            onTopicClick = { topic ->
+              setState {
+                if (questionState.selectedTopic != topic) {
+                  questionState.selectedTopic = topic
+                  questionState.timerState.isLive = false
                 }
               }
-            } else if (!state.showSignOutConfirm) {
-              signOut {
-                onSignOutHandler = {
-                  setState {
-                    showSignOutConfirm = true
+            }
+            onTimerClick = {
+              setState {
+                val timerState = questionState.timerState
+                when {
+                  timerState.isLive && timerState.isPaused -> timerState.isPaused = false
+                  timerState.isLive && !timerState.isPaused -> timerState.isPaused = true
+                  else -> timerState.isLive = true
+                }
+              }
+            }
+            onPreviousClick = {
+              setState {
+                onPreviousClickHandler(questionState)
+              }
+            }
+            onWrongClick = {
+              setState {
+                questionState.scoreState.group23Score.round2[questionState.selectedTopic]?.remove(
+                  questionState.getCurrentQuestion()
+                )
+              }
+            }
+            onRightClick = {
+              setState {
+                questionState.scoreState.group23Score.round2[questionState.selectedTopic]?.add(
+                  questionState.getCurrentQuestion()
+                )
+              }
+            }
+            onNextClick = {
+              setState {
+                onNextClickHandler(questionState)
+              }
+            }
+            onIndexClick = { index ->
+              setState {
+                onIndexClickHandler(questionState, index)
+              }
+            }
+            onSearchByKuralNoClick = { kuralNo ->
+              setState {
+                searchResultKural =
+                  allKurals.firstOrNull { it.kuralNo == kuralNo }
+              }
+            }
+            onAddKuralClick = {
+              setState {
+                searchResultKural?.let {
+                  if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
+                    if (!questionState.scoreState.group23Score.round1.containsKey(it.kuralNo)) {
+                      questionState.scoreState.group23Score.round1[it.kuralNo] =
+                        Group23Round1Score(it)
+                    }
+                  } else {
+                    if (!questionState.scoreState.group1Score.round1.containsKey(it.kuralNo)) {
+                      questionState.scoreState.group1Score.round1[it.kuralNo] =
+                        Group1Round1Score(it)
+                    }
                   }
                 }
               }
-              person {
-                questionState = state.questionState
-                searchResultKural = state.searchResultKural
-                selectedKuralMeaning = state.selectedKuralMeaning
-                onRoundClick = { round ->
-                  setState {
-                    if (questionState.selectedRound != round) {
-                      questionState.selectedRound = round
-                      if (round == Round.I) {
-                        questionState.timerState.isLive = false
-                      }
-                    }
+            }
+            onDeleteKuralClick = { kuralNo ->
+              setState {
+                if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
+                  questionState.scoreState.group23Score.round1.remove(kuralNo)
+                } else {
+                  questionState.scoreState.group1Score.round1.remove(kuralNo)
+                }
+              }
+              setState {
+                if (questionState.selectedGroup.type != ScoreType.PottiSuttru) {
+                  if (questionState.scoreState.group1Score.round1.isEmpty()) {
+                    questionState.scoreState.group1Score.bonus = 0
                   }
                 }
-                onTopicClick = { topic ->
-                  setState {
-                    if (questionState.selectedTopic != topic) {
-                      questionState.selectedTopic = topic
-                      questionState.timerState.isLive = false
-                    }
-                  }
+              }
+            }
+            onG1Click = { kuralNo, kuralScore ->
+              setState {
+                questionState.scoreState.group1Score.round1[kuralNo] =
+                  kuralScore
+              }
+            }
+            onG23Click = { kuralNo, kuralScore ->
+              setState {
+                questionState.scoreState.group23Score.round1[kuralNo] =
+                  kuralScore
+              }
+            }
+            onG1BonusClick = { value ->
+              setState {
+                if (questionState.scoreState.group1Score.bonus == value) {
+                  questionState.scoreState.group1Score.bonus = 0
+                } else {
+                  questionState.scoreState.group1Score.bonus = value
                 }
-                onTimerClick = {
-                  setState {
-                    val timerState = questionState.timerState
-                    when {
-                      timerState.isLive && timerState.isPaused -> timerState.isPaused = false
-                      timerState.isLive && !timerState.isPaused -> timerState.isPaused = true
-                      else -> timerState.isLive = true
-                    }
+              }
+            }
+            onMuVaradhaClick = {
+              setState {
+                selectedKuralMeaning =
+                  if (selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) {
+                    val tempList =
+                      selectedKuralMeaning.toMutableSet()
+                    tempList.remove(KuralMeaning.MuVaradha)
+                    tempList
+                  } else {
+                    val tempList =
+                      selectedKuralMeaning.toMutableSet()
+                    tempList.add(KuralMeaning.MuVaradha)
+                    tempList
                   }
-                }
-                onPreviousClick = {
-                  setState {
-                    onPreviousClickHandler(questionState)
+              }
+            }
+            onSalamanPapaClick = {
+              setState {
+                selectedKuralMeaning =
+                  if (selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) {
+                    val tempList =
+                      selectedKuralMeaning.toMutableSet()
+                    tempList.remove(KuralMeaning.SalamanPapa)
+                    tempList
+                  } else {
+                    val tempList =
+                      selectedKuralMeaning.toMutableSet()
+                    tempList.add(KuralMeaning.SalamanPapa)
+                    tempList
                   }
-                }
-                onWrongClick = {
-                  setState {
-                    questionState.scoreState.group23Score.round2[questionState.selectedTopic]?.remove(
-                      questionState.getCurrentQuestion()
-                    )
+              }
+            }
+            onMuKarunanidhiClick = {
+              setState {
+                selectedKuralMeaning =
+                  if (selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) {
+                    val tempList =
+                      selectedKuralMeaning.toMutableSet()
+                    tempList.remove(KuralMeaning.MuKarunanidhi)
+                    tempList
+                  } else {
+                    val tempList =
+                      selectedKuralMeaning.toMutableSet()
+                    tempList.add(KuralMeaning.MuKarunanidhi)
+                    tempList
                   }
-                }
-                onRightClick = {
-                  setState {
-                    questionState.scoreState.group23Score.round2[questionState.selectedTopic]?.add(
-                      questionState.getCurrentQuestion()
-                    )
-                  }
-                }
-                onNextClick = {
-                  setState {
-                    onNextClickHandler(questionState)
-                  }
-                }
-                onIndexClick = { index ->
-                  setState {
-                    onIndexClickHandler(questionState, index)
-                  }
-                }
-                onSearchByKuralNoClick = { kuralNo ->
-                  setState {
-                    searchResultKural =
-                      allKurals.firstOrNull { it.kuralNo == kuralNo }
-                  }
-                }
-                onAddKuralClick = {
-                  setState {
-                    searchResultKural?.let {
-                      if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
-                        if (!questionState.scoreState.group23Score.round1.containsKey(it.kuralNo)) {
-                          questionState.scoreState.group23Score.round1[it.kuralNo] =
-                            Group23Round1Score(it)
-                        }
-                      } else {
-                        if (!questionState.scoreState.group1Score.round1.containsKey(it.kuralNo)) {
-                          questionState.scoreState.group1Score.round1[it.kuralNo] =
-                            Group1Round1Score(it)
-                        }
-                      }
-                    }
-                    searchResultKural = null
-                  }
-                }
-                onDeleteKuralClick = { kuralNo ->
-                  setState {
-                    if (questionState.selectedGroup.type == ScoreType.PottiSuttru) {
-                      questionState.scoreState.group23Score.round1.remove(kuralNo)
-                    } else {
-                      questionState.scoreState.group1Score.round1.remove(kuralNo)
-                    }
-                  }
-                  setState {
-                    if (questionState.selectedGroup.type != ScoreType.PottiSuttru) {
-                      if (questionState.scoreState.group1Score.round1.isEmpty()) {
-                        questionState.scoreState.group1Score.bonus = 0
-                      }
-                    }
-                  }
-                }
-                onG1Click = { kuralNo, kuralScore ->
-                  setState {
-                    questionState.scoreState.group1Score.round1[kuralNo] =
-                      kuralScore
-                  }
-                }
-                onG23Click = { kuralNo, kuralScore ->
-                  setState {
-                    questionState.scoreState.group23Score.round1[kuralNo] =
-                      kuralScore
-                  }
-                }
-                onG1BonusClick = { value ->
-                  setState {
-                    if (questionState.scoreState.group1Score.bonus == value) {
-                      questionState.scoreState.group1Score.bonus = 0
-                    } else {
-                      questionState.scoreState.group1Score.bonus = value
-                    }
-                  }
-                }
-                onMuVaradhaClick = {
-                  setState {
-                    selectedKuralMeaning =
-                      if (selectedKuralMeaning.contains(KuralMeaning.MuVaradha)) {
-                        val tempList =
-                          selectedKuralMeaning.toMutableSet()
-                        tempList.remove(KuralMeaning.MuVaradha)
-                        tempList
-                      } else {
-                        val tempList =
-                          selectedKuralMeaning.toMutableSet()
-                        tempList.add(KuralMeaning.MuVaradha)
-                        tempList
-                      }
-                  }
-                }
-                onSalamanPapaClick = {
-                  setState {
-                    selectedKuralMeaning =
-                      if (selectedKuralMeaning.contains(KuralMeaning.SalamanPapa)) {
-                        val tempList =
-                          selectedKuralMeaning.toMutableSet()
-                        tempList.remove(KuralMeaning.SalamanPapa)
-                        tempList
-                      } else {
-                        val tempList =
-                          selectedKuralMeaning.toMutableSet()
-                        tempList.add(KuralMeaning.SalamanPapa)
-                        tempList
-                      }
-                  }
-                }
-                onMuKarunanidhiClick = {
-                  setState {
-                    selectedKuralMeaning =
-                      if (selectedKuralMeaning.contains(KuralMeaning.MuKarunanidhi)) {
-                        val tempList =
-                          selectedKuralMeaning.toMutableSet()
-                        tempList.remove(KuralMeaning.MuKarunanidhi)
-                        tempList
-                      } else {
-                        val tempList =
-                          selectedKuralMeaning.toMutableSet()
-                        tempList.add(KuralMeaning.MuKarunanidhi)
-                        tempList
-                      }
-                  }
-                }
               }
             }
           }

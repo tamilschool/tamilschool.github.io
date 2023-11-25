@@ -17,6 +17,7 @@ package competition.scoreCard
 
 import data.CQuestionState
 import data.Group1RoundType
+import kotlinx.css.pct
 import kotlinx.css.rem
 import kotlinx.css.width
 import react.RBuilder
@@ -36,12 +37,12 @@ class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
     styledDiv {
       css {
         classes = mutableListOf("")
+        width = 100.pct
       }
       val group1Score = props.questionState.scoreState.group1Score
       styledDiv {
         css {
-          classes = mutableListOf("card text-white bg-dark m-2")
-          width = 16.rem
+          classes = mutableListOf("card text-white bg-dark")
         }
         styledDiv {
           css {
