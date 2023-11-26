@@ -63,7 +63,6 @@ class Person : RComponent<PersonProps, RState>() {
         css {
           classes = mutableListOf("row m-0")
           height = 100.pct
-          position = Position.relative
         }
         styledDiv {
           css {

@@ -28,7 +28,6 @@ external interface TitleBarProps : RProps {
   var secondOptionalRowStyle: String?
   var secondRowStyle: String
   var secondRowWidth: LinearDimension?
-  var allKuralsWidth: LinearDimension?
   var smallBtnWidth: LinearDimension
   var mediumBtnWidth: LinearDimension
   var largeBtnWidth: LinearDimension
@@ -57,7 +56,8 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
             }
             styledDiv {
               css {
-                classes = mutableListOf("btn-group mr-2")
+                val bottomMargin = if (props.questionState.selectedRound == Round.I) "mb-2" else ""
+                classes = mutableListOf("btn-group mr-2 $bottomMargin")
                 props.personButtonWidth?.let { width = it }
               }
               styledUl {
