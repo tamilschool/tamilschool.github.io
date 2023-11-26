@@ -257,7 +257,6 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       css {
         css {
           height = 100.pct
-          position = Position.relative
         }
       }
       if (state.loaded) {

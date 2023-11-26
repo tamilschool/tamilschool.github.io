@@ -73,7 +73,7 @@ class Person : RComponent<PersonProps, RState>() {
           if (props.questionState.selectedRound == Round.II) {
             styledDiv {
               css {
-                classes = mutableListOf("")
+                classes = mutableListOf("row m-0")
               }
               titleBar {
                 questionState = props.questionState
@@ -126,7 +126,7 @@ class Person : RComponent<PersonProps, RState>() {
             } else {
               styledDiv {
                 css {
-                  classes = mutableListOf("m-2")
+                  classes = mutableListOf("mt-2")
                 }
                 styledImg {
                   attrs.src = "img/thiruvalluvar.jpg"

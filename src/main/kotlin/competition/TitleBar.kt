@@ -48,7 +48,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
       if (props.questionState.selectedGroup.type == ScoreType.PottiSuttru) {
         styledDiv {
           css {
-            classes = mutableListOf("row m-2")
+            classes = mutableListOf("row m-0")
           }
           styledDiv {
             css {
@@ -132,7 +132,7 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
           if (props.questionState.timerState.isLive) {
             styledDiv {
               css {
-                classes = mutableListOf("row m-2")
+                classes = mutableListOf("row m-0 mt-2")
               }
               styledDiv {
                 css {

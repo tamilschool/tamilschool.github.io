@@ -1,5 +1,6 @@
 package competition
 
+import components.wordQuestion
 import data.CQuestionState
 import data.Topic
 import kotlinx.css.pct
@@ -24,6 +25,8 @@ class TopicContent : RComponent<TopicPros, RState>() {
           isAnswered = props.questionState.isAnswered()
           selectedThirukkurals =
             props.questionState.round2Kurals.filter { it.athikaram == question }
+          selectedKuralMeaning = emptySet()
+          showAnswer = true
         }
       }
 
@@ -48,6 +51,8 @@ class TopicContent : RComponent<TopicPros, RState>() {
           isAnswered = props.questionState.isAnswered()
           selectedThirukkurals =
             props.questionState.round2Kurals.filter { it.words.first() == question }
+          selectedKuralMeaning = emptySet()
+          showAnswer = true
         }
       }
 
@@ -57,6 +62,8 @@ class TopicContent : RComponent<TopicPros, RState>() {
           isAnswered = props.questionState.isAnswered()
           selectedThirukkurals =
             props.questionState.round2Kurals.filter { it.words.last() == question }
+          selectedKuralMeaning = emptySet()
+          showAnswer = true
         }
       }
 

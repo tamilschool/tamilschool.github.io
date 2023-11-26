@@ -1,8 +1,8 @@
 package competition.round
 
-import competition.kuralDisplay
 import competition.kuralPorulSelection
 import competition.titleBar
+import components.kuralDisplay
 import data.CQuestionState
 import data.Group1Round1Score
 import data.Group23Round1Score
@@ -107,6 +107,7 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
         props.searchResultKural?.let { validKural ->
           kuralDisplay {
             selectedThirukkural = validKural
+            selectedKuralMeaning = emptySet()
             style = "text-dark bg-warning"
           }
         }

@@ -1,5 +1,7 @@
 package competition
 
+import components.kuralDisplay
+import components.questionWithName
 import data.KuralMeaning
 import data.Thirukkural
 import kotlinx.css.LinearDimension
@@ -28,7 +30,7 @@ class KuralPorul : RComponent<KuralPorulProps, RState>() {
     }
     kuralDisplay {
       selectedThirukkural = props.selectedThirukkural
-      showMeaning = false
+      selectedKuralMeaning = emptySet()
     }
   }
 }

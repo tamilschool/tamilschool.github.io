@@ -1,5 +1,8 @@
 package competition
 
+import components.kuralDisplay
+import components.questionMultiline
+import data.KuralMeaning
 import data.Thirukkural
 import react.RBuilder
 import react.RComponent
@@ -20,7 +23,7 @@ class Kural : RComponent<KuralProps, RState>() {
     }
     kuralDisplay {
       selectedThirukkural = props.selectedThirukkural
-      showMeaning = true
+      selectedKuralMeaning = KuralMeaning.values().toSet()
     }
   }
 }
