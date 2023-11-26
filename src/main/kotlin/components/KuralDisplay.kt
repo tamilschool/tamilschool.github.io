@@ -1,4 +1,4 @@
-package practice
+package components
 
 import data.KuralMeaning
 import data.Thirukkural
@@ -61,22 +61,24 @@ class KuralDisplay : RComponent<KuralDisplayProps, RState>() {
           +props.selectedThirukkural.kural.secondLine
         }
       }
-      styledDiv {
-        css {
-          classes = mutableListOf("card-footer")
-        }
-        props.selectedKuralMeaning.forEach {
-          styledP {
-            css {
-              classes = mutableListOf("card-text")
-            }
-            +it.getMeaning(props.selectedThirukkural)
-            styledDiv {
+      if (props.selectedKuralMeaning.isNotEmpty()) {
+        styledDiv {
+          css {
+            classes = mutableListOf("card-footer")
+          }
+          props.selectedKuralMeaning.forEach {
+            styledP {
               css {
-                classes = mutableListOf("font-italic d-flex flex-column text-right")
+                classes = mutableListOf("card-text")
               }
-              styledSmall {
-                +"உரை : ${it.tamil}"
+              +it.getMeaning(props.selectedThirukkural)
+              styledDiv {
+                css {
+                  classes = mutableListOf("font-italic d-flex flex-column text-right")
+                }
+                styledSmall {
+                  +"உரை : ${it.tamil}"
+                }
               }
             }
           }

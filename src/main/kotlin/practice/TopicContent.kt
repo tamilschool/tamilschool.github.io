@@ -1,5 +1,6 @@
 package practice
 
+import components.wordQuestion
 import data.KuralMeaning
 import data.QuestionState
 import data.Topic

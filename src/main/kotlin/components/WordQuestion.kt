@@ -1,4 +1,4 @@
-package practice
+package components
 
 import data.KuralMeaning
 import data.Thirukkural
@@ -44,6 +44,7 @@ class WordQuestion : RComponent<WordQuestionProps, RState>() {
         question {
           question = props.question
           fontSize = 1.1.rem
+          isAnswered = false
         }
       }
       styledDiv {

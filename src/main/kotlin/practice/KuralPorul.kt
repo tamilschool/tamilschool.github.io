@@ -1,5 +1,6 @@
 package practice
 
+import components.kuralDisplay
 import data.KuralMeaning
 import data.Thirukkural
 import kotlinx.css.Display

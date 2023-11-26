@@ -1,7 +1,5 @@
-package practice
+package components
 
-import data.KuralMeaning
-import data.Thirukkural
 import kotlinx.css.Overflow
 import kotlinx.css.Position
 import kotlinx.css.bottom
@@ -11,6 +9,8 @@ import kotlinx.css.position
 import kotlinx.css.px
 import kotlinx.css.right
 import kotlinx.css.top
+import data.KuralMeaning
+import data.Thirukkural
 import react.RBuilder
 import react.RComponent
 import react.RProps
