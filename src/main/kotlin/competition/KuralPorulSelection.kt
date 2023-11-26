@@ -27,7 +27,7 @@ class KuralPorulSelection : RComponent<KuralPorulSelectionProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("d-flex flex-row m-2")
+        classes = mutableListOf("d-flex flex-row m-0")
       }
       val btnSize = if (props.buttonSize == 100.pct) "" else "btn-sm"
 

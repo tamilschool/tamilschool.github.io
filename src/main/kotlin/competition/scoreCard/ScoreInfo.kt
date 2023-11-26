@@ -37,7 +37,7 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("row m-0 pt-2")
+        classes = mutableListOf("row m-0")
         width = 100.pct
       }
       when (props.questionState.selectedGroup.type) {

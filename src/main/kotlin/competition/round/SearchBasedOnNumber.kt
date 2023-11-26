@@ -32,7 +32,7 @@ class SearchBasedOnNumber : RComponent<SearchBasedOnNumberProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("m-2")
+        classes = mutableListOf("mt-2")
       }
       styledDiv {
         css {

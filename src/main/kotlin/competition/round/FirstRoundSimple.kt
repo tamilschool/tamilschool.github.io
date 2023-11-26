@@ -11,19 +11,18 @@ import data.Round
 import data.ScoreType
 import data.Thirukkural
 import data.Topic
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
 import kotlinx.css.Overflow
 import kotlinx.css.Position
 import kotlinx.css.bottom
-import kotlinx.css.display
-import kotlinx.css.flexDirection
 import kotlinx.css.height
+import kotlinx.css.left
 import kotlinx.css.overflowY
 import kotlinx.css.pct
 import kotlinx.css.position
 import kotlinx.css.px
+import kotlinx.css.right
 import kotlinx.css.top
+import kotlinx.css.width
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -113,15 +112,15 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
         }
         styledDiv {
           css {
-            classes = mutableListOf("d-flex flex-wrap")
+            classes = mutableListOf("d-flex flex-wrap ")
           }
           for (kural in props.questionState.scoreState.group1Score.round1) {
             styledButton {
               css {
                 val style =
-                  if (kural.value.score.values.map { it.toFloat() }.sum() > 0) "btn-success"
+                  if (kural.value.score.values.map { it }.sum() > 0) "btn-success"
                   else "btn-outline-success"
-                classes = mutableListOf("btn $style m-2")
+                classes = mutableListOf("btn $style m-1")
               }
               attrs {
                 disabled = true
@@ -134,7 +133,7 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
               css {
                 val style =
                   if (kural.value.score.values.count { it } > 0) "btn-success" else "btn-outline-success"
-                classes = mutableListOf("btn $style m-2")
+                classes = mutableListOf("btn $style m-1")
               }
               attrs {
                 disabled = true
@@ -148,56 +147,66 @@ class FirstRoundSimple : RComponent<FirstRoundSimpleProps, RState>() {
         css {
           classes = mutableListOf("col-7 p-0")
           height = 100.pct
-          position = Position.relative
+          width = 100.pct
         }
         styledDiv {
           css {
-            position = Position.absolute
-            top = 0.px
-            bottom = 0.px
-            overflowY = Overflow.auto
+            classes = mutableListOf("ml-1 mr-1")
+            height = 100.pct
+            width = 100.pct
+            position = Position.relative
           }
-          if (props.questionState.selectedGroup.type == ScoreType.PottiSuttru) {
-            props.questionState.scoreState.group23Score.round1.values.forEach { score ->
-              firstRoundKuralDisplay {
-                key = score.thirukkural.kuralNo.toString()
-                thirukkural = score.thirukkural
-                group23Round1Score = score
-                scoreType = props.questionState.selectedGroup.type
-                selectedKuralMeaning = props.selectedKuralMeaning
-                onDeleteKuralClick = props.onDeleteKuralClick
-                onG23Click = { type, value ->
-                  score.score[type] = value
-                  props.onG23Click(
-                    score.thirukkural.kuralNo,
-                    score
-                  )
-                }
-              }
+          styledDiv {
+            css {
+              position = Position.absolute
+              top = 0.px
+              bottom = 0.px
+              left = 0.px
+              right = 0.px
+              overflowY = Overflow.auto
             }
-          } else {
-            props.questionState.scoreState.group1Score.round1.values.forEach { score ->
-              firstRoundKuralDisplay {
-                key = score.thirukkural.kuralNo.toString()
-                thirukkural = score.thirukkural
-                group1Round1Score = score
-                scoreType = props.questionState.selectedGroup.type
-                selectedKuralMeaning = props.selectedKuralMeaning
-                onDeleteKuralClick = props.onDeleteKuralClick
-                onG1Click = { type, value ->
-                  if (score.score[type] == value) {
-                    score.score[type] = 0F
-                  } else {
-                    score.score[type] = value as Float
+            if (props.questionState.selectedGroup.type == ScoreType.PottiSuttru) {
+              props.questionState.scoreState.group23Score.round1.values.forEach { score ->
+                firstRoundKuralDisplay {
+                  key = score.thirukkural.kuralNo.toString()
+                  thirukkural = score.thirukkural
+                  group23Round1Score = score
+                  scoreType = props.questionState.selectedGroup.type
+                  selectedKuralMeaning = props.selectedKuralMeaning
+                  onDeleteKuralClick = props.onDeleteKuralClick
+                  onG23Click = { type, value ->
+                    score.score[type] = value
+                    props.onG23Click(
+                      score.thirukkural.kuralNo,
+                      score
+                    )
                   }
-                  props.onG1Click(score.thirukkural.kuralNo, score)
                 }
               }
-            }
-            if (props.questionState.scoreState.group1Score.round1.values.isNotEmpty()) {
-              firstRoundRealWorldExample {
-                bonus = props.questionState.scoreState.group1Score.bonus
-                onG1BonusClick = props.onG1BonusClick
+            } else {
+              props.questionState.scoreState.group1Score.round1.values.forEach { score ->
+                firstRoundKuralDisplay {
+                  key = score.thirukkural.kuralNo.toString()
+                  thirukkural = score.thirukkural
+                  group1Round1Score = score
+                  scoreType = props.questionState.selectedGroup.type
+                  selectedKuralMeaning = props.selectedKuralMeaning
+                  onDeleteKuralClick = props.onDeleteKuralClick
+                  onG1Click = { type, value ->
+                    if (score.score[type] == value) {
+                      score.score[type] = 0F
+                    } else {
+                      score.score[type] = value as Float
+                    }
+                    props.onG1Click(score.thirukkural.kuralNo, score)
+                  }
+                }
+              }
+              if (props.questionState.scoreState.group1Score.round1.values.isNotEmpty()) {
+                firstRoundRealWorldExample {
+                  bonus = props.questionState.scoreState.group1Score.bonus
+                  onG1BonusClick = props.onG1BonusClick
+                }
               }
             }
           }

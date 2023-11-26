@@ -22,16 +22,16 @@ class GroupSelection : RComponent<GroupSelectionProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("p-2")
+        classes = mutableListOf("")
       }
       styledDiv {
         css {
-          classes = mutableListOf("row m-2")
+          classes = mutableListOf("row justify-content-between")
         }
         Group.values().forEach { group ->
           styledButton {
             css {
-              classes = mutableListOf("btn btn-primary mr-2")
+              classes = mutableListOf("btn btn-primary col ml-3 mr-3")
             }
             attrs {
               onClickFunction = { props.onGroupClick(group) }
@@ -42,7 +42,7 @@ class GroupSelection : RComponent<GroupSelectionProps, RState>() {
       }
       styledDiv {
         css {
-          classes = mutableListOf("m-2")
+          classes = mutableListOf("mt-2")
         }
         styledImg {
           attrs.src = "img/thiruvalluvar.jpg"

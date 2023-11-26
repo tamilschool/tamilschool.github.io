@@ -35,7 +35,7 @@ class PottiSuttruScoreCard : RComponent<PottiSuttruScoreCardProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("")
+        classes = mutableListOf("mt-2")
         width = 100.pct
       }
       val group23Score = props.questionState.scoreState.group23Score

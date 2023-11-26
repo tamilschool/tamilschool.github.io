@@ -35,7 +35,7 @@ class DollarCardMazhalai : RComponent<DollarCardMazhalaiProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card text-white bg-dark pb-2")
+        classes = mutableListOf("card text-white bg-dark")
         width = 100.pct
       }
       styledDiv {

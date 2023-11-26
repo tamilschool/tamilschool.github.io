@@ -61,7 +61,7 @@ class Person : RComponent<PersonProps, RState>() {
       }
       styledDiv {
         css {
-          classes = mutableListOf("row m-2")
+          classes = mutableListOf("row m-0")
           height = 100.pct
           position = Position.relative
         }
@@ -142,8 +142,13 @@ class Person : RComponent<PersonProps, RState>() {
           css {
             classes = mutableListOf("col-2 p-0")
           }
-          scoreInfo {
-            questionState = props.questionState
+          styledDiv {
+            css {
+              classes = mutableListOf("ml-2")
+            }
+            scoreInfo {
+              questionState = props.questionState
+            }
           }
         }
       }

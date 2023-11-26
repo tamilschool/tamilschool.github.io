@@ -36,7 +36,7 @@ class Group1PointsCard : RComponent<Group1PointsCardProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("")
+        classes = mutableListOf("mt-2")
         width = 100.pct
       }
       val group1Score = props.questionState.scoreState.group1Score

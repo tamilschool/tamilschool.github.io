@@ -34,7 +34,7 @@ class FirstRoundKuralDisplay : RComponent<FirstRoundKuralDisplayProps, RState>()
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card text-white bg-success m-2")
+        classes = mutableListOf("card text-white bg-success mb-2")
       }
       styledDiv {
         css {
@@ -45,7 +45,7 @@ class FirstRoundKuralDisplay : RComponent<FirstRoundKuralDisplayProps, RState>()
         }
         styledDiv {
           css {
-            classes = mutableListOf("row")
+            classes = mutableListOf("row m-0")
           }
           styledDiv {
             css {
@@ -105,7 +105,7 @@ class FirstRoundKuralDisplay : RComponent<FirstRoundKuralDisplayProps, RState>()
         }
         styledDiv {
           css {
-            classes = mutableListOf("row justify-content-between")
+            classes = mutableListOf("row justify-content-between m-0")
           }
           styledButton {
             css {

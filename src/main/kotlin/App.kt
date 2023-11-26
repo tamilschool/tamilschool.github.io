@@ -29,7 +29,7 @@ class App : RComponent<RProps, AppState>() {
     val mainScope = MainScope()
     mainScope.launch {
       setState {
-        practice = true
+        practice = false
         loaded = true
       }
     }

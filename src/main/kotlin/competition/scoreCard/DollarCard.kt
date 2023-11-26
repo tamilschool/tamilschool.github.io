@@ -36,7 +36,7 @@ class DollarCard : RComponent<DollarCardProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("pb-2")
+        classes = mutableListOf("")
         width = 100.pct
       }
       styledDiv {

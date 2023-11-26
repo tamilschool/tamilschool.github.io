@@ -21,7 +21,7 @@ class FirstRoundRealWorldExample : RComponent<FirstRoundRealWorldExampleProps, R
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card text-white bg-success m-2")
+        classes = mutableListOf("card text-white bg-success mt-2")
       }
       styledDiv {
         css {
