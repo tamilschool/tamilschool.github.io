@@ -24,6 +24,7 @@ external interface WordQuestionProps : RProps {
   var question: String
   var selectedThirukkurals: List<Thirukkural>
   var selectedKuralMeaning: Set<KuralMeaning>
+  var isAnswered: Boolean
   var showAnswer: Boolean
 }
 
@@ -44,7 +45,7 @@ class WordQuestion : RComponent<WordQuestionProps, RState>() {
         question {
           question = props.question
           fontSize = 1.1.rem
-          isAnswered = false
+          isAnswered = props.isAnswered
         }
       }
       styledDiv {

@@ -1,4 +1,4 @@
-package practice/*
+package components/*
  * Copyright 2020 Uttran Ishtalingam
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,13 +29,15 @@ import styled.styledDiv
 
 external interface QuestionMultilineProps : RProps {
   var question: KuralOnly
+  var isAnswered: Boolean
 }
 
 class QuestionMultiline : RComponent<QuestionMultilineProps, RState>() {
   override fun RBuilder.render() {
     styledDiv {
       css {
-        classes = mutableListOf("card bg-warning mt-2 text-center")
+        val style = if (props.isAnswered) "success text-white" else "warning"
+        classes = mutableListOf("card bg-$style mt-2 text-center")
         width = 100.pct
       }
       styledDiv {

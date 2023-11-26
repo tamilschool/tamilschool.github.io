@@ -3,6 +3,7 @@ package practice
 import data.KuralMeaning
 import data.Thirukkural
 import components.multipleKuralDisplay
+import components.questionMultiline
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.Position
