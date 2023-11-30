@@ -131,7 +131,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
     return CQuestionState(
       selectedGroup = group,
       selectedRound = Round.I,
-      selectedTopic = Topic.Athikaram,
+      selectedTopic = Topic.FirstWord,
       round2Kurals = allKurals,
       athikaramState = athikaramState,
       kuralState = kuralState,

@@ -87,7 +87,7 @@ class PracticeApp : RComponent<PracticeAppProps, PracticeAppState>() {
 
   private fun createQuestionState(group: Group, thirukkurals: List<Thirukkural>) = QuestionState(
     selectedGroup = group,
-    selectedTopic = Topic.Athikaram,
+    selectedTopic = Topic.FirstWord,
     thirukkurals = thirukkurals,
     athikaramState = AthikaramState(thirukkurals),
     thirukkuralState = ThirukkuralState(thirukkurals),

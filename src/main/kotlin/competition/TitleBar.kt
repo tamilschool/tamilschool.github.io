@@ -87,10 +87,10 @@ class TitleBar : RComponent<TitleBarProps, RState>() {
                   id = "topicDropDown"
                   names = listOf(
                     listOf(
-                      Topic.Athikaram.tamil,
-                      Topic.Porul.tamil,
-                      Topic.Kural.tamil,
                       Topic.FirstWord.tamil,
+                      Topic.Athikaram.tamil,
+                      Topic.Kural.tamil,
+                      Topic.Porul.tamil,
                       Topic.LastWord.tamil
                     ),
                   )
