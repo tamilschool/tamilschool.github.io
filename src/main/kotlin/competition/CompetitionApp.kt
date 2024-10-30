@@ -76,7 +76,7 @@ class CompetitionApp : RComponent<CompetitionAppProps, CompetitionAppState>() {
       val source = fetchSource()
       setState {
         allKurals = source
-        questionState = createQuestionState(Group.IA, allKurals)
+        questionState = createQuestionState(Group.I, allKurals)
         selectedKuralMeaning = mutableSetOf(KuralMeaning.SalamanPapa)
         showSignOutConfirm = false
         loaded = true

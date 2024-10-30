@@ -16,8 +16,7 @@ enum class ScoreType {
 }
 
 enum class Group(val tamilDisplay: String, val englishDisplay: String, val type: ScoreType) {
-  IA("பிரிவு 1 (முன்மழலை/மழலை)", "6 & Below", ScoreType.KuralOnly),
-  IB("பிரிவு 1", "6 & Below", ScoreType.KuralPorul),
+  I("பிரிவு 1", "6 & Below", ScoreType.KuralOnly),
   II("பிரிவு 2", "7 to 9", ScoreType.PottiSuttru),
   III("பிரிவு 3", "10 & Above", ScoreType.PottiSuttru);
 }
