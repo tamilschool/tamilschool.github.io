@@ -45,24 +45,14 @@ class ScoreInfo : RComponent<ScoreInfoProps, RState>() {
           dollarCard {
             kuralsCount = props.questionState.scoreState.group23Score.getKuralCount()
             porulsCount = props.questionState.scoreState.group23Score.getPorulCount()
-            dollars = props.questionState.scoreState.group23Score.getDollars()
+            round1Dollars = props.questionState.scoreState.group23Score.getRound1Dollars()
+            round2Dollars = props.questionState.scoreState.group23Score.getRound2Dollars()
+            totalDollars = props.questionState.scoreState.group23Score.getDollars()
           }
           pottiSuttruScoreCard {
             questionState = props.questionState
           }
         }
-
-        ScoreType.KuralPorul -> {
-          dollarCard {
-            kuralsCount = props.questionState.scoreState.group1Score.getKuralCount()
-            porulsCount = props.questionState.scoreState.group1Score.getPorulCount()
-            dollars = props.questionState.scoreState.group1Score.getDollars(ScoreType.KuralPorul)
-          }
-          group1PointsCard {
-            questionState = props.questionState
-          }
-        }
-
         else -> {
           dollarCardMazhalai {
             kuralsCount = props.questionState.scoreState.group1Score.getKuralCount()

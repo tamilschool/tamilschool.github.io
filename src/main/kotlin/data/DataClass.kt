@@ -12,7 +12,7 @@ val account = "tamilschool/tamilschool.github.io"
 val path = "main/src/main/resources/files"
 
 enum class ScoreType {
-  KuralOnly, KuralPorul, PottiSuttru
+  KuralOnly, PottiSuttru
 }
 
 enum class Group(val tamilDisplay: String, val englishDisplay: String, val type: ScoreType) {

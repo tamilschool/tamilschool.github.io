@@ -29,7 +29,9 @@ import styled.styledDiv
 external interface DollarCardProps : RProps {
   var kuralsCount: Int
   var porulsCount: Int
-  var dollars: Float
+  var round1Dollars: Float
+  var round2Dollars: Float
+  var totalDollars: Float
 }
 
 class DollarCard : RComponent<DollarCardProps, RState>() {
@@ -45,7 +47,7 @@ class DollarCard : RComponent<DollarCardProps, RState>() {
         }
         styledDiv {
           css {
-            classes = mutableListOf("card-body p-2")
+            classes = mutableListOf("card-header p-2")
           }
           scoreCardEntry {
             keyEntry = Topic.Kural.tamil
@@ -58,11 +60,24 @@ class DollarCard : RComponent<DollarCardProps, RState>() {
         }
         styledDiv {
           css {
+            classes = mutableListOf("card-body p-2")
+          }
+          scoreCardEntry {
+            keyEntry = "சுற்று 1"
+            valueEntry = " $ ${props.round1Dollars}"
+          }
+          scoreCardEntry {
+            keyEntry = "சுற்று 2"
+            valueEntry = " $ ${props.round2Dollars}"
+          }
+        }
+        styledDiv {
+          css {
             classes = mutableListOf("card-footer p-2")
           }
           scoreCardEntry {
             keyEntry = "மொத்தம்"
-            valueEntry = " $ ${props.dollars}"
+            valueEntry = " $ ${props.totalDollars}"
           }
         }
       }

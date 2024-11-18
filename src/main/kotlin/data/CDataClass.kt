@@ -185,7 +185,9 @@ data class Group23Score(
 ) {
   fun getKuralCount(): Int = round1.values.count { it.score[Group23Round1Type.KURAL] == true }
   fun getPorulCount(): Int = round1.values.count { it.score[Group23Round1Type.PORUL] == true }
-  fun getDollars(): Float = (getKuralCount().toFloat() + getPorulCount().toFloat()) / 2
+  fun getRound1Dollars(): Float = (getKuralCount().toFloat() + getPorulCount().toFloat()) / 2
+  fun getRound2Dollars(): Float = (getTotal().toFloat()) / 2
+  fun getDollars(): Float = getRound1Dollars() + getRound2Dollars()
   fun getAnsweredKuralList(): String =
     round1.filter { it.value.score.values.contains(true) }.keys.joinToString(",")
 
