@@ -21,9 +21,9 @@ export function GroupSelector({ selectedGroup, groupCounts, onGroupChange }: Gro
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default" className="min-w-[140px]">
+        <Button className="min-w-[140px] bg-blue-600 hover:bg-blue-700 text-white">
           {currentDisplay.tamil} ({currentDisplay.english})
-          <span className="ml-2 badge bg-white text-blue-600 px-2 py-0.5 rounded text-xs">
+          <span className="ml-2 bg-white text-blue-600 px-2 py-0.5 rounded text-xs font-semibold">
             {groupCounts[selectedGroup]}
           </span>
         </Button>

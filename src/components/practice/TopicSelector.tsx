@@ -26,7 +26,7 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="min-w-[160px]">
+        <Button className="min-w-[160px] bg-blue-600 hover:bg-blue-700 text-white">
           {TopicDisplay[selectedTopic]}
         </Button>
       </DropdownMenuTrigger>

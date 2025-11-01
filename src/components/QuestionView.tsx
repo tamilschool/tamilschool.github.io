@@ -1,7 +1,6 @@
 import type { Thirukkural, Topic, KuralMeaning } from '@/types';
 import { TopicDisplay } from '@/types';
 import { KuralDisplay } from './KuralDisplay';
-import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 /**
@@ -26,7 +25,6 @@ export function QuestionView({
   topic,
   selectedMeanings,
   showAnswer,
-  onToggleAnswer,
   currentQuestion,
 }: QuestionViewProps) {
   if (!currentQuestion) {
@@ -41,17 +39,12 @@ export function QuestionView({
 
   return (
     <div className="space-y-2">
-      {/* Question Header */}
-      <Card>
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">{TopicDisplay[topic]}</h3>
-            <Button variant="outline" size="sm" onClick={onToggleAnswer}>
-              {showAnswer ? 'பதிலை மறை' : 'பதிலைக் காட்டு'}
-            </Button>
-          </div>
+      {/* Question Header with Yellow Background */}
+      <Card className="border-none">
+        <CardHeader className="bg-yellow-500 text-center py-4">
+          <h3 className="text-2xl font-bold text-gray-900">{TopicDisplay[topic]}</h3>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-4">
           {/* Question Text */}
           {currentQuestion.athikaram && (
             <div className="text-xl font-semibold text-center py-4">

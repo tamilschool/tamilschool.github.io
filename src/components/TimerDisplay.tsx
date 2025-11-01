@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Play, Pause, RotateCcw } from 'lucide-react';
 
 /**
  * Timer display component with MM:SS format and control buttons
@@ -26,49 +25,28 @@ export function TimerDisplay({
   isPaused,
   count,
   onToggle,
-  onReset,
 }: TimerDisplayProps) {
   const isExpired = time <= 0 && isLive;
 
   return (
     <div className="flex items-center gap-2">
-      <div
-        className={`text-2xl font-mono font-bold min-w-[80px] ${
-          isExpired ? 'text-destructive' : 'text-foreground'
-        }`}
-      >
-        {formatTime(time)}
-      </div>
-
       <Button
-        variant={isLive && !isPaused ? 'default' : 'outline'}
-        size="sm"
+        className={`min-w-[120px] text-lg font-bold ${
+          isExpired
+            ? 'bg-red-600 hover:bg-red-700'
+            : isPaused
+            ? 'bg-gray-500 hover:bg-gray-600'
+            : 'bg-green-600 hover:bg-green-700'
+        } text-white`}
         onClick={onToggle}
       >
-        {isLive && !isPaused ? (
-          <>
-            <Pause className="h-4 w-4 mr-1" />
-            Pause
-          </>
-        ) : (
-          <>
-            <Play className="h-4 w-4 mr-1" />
-            {isExpired ? 'Restart' : 'Start'}
-          </>
-        )}
+        {formatTime(time)}
         {isLive && count !== undefined && count > 0 && (
-          <span className="ml-2 bg-white text-blue-600 px-2 py-0.5 rounded text-xs font-semibold">
+          <span className="ml-2 bg-white text-blue-600 px-2 py-1 rounded text-sm font-bold">
             {count}
           </span>
         )}
       </Button>
-
-      {isLive && (
-        <Button variant="ghost" size="sm" onClick={onReset}>
-          <RotateCcw className="h-4 w-4 mr-1" />
-          Reset
-        </Button>
-      )}
     </div>
   );
 }

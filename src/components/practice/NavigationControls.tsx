@@ -17,30 +17,25 @@ export function NavigationControls({
   return (
     <div className="flex gap-2">
       <Button
-        variant="outline"
-        size="icon"
         onClick={onPrevious}
         disabled={!isLive}
-        className="w-10 h-10"
+        className="w-12 h-12 p-0 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-6 w-6" />
       </Button>
       <Button
-        variant="destructive"
         onClick={onShowAnswer}
         disabled={!isLive}
-        className="min-w-[100px]"
+        className="min-w-[100px] h-12 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white text-lg"
       >
         பதில்
       </Button>
       <Button
-        variant="outline"
-        size="icon"
         onClick={onNext}
         disabled={!isLive}
-        className="w-10 h-10"
+        className="w-12 h-12 p-0 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-6 w-6" />
       </Button>
     </div>
   );

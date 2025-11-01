@@ -298,11 +298,15 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      {/* Header with mode switch button */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">திருக்குறள் பயிற்சி</h1>
+      {/* Header */}
+      <div className="text-center mb-6 relative">
+        <h1 className="text-3xl font-bold text-gray-900">திருக்குறள் பயிற்சி</h1>
         {onSwitchMode && (
-          <Button variant="outline" size="sm" onClick={onSwitchMode}>
+          <Button
+            className="absolute right-0 top-0 bg-blue-600 hover:bg-blue-700 text-white"
+            size="sm"
+            onClick={onSwitchMode}
+          >
             திருக்குறள் போட்டி
           </Button>
         )}
