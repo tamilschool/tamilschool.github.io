@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Topic, TopicDisplay } from '@/types';
 import type { Topic as TopicType } from '@/types';
 
@@ -24,23 +24,20 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
   ];
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="min-w-[160px] bg-blue-600 hover:bg-blue-700 text-white">
-          {TopicDisplay[selectedTopic]}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {topics.map((topic) => (
-          <DropdownMenuItem
-            key={topic}
-            onClick={() => onTopicChange(topic)}
-            className="cursor-pointer"
-          >
-            {TopicDisplay[topic]}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex items-center gap-2">
+      <label className="text-sm font-medium text-gray-700">பொருள்:</label>
+      <Select value={selectedTopic} onValueChange={onTopicChange}>
+        <SelectTrigger className="w-auto min-w-[160px] bg-white border-gray-300">
+          <SelectValue placeholder="பொருள் தேர்ந்து" />
+        </SelectTrigger>
+        <SelectContent>
+          {topics.map((topic) => (
+            <SelectItem key={topic} value={topic}>
+              {TopicDisplay[topic]}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

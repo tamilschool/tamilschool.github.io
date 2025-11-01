@@ -28,6 +28,10 @@ export function TimerDisplay({
 }: TimerDisplayProps) {
   const isExpired = time <= 0 && isLive;
 
+  const buttonText = isLive 
+    ? formatTime(time)
+    : 'தொடங்குக';
+
   return (
     <div className="flex items-center gap-2">
       <Button
@@ -36,11 +40,13 @@ export function TimerDisplay({
             ? 'bg-red-600 hover:bg-red-700'
             : isPaused
             ? 'bg-gray-500 hover:bg-gray-600'
+            : isLive && !isPaused
+            ? 'bg-green-600 hover:bg-green-700'
             : 'bg-green-600 hover:bg-green-700'
         } text-white`}
         onClick={onToggle}
       >
-        {formatTime(time)}
+        {buttonText}
         {isLive && count !== undefined && count > 0 && (
           <> {count}</>
         )}

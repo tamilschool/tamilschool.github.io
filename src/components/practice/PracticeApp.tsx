@@ -299,13 +299,13 @@ export function PracticeApp({}: PracticeAppProps) {
     <div className="min-h-screen bg-gray-50">
       {/* Light Blue Header */}
       <div className="bg-blue-100 py-4 px-3 mb-0">
-        <h1 className="text-2xl font-bold text-gray-900 text-center">திருக்குறள் பயிற்சி</h1>
+        <h1 className="text-4xl font-bold text-gray-900 text-center">திருக்குறள் பயிற்சி</h1>
       </div>
 
       {/* Control Panel */}
       <div className="px-3 py-3">
         {/* Group and Topic Selectors */}
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-3 mb-3 items-center">
           <GroupSelector
             selectedGroup={selectedGroup}
             groupCounts={groupCounts}
@@ -317,36 +317,47 @@ export function PracticeApp({}: PracticeAppProps) {
           />
         </div>
 
-        {/* Scholar Meanings Selection */}
-        <div className="mb-3">
-          <ScholarSelector
-            selectedMeanings={selectedMeanings}
-            onMeaningToggle={handleMeaningToggle}
-          />
-        </div>
+        {/* Scholar Meanings Selection - Hidden until timer starts */}
+        {timer.isLive && (
+          <div className="mb-3">
+            <ScholarSelector
+              selectedMeanings={selectedMeanings}
+              onMeaningToggle={handleMeaningToggle}
+            />
+          </div>
+        )}
 
         {/* Timer and Navigation */}
-        <div className="flex justify-between items-center mb-3">
-          <TimerDisplay
-            time={timer.time}
-            isLive={timer.isLive}
-            isPaused={timer.isPaused}
-            count={timer.count}
-            onToggle={handleTimerClick}
-            onReset={() => resetTimer(true)}
-          />
-          {selectedTopic !== Topic.AllKurals && (
-            <NavigationControls
-              isLive={timer.isLive && timer.time > 0}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-              onShowAnswer={() => setShowAnswer(!showAnswer)}
+        <div className="flex gap-3 items-center mb-3">
+          <div className="flex-shrink-0">
+            <TimerDisplay
+              time={timer.time}
+              isLive={timer.isLive}
+              isPaused={timer.isPaused}
+              count={timer.count}
+              onToggle={handleTimerClick}
+              onReset={() => resetTimer(true)}
             />
+          </div>
+          {selectedTopic !== Topic.AllKurals && (
+            <div className="flex-1">
+              <NavigationControls
+                isLive={timer.isLive && timer.time > 0}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                onShowAnswer={() => setShowAnswer(!showAnswer)}
+              />
+            </div>
           )}
         </div>
 
         {/* Question Display */}
-        {selectedTopic === Topic.AllKurals ? (
+        {!timer.isLive ? (
+          <div className="h-96 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-blue-300">
+            <p className="text-2xl font-semibold text-blue-600 mb-4">தொடங்குக</p>
+            <p className="text-lg text-blue-500">பயிற்சியை தொடங்க பச்சை பொத்தানை அழுத்தவும்</p>
+          </div>
+        ) : selectedTopic === Topic.AllKurals ? (
           <div className="space-y-2">
             <h2 className="text-xl font-semibold mb-4">அனைத்து குறள்கள்</h2>
             {currentKurals.map(kural => (
