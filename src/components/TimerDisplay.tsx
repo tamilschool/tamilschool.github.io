@@ -30,12 +30,12 @@ export function TimerDisplay({
 
   const buttonText = isLive 
     ? formatTime(time)
-    : 'தொடங்குக';
+    : 'தொடங்கு';
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-0">
       <Button
-        className={`min-w-[100px] h-10 text-sm font-bold ${
+        className={`min-w-[100px] h-10 px-3 text-sm font-bold rounded-md flex items-center justify-center ${
           isExpired
             ? 'bg-red-600 hover:bg-red-700'
             : isPaused
