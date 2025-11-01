@@ -9,7 +9,6 @@ export interface TimerDisplayProps {
   time: number; // seconds
   isLive: boolean;
   isPaused: boolean;
-  count?: number; // Optional answered questions count
   totalTime: number;
   onToggle: () => void;
   onReset: () => void;
@@ -25,7 +24,6 @@ export function TimerDisplay({
   time,
   isLive,
   isPaused,
-  count,
   totalTime,
   onToggle,
 }: TimerDisplayProps) {
@@ -67,19 +65,14 @@ export function TimerDisplay({
   return (
     <div className="flex items-center">
       <div
-        className="relative inline-flex rounded-xl p-[2px] -my-[2px]"
+        className={`relative inline-flex rounded-xl p-[2px] -my-[2px] ${isLive && isPaused ? 'animate-pulse' : ''}`}
         style={borderStyle}
       >
         <Button
-          className={`${buttonBase} ${stateClasses} ${activeTextClass} h-9`}
+          className={`${buttonBase} ${stateClasses} ${activeTextClass}`}
           onClick={onToggle}
         >
           {buttonText}
-          {isLive && count !== undefined && count > 0 && (
-            <span className="ml-2 rounded-full bg-emerald-50 px-2 text-xs font-semibold text-emerald-600">
-              {count}
-            </span>
-          )}
         </Button>
       </div>
     </div>

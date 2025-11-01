@@ -323,28 +323,45 @@ export function PracticeApp({ }: PracticeAppProps) {
 
         {/* Timer and Navigation */}
         {selectedTopic !== Topic.AllKurals && (
-          <div className="flex gap-2 items-center mb-3">
-            <div className="flex-shrink-0">
-              <TimerDisplay
-                time={timer.time}
-                isLive={timer.isLive}
-                isPaused={timer.isPaused}
-                count={timer.count}
-                totalTime={timer.totalTime}
-                onToggle={handleTimerClick}
-                onReset={() => resetTimer(true)}
-              />
-            </div>
+          (() => {
+            const totalsByTopic: Record<TopicType, number> = {
+              [Topic.Athikaram]: athikarams.length,
+              [Topic.Porul]: currentKurals.length,
+              [Topic.Kural]: currentKurals.length,
+              [Topic.FirstWord]: firstWords.length,
+              [Topic.LastWord]: lastWords.length,
+              [Topic.AllKurals]: currentKurals.length,
+            };
+            const totalForTopic = totalsByTopic[selectedTopic] ?? 0;
+            const leftCount = timer.count;
+            const rightCount = Math.max(totalForTopic - leftCount - 1, 0);
 
-            <div className="flex-1">
-              <NavigationControls
-                isLive={timer.isLive && timer.time > 0}
-                onPrevious={handlePrevious}
-                onNext={handleNext}
-                onShowAnswer={() => setShowAnswer(!showAnswer)}
-              />
-            </div>
-          </div>
+            return (
+              <div className="flex gap-2 items-center mb-3">
+                <div className="flex-shrink-0">
+                  <TimerDisplay
+                    time={timer.time}
+                    isLive={timer.isLive}
+                    isPaused={timer.isPaused}
+                    totalTime={timer.totalTime}
+                    onToggle={handleTimerClick}
+                    onReset={() => resetTimer(true)}
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <NavigationControls
+                    isLive={timer.isLive && timer.time > 0}
+                    onPrevious={handlePrevious}
+                    onNext={handleNext}
+                    onShowAnswer={() => setShowAnswer(!showAnswer)}
+                    leftCount={leftCount}
+                    rightCount={rightCount}
+                  />
+                </div>
+              </div>
+            );
+          })()
         )}
 
         {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
