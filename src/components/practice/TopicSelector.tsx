@@ -17,10 +17,10 @@ export interface TopicSelectorProps {
 
 export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorProps) {
   const topics: TopicType[] = [
-    Topic.Athikaram,
-    Topic.Porul,
-    Topic.Kural,
     Topic.FirstWord,
+    Topic.Athikaram,
+    Topic.Kural,
+    Topic.Porul,
     Topic.LastWord,
   ];
 

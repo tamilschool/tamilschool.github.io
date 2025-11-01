@@ -321,16 +321,6 @@ export function PracticeApp({ }: PracticeAppProps) {
           </div>
         </div>
 
-        {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
-        {timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.AllKurals) && (
-          <div className="mb-3">
-            <ScholarSelector
-              selectedMeanings={selectedMeanings}
-              onMeaningToggle={handleMeaningToggle}
-            />
-          </div>
-        )}
-
         {/* Timer and Navigation */}
         {selectedTopic !== Topic.AllKurals && (
           <div className="flex gap-3 items-center mb-3">
@@ -353,6 +343,16 @@ export function PracticeApp({ }: PracticeAppProps) {
                 onShowAnswer={() => setShowAnswer(!showAnswer)}
               />
             </div>
+          </div>
+        )}
+
+        {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
+        {(timer.isLive && selectedTopic === Topic.Porul || selectedTopic === Topic.AllKurals) && (
+          <div className="mb-3">
+            <ScholarSelector
+              selectedMeanings={selectedMeanings}
+              onMeaningToggle={handleMeaningToggle}
+            />
           </div>
         )}
 
