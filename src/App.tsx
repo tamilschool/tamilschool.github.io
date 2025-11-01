@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { fetchSource } from './lib/data/fetchSource';
 import { parseSource } from './lib/data/parseSource';
 import type { Thirukkural } from './types';
+import { Phase3Test } from './components/Phase3Test';
 import './App.css';
 
 function App() {
   const [kurals, setKurals] = useState<Thirukkural[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showTest, setShowTest] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -57,6 +59,10 @@ function App() {
     );
   }
 
+  if (showTest) {
+    return <Phase3Test />;
+  }
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">திருக்குறள் பயிற்சி</h1>
@@ -88,6 +94,13 @@ function App() {
           </div>
         )}
       </div>
+      
+      <button
+        onClick={() => setShowTest(true)}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Test Phase 3 Components
+      </button>
       
       <p className="mt-4 text-sm text-muted-foreground">
         Check browser console for detailed logs
