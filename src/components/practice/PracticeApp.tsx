@@ -321,8 +321,8 @@ export function PracticeApp({ }: PracticeAppProps) {
           </div>
         </div>
 
-        {/* Scholar Meanings Selection - Hidden until timer starts */}
-        {timer.isLive && (
+        {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
+        {timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.AllKurals) && (
           <div className="mb-3">
             <ScholarSelector
               selectedMeanings={selectedMeanings}

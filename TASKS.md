@@ -46,6 +46,9 @@
 
 ## Phase 3: Shared Components & Hooks
 
+- [x] Analyze practice component dependencies for question/answer styling (`src/components/practice/PracticeApp.tsx`, `src/components/QuestionView.tsx`, `src/components/KuralDisplay.tsx`)
+- [x] Refactor practice `QuestionView` layout to separate question and answer styling (`src/components/QuestionView.tsx`)
+- [x] Restyle `KuralDisplay` card visuals to align with updated practice view (`src/components/KuralDisplay.tsx`)
 - [ ] Create `/src/hooks/useTimer.ts`
   - Practice: 240s, Competition: 1201s
   - isLive, isPaused, time state
@@ -74,6 +77,10 @@
   - Visual indicator when expired
   
 - [ ] Test components in isolation with mock data
+
+- [ ] Review legacy practice question/answer styling _(status: not-started)_
+- [ ] Update `QuestionView` to remove header and apply new background _(status: not-started)_
+- [ ] Restyle `KuralDisplay` to neutral card _(status: not-started)_
 
 ## Phase 4: Practice Mode
 
