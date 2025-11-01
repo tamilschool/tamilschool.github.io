@@ -72,6 +72,7 @@ export function Phase3Test() {
           time={timer.time}
           isLive={true}
           isPaused={timer.isPaused}
+          totalTime={timer.totalTime}
           onToggle={() => timer.toggle()}
           onReset={() => timer.reset()}
         />

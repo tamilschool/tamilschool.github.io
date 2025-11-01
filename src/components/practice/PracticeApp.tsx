@@ -323,13 +323,14 @@ export function PracticeApp({ }: PracticeAppProps) {
 
         {/* Timer and Navigation */}
         {selectedTopic !== Topic.AllKurals && (
-          <div className="flex gap-3 items-center mb-3">
+          <div className="flex gap-2 items-center mb-3">
             <div className="flex-shrink-0">
               <TimerDisplay
                 time={timer.time}
                 isLive={timer.isLive}
                 isPaused={timer.isPaused}
                 count={timer.count}
+                totalTime={timer.totalTime}
                 onToggle={handleTimerClick}
                 onReset={() => resetTimer(true)}
               />

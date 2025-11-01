@@ -17,6 +17,7 @@ export interface UseTimerReturn {
   isLive: boolean;
   isPaused: boolean;
   count: number;
+  totalTime: number;
   start: () => void;
   pause: () => void;
   resume: () => void;
@@ -92,6 +93,7 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturn {
     isLive,
     isPaused,
     count,
+    totalTime: initialTime,
     start,
     pause,
     resume,
