@@ -1,7 +1,9 @@
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -20,15 +22,13 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
     Topic.Kural,
     Topic.FirstWord,
     Topic.LastWord,
-    Topic.AllKurals,
   ];
 
   return (
-    <div className="flex items-center gap-2">
-      {/* <label className="text-sm font-medium text-gray-700 whitespace-nowrap">பொருள்:</label> */}
+    <div className="flex w-full h-full">
       <Select value={selectedTopic} onValueChange={onTopicChange}>
-        <SelectTrigger className="w-auto min-w-[140px] bg-white border-gray-300 border">
-          <SelectValue placeholder="பொருள் தேர்ந்து" />
+        <SelectTrigger className="h-full w-full ">
+          <SelectValue placeholder="Topic" className="flex items-center" />
         </SelectTrigger>
         <SelectContent>
           {topics.map((topic) => (
@@ -36,6 +36,12 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
               {TopicDisplay[topic]}
             </SelectItem>
           ))}
+          <SelectGroup>
+             <SelectLabel>---------------------------</SelectLabel>
+            <SelectItem value={Topic.AllKurals}>
+              {TopicDisplay[Topic.AllKurals]}
+            </SelectItem>
+          </SelectGroup>
         </SelectContent>
       </Select>
     </div>

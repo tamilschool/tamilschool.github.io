@@ -13,14 +13,14 @@ export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorPro
   const groups: GroupType[] = [Group.II, Group.III];
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex w-full h-full">
       <ToggleGroup
         type="single"
         value={selectedGroup}
         onValueChange={(value) => {
           if (value) onGroupChange(value as GroupType);
         }}
-        className="border border-gray-300 rounded-md p-1 flex gap-1"
+        className="border border-gray-300 rounded-md p-1 flex items-center gap-1 w-full h-full"
       >
         {groups.map((group) => {
           const display = GroupDisplay[group];
@@ -29,7 +29,7 @@ export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorPro
               key={group}
               value={group}
               aria-label={`${display.tamil} (${display.english})`}
-              className="px-3 py-1.5 text-sm font-medium data-[state=on]:bg-blue-600 data-[state=on]:text-white"
+              className="flex-1 h-full px-3 text-sm font-medium flex items-center justify-center data-[state=on]:bg-blue-600 data-[state=on]:text-white"
             >
               {display.tamil}
             </ToggleGroupItem>

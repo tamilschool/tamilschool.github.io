@@ -305,16 +305,20 @@ export function PracticeApp({}: PracticeAppProps) {
       {/* Control Panel */}
       <div className="px-3 py-3">
         {/* Group and Topic Selectors */}
-        <div className="flex gap-3 mb-3 items-center">
-          <GroupSelector
-            selectedGroup={selectedGroup}
-            groupCounts={groupCounts}
-            onGroupChange={handleGroupChange}
-          />
-          <TopicSelector
-            selectedTopic={selectedTopic}
-            onTopicChange={handleTopicChange}
-          />
+        <div className="flex gap-3 mb-3 h-12">
+          <div className="flex-1 h-full">
+            <GroupSelector
+              selectedGroup={selectedGroup}
+              groupCounts={groupCounts}
+              onGroupChange={handleGroupChange}
+            />
+          </div>
+          <div className="flex-1 h-full">
+            <TopicSelector
+              selectedTopic={selectedTopic}
+              onTopicChange={handleTopicChange}
+            />
+          </div>
         </div>
 
         {/* Scholar Meanings Selection - Hidden until timer starts */}
