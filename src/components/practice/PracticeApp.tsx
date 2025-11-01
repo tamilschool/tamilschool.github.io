@@ -299,7 +299,7 @@ export function PracticeApp({}: PracticeAppProps) {
     <div className="min-h-screen bg-gray-50">
       {/* Light Blue Header */}
       <div className="bg-blue-100 py-4 px-3 mb-0">
-        <h1 className="text-5xl font-extrabold text-gray-800 text-center">திருக்குறள் பயிற்சி</h1>
+        <h1 className="text-xl font-extrabold text-blue-800 text-center">திருக்குறள் பயிற்சி</h1>
       </div>
 
       {/* Control Panel */}
@@ -354,7 +354,7 @@ export function PracticeApp({}: PracticeAppProps) {
         {/* Thiruvalluvar Statue Image */}
         <div className="mb-3 rounded-lg overflow-hidden">
           <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Thiruvalluvar_Statue%2C_Kanyakumari.jpg/800px-Thiruvalluvar_Statue%2C_Kanyakumari.jpg" 
+            src="thiruvalluvar.jpg" 
             alt="Thiruvalluvar Statue at Kanyakumari" 
             className="w-full h-64 object-cover"
           />

@@ -8,13 +8,12 @@ export interface GroupSelectorProps {
   onGroupChange: (group: GroupType) => void;
 }
 
-export function GroupSelector({ selectedGroup, groupCounts, onGroupChange }: GroupSelectorProps) {
+export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorProps) {
   // Only show Group II and III (not Group I)
   const groups: GroupType[] = [Group.II, Group.III];
 
   return (
     <div className="flex items-center gap-2">
-      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">குழு:</label>
       <ToggleGroup
         type="single"
         value={selectedGroup}
@@ -33,9 +32,6 @@ export function GroupSelector({ selectedGroup, groupCounts, onGroupChange }: Gro
               className="px-3 py-1.5 text-sm font-medium data-[state=on]:bg-blue-600 data-[state=on]:text-white"
             >
               {display.tamil}
-              <span className="ml-1 text-xs opacity-80">
-                ({groupCounts[group]})
-              </span>
             </ToggleGroupItem>
           );
         })}
