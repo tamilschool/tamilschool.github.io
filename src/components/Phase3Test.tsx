@@ -162,7 +162,6 @@ export function Phase3Test() {
           topic={currentTopic}
           selectedMeanings={selectedMeanings}
           showAnswer={showAnswer}
-          onToggleAnswer={() => setShowAnswer(!showAnswer)}
           currentQuestion={{
             athikaram: currentKural.athikaram,
             answers: mockKurals.filter(k => k.athikaram === currentKural.athikaram),

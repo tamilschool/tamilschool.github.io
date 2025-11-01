@@ -297,7 +297,7 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto px-3 py-3 max-w-3xl">
       {/* Header */}
       <div className="text-center mb-6 relative">
         <h1 className="text-3xl font-bold text-gray-900">திருக்குறள் பயிற்சி</h1>
@@ -313,7 +313,7 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
       </div>
 
       {/* Control Panel */}
-      <div className="space-y-4 mb-6">
+      <div className="space-y-3 mb-4">
         {/* Group and Topic Selectors */}
         <div className="flex flex-wrap gap-2">
           <GroupSelector
@@ -372,7 +372,6 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
           topic={selectedTopic}
           selectedMeanings={selectedMeanings}
           showAnswer={showAnswer}
-          onToggleAnswer={() => setShowAnswer(!showAnswer)}
           currentQuestion={getCurrentQuestion()}
         />
       )}

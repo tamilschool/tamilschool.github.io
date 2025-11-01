@@ -11,7 +11,6 @@ export interface QuestionViewProps {
   topic: Topic;
   selectedMeanings: Set<KuralMeaning>;
   showAnswer: boolean;
-  onToggleAnswer: () => void;
   // Topic-specific data
   currentQuestion?: {
     athikaram?: string;

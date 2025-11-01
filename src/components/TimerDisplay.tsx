@@ -16,7 +16,7 @@ export interface TimerDisplayProps {
 function formatTime(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  return `${mins} : ${secs.toString().padStart(2, '0')}`;
 }
 
 export function TimerDisplay({
@@ -31,7 +31,7 @@ export function TimerDisplay({
   return (
     <div className="flex items-center gap-2">
       <Button
-        className={`min-w-[120px] text-lg font-bold ${
+        className={`min-w-[110px] h-12 text-base font-bold ${
           isExpired
             ? 'bg-red-600 hover:bg-red-700'
             : isPaused
@@ -42,9 +42,7 @@ export function TimerDisplay({
       >
         {formatTime(time)}
         {isLive && count !== undefined && count > 0 && (
-          <span className="ml-2 bg-white text-blue-600 px-2 py-1 rounded text-sm font-bold">
-            {count}
-          </span>
+          <> {count}</>
         )}
       </Button>
     </div>
