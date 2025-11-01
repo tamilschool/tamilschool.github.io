@@ -24,10 +24,10 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
   ];
 
   return (
-    <div className="flex items-center gap-2">
-      <label className="text-sm font-medium text-gray-700">பொருள்:</label>
+    <div className="flex items-center gap-2 flex-wrap">
+      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">பொருள்:</label>
       <Select value={selectedTopic} onValueChange={onTopicChange}>
-        <SelectTrigger className="w-auto min-w-[160px] bg-white border-gray-300">
+        <SelectTrigger className="w-auto min-w-[140px] bg-white border-gray-300 border">
           <SelectValue placeholder="பொருள் தேர்ந்து" />
         </SelectTrigger>
         <SelectContent>

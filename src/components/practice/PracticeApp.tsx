@@ -351,11 +351,20 @@ export function PracticeApp({}: PracticeAppProps) {
           )}
         </div>
 
+        {/* Thiruvalluvar Statue Image */}
+        <div className="mb-3 rounded-lg overflow-hidden bg-blue-100 flex items-center justify-center h-64">
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="text-6xl mb-2">🗿</div>
+            <p className="text-gray-600 text-sm">Thiruvalluvar Statue</p>
+            <p className="text-gray-500 text-xs mt-1">Kanyakumari, Tamil Nadu</p>
+          </div>
+        </div>
+
         {/* Question Display */}
         {!timer.isLive ? (
           <div className="h-96 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-blue-300">
             <p className="text-2xl font-semibold text-blue-600 mb-4">தொடங்குக</p>
-            <p className="text-lg text-blue-500">பயிற்சியை தொடங்க பச்சை பொத்தানை அழுத்தவும்</p>
+            <p className="text-lg text-blue-500">பயிற்சியை தொடங்க பச்சை பொத்தானை அழுத்தவும்</p>
           </div>
         ) : selectedTopic === Topic.AllKurals ? (
           <div className="space-y-2">

@@ -15,25 +15,25 @@ export function NavigationControls({
   onShowAnswer,
 }: NavigationControlsProps) {
   return (
-    <div className="flex gap-2 w-full">
+    <div className="flex gap-2 w-full h-10">
       <Button
         onClick={onPrevious}
         disabled={!isLive}
-        className="flex-1 h-12 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white rounded"
+        className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white rounded flex items-center justify-center"
       >
         <ChevronLeft className="h-5 w-5" />
       </Button>
       <Button
         onClick={onShowAnswer}
         disabled={!isLive}
-        className="flex-1 h-12 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white text-base font-semibold rounded"
+        className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white text-sm font-semibold rounded flex items-center justify-center"
       >
         பதில்
       </Button>
       <Button
         onClick={onNext}
         disabled={!isLive}
-        className="flex-1 h-12 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white rounded"
+        className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white rounded flex items-center justify-center"
       >
         <ChevronRight className="h-5 w-5" />
       </Button>

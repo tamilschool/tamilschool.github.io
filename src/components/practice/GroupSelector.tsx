@@ -13,15 +13,15 @@ export function GroupSelector({ selectedGroup, groupCounts, onGroupChange }: Gro
   const groups: GroupType[] = [Group.II, Group.III];
 
   return (
-    <div className="flex items-center gap-2">
-      <label className="text-sm font-medium text-gray-700">குழு:</label>
+    <div className="flex items-center gap-2 flex-wrap">
+      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">குழு:</label>
       <ToggleGroup
         type="single"
         value={selectedGroup}
         onValueChange={(value) => {
           if (value) onGroupChange(value as GroupType);
         }}
-        className="border border-gray-300 rounded-md p-1"
+        className="border border-gray-300 rounded-md p-1 flex gap-1"
       >
         {groups.map((group) => {
           const display = GroupDisplay[group];

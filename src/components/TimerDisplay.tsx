@@ -35,7 +35,7 @@ export function TimerDisplay({
   return (
     <div className="flex items-center gap-2">
       <Button
-        className={`min-w-[110px] h-12 text-base font-bold ${
+        className={`min-w-[100px] h-10 text-sm font-bold ${
           isExpired
             ? 'bg-red-600 hover:bg-red-700'
             : isPaused
