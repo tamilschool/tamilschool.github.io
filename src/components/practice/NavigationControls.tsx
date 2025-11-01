@@ -19,21 +19,21 @@ export function NavigationControls({
       <Button
         onClick={onPrevious}
         disabled={!isLive}
-        className="w-12 h-12 p-0 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white"
+        className="w-12 h-12 p-0 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white rounded"
       >
         <ChevronLeft className="h-6 w-6" />
       </Button>
       <Button
         onClick={onShowAnswer}
         disabled={!isLive}
-        className="min-w-[100px] h-12 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white text-lg"
+        className="min-w-[100px] h-12 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white text-base font-semibold rounded"
       >
         பதில்
       </Button>
       <Button
         onClick={onNext}
         disabled={!isLive}
-        className="w-12 h-12 p-0 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white"
+        className="w-12 h-12 p-0 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white rounded"
       >
         <ChevronRight className="h-6 w-6" />
       </Button>

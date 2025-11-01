@@ -46,7 +46,7 @@ export function Phase3Test() {
   const [selectedMeanings, setSelectedMeanings] = useState<Set<KuralMeaningType>>(
     new Set([KuralMeaning.MuVaradha, KuralMeaning.SalamanPapa])
   );
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [showAnswer] = useState(false);
   const [currentTopic] = useState<TopicType>(Topic.Athikaram);
 
   // Test useTimer

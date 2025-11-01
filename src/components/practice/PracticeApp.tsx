@@ -10,7 +10,6 @@ import { GroupSelector } from './GroupSelector';
 import { TopicSelector } from './TopicSelector';
 import { ScholarSelector } from './ScholarSelector';
 import { NavigationControls } from './NavigationControls';
-import { Button } from '@/components/ui/button';
 import { Group, Topic, KuralMeaning } from '@/types';
 import type { Thirukkural, Group as GroupType, Topic as TopicType, KuralMeaning as KuralMeaningType } from '@/types';
 
@@ -18,7 +17,7 @@ export interface PracticeAppProps {
   onSwitchMode?: () => void;
 }
 
-export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
+export function PracticeApp({}: PracticeAppProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
@@ -297,25 +296,16 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
   }
 
   return (
-    <div className="container mx-auto px-3 py-3 max-w-3xl">
-      {/* Header */}
-      <div className="text-center mb-6 relative">
-        <h1 className="text-3xl font-bold text-gray-900">திருக்குறள் பயிற்சி</h1>
-        {onSwitchMode && (
-          <Button
-            className="absolute right-0 top-0 bg-blue-600 hover:bg-blue-700 text-white"
-            size="sm"
-            onClick={onSwitchMode}
-          >
-            திருக்குறள் போட்டி
-          </Button>
-        )}
+    <div className="min-h-screen bg-gray-50">
+      {/* Light Blue Header */}
+      <div className="bg-blue-100 py-4 px-3 mb-0">
+        <h1 className="text-2xl font-bold text-gray-900 text-center">திருக்குறள் பயிற்சி</h1>
       </div>
 
       {/* Control Panel */}
-      <div className="space-y-3 mb-4">
+      <div className="px-3 py-3">
         {/* Group and Topic Selectors */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-3">
           <GroupSelector
             selectedGroup={selectedGroup}
             groupCounts={groupCounts}
@@ -328,13 +318,15 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
         </div>
 
         {/* Scholar Meanings Selection */}
-        <ScholarSelector
-          selectedMeanings={selectedMeanings}
-          onMeaningToggle={handleMeaningToggle}
-        />
+        <div className="mb-3">
+          <ScholarSelector
+            selectedMeanings={selectedMeanings}
+            onMeaningToggle={handleMeaningToggle}
+          />
+        </div>
 
         {/* Timer and Navigation */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-3">
           <TimerDisplay
             time={timer.time}
             isLive={timer.isLive}
@@ -352,29 +344,29 @@ export function PracticeApp({ onSwitchMode }: PracticeAppProps) {
             />
           )}
         </div>
-      </div>
 
-      {/* Question Display */}
-      {selectedTopic === Topic.AllKurals ? (
-        <div className="space-y-2">
-          <h2 className="text-xl font-semibold mb-4">அனைத்து குறள்கள்</h2>
-          {currentKurals.map(kural => (
-            <KuralDisplay
-              key={kural.kuralNo}
-              thirukkural={kural}
-              selectedMeanings={selectedMeanings}
-              variant="default"
-            />
-          ))}
-        </div>
-      ) : (
-        <QuestionView
-          topic={selectedTopic}
-          selectedMeanings={selectedMeanings}
-          showAnswer={showAnswer}
-          currentQuestion={getCurrentQuestion()}
-        />
-      )}
+        {/* Question Display */}
+        {selectedTopic === Topic.AllKurals ? (
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold mb-4">அனைத்து குறள்கள்</h2>
+            {currentKurals.map(kural => (
+              <KuralDisplay
+                key={kural.kuralNo}
+                thirukkural={kural}
+                selectedMeanings={selectedMeanings}
+                variant="default"
+              />
+            ))}
+          </div>
+        ) : (
+          <QuestionView
+            topic={selectedTopic}
+            selectedMeanings={selectedMeanings}
+            showAnswer={showAnswer}
+            currentQuestion={getCurrentQuestion()}
+          />
+        )}
+      </div>
     </div>
   );
 }

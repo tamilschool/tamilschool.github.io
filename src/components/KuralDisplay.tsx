@@ -26,18 +26,18 @@ export function KuralDisplay({
   };
 
   return (
-    <Card className={`mt-2 ${variantClasses[variant]}`}>
+    <Card className={`mb-3 ${variantClasses[variant]} rounded-lg`}>
       <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
-        <div className={`font-semibold text-lg ${isGreenCard ? 'text-white' : ''}`}>
+        <div className={`font-semibold ${isGreenCard ? 'text-white' : ''}`}>
           {thirukkural.athikaram}
         </div>
-        <div className={`text-sm flex flex-col text-right ${isGreenCard ? 'text-gray-100' : 'text-muted-foreground'}`}>
-          <small>அதிகாரம் : {thirukkural.athikaramNo}</small>
-          <small>குறள் : {thirukkural.kuralNo}</small>
+        <div className={`text-xs flex flex-col text-right ${isGreenCard ? 'text-gray-100' : 'text-muted-foreground'}`}>
+          <div>அதிகாரம் : {thirukkural.athikaramNo}</div>
+          <div>குறள் : {thirukkural.kuralNo}</div>
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-2 pt-0 pb-3">
         <p className={`text-xl leading-relaxed ${isGreenCard ? 'text-white' : ''}`}>
           {thirukkural.kural.firstLine}
         </p>
@@ -47,7 +47,7 @@ export function KuralDisplay({
       </CardContent>
 
       {selectedMeanings.size > 0 && (
-        <CardFooter className="flex flex-col items-start gap-4">
+        <CardFooter className="flex flex-col items-start gap-3 pt-1 pb-3">
           {Array.from(selectedMeanings).map((meaning) => (
             <div key={meaning} className="w-full">
               <p className={`text-base leading-relaxed mb-2 ${isGreenCard ? 'text-white' : ''}`}>

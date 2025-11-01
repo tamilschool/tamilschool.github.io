@@ -1,7 +1,6 @@
 import type { Thirukkural, Topic, KuralMeaning } from '@/types';
 import { TopicDisplay } from '@/types';
 import { KuralDisplay } from './KuralDisplay';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 /**
  * Question view component that displays questions based on topic type
@@ -28,30 +27,28 @@ export function QuestionView({
 }: QuestionViewProps) {
   if (!currentQuestion) {
     return (
-      <Card className="mt-2">
-        <CardContent className="p-4">
-          <p className="text-muted-foreground">No question data available</p>
-        </CardContent>
-      </Card>
+      <div className="mt-2 border rounded p-4">
+        <p className="text-muted-foreground">No question data available</p>
+      </div>
     );
   }
 
   return (
     <div className="space-y-2">
       {/* Question Header with Yellow Background */}
-      <Card className="border-none">
-        <CardHeader className="bg-yellow-500 text-center py-4">
-          <h3 className="text-2xl font-bold text-gray-900">{TopicDisplay[topic]}</h3>
-        </CardHeader>
-        <CardContent className="pt-4">
+      <div className="mb-3">
+        <div className="bg-yellow-500 text-center py-3 rounded-t">
+          <h3 className="text-xl font-bold text-gray-900">{TopicDisplay[topic]}</h3>
+        </div>
+        <div className="bg-white p-0 rounded-b">
           {/* Question Text */}
           {currentQuestion.athikaram && (
-            <div className="text-xl font-semibold text-center py-4">
+            <div className="text-xl font-semibold text-center py-6 bg-white">
               {currentQuestion.athikaram}
             </div>
           )}
           {currentQuestion.word && (
-            <div className="text-2xl font-bold text-center py-6">
+            <div className="text-xl font-semibold text-center py-6 bg-white">
               {currentQuestion.word}
             </div>
           )}
@@ -62,8 +59,8 @@ export function QuestionView({
               variant="default"
             />
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Answer Section */}
       {showAnswer && (
