@@ -299,13 +299,13 @@ export function PracticeApp({}: PracticeAppProps) {
     <div className="min-h-screen bg-gray-50">
       {/* Light Blue Header */}
       <div className="bg-blue-100 py-4 px-3 mb-0">
-        <h1 className="text-4xl font-bold text-gray-900 text-center">திருக்குறள் பயிற்சி</h1>
+        <h1 className="text-5xl font-extrabold text-gray-800 text-center">திருக்குறள் பயிற்சி</h1>
       </div>
 
       {/* Control Panel */}
       <div className="px-3 py-3">
         {/* Group and Topic Selectors */}
-        <div className="flex flex-wrap gap-3 mb-3 items-center">
+        <div className="flex gap-3 mb-3 items-center">
           <GroupSelector
             selectedGroup={selectedGroup}
             groupCounts={groupCounts}
@@ -352,12 +352,12 @@ export function PracticeApp({}: PracticeAppProps) {
         </div>
 
         {/* Thiruvalluvar Statue Image */}
-        <div className="mb-3 rounded-lg overflow-hidden bg-blue-100 flex items-center justify-center h-64">
-          <div className="flex flex-col items-center justify-center text-center">
-            <div className="text-6xl mb-2">🗿</div>
-            <p className="text-gray-600 text-sm">Thiruvalluvar Statue</p>
-            <p className="text-gray-500 text-xs mt-1">Kanyakumari, Tamil Nadu</p>
-          </div>
+        <div className="mb-3 rounded-lg overflow-hidden">
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Thiruvalluvar_Statue%2C_Kanyakumari.jpg/800px-Thiruvalluvar_Statue%2C_Kanyakumari.jpg" 
+            alt="Thiruvalluvar Statue at Kanyakumari" 
+            className="w-full h-64 object-cover"
+          />
         </div>
 
         {/* Question Display */}

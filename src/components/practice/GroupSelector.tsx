@@ -13,7 +13,7 @@ export function GroupSelector({ selectedGroup, groupCounts, onGroupChange }: Gro
   const groups: GroupType[] = [Group.II, Group.III];
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex items-center gap-2">
       <label className="text-sm font-medium text-gray-700 whitespace-nowrap">குழு:</label>
       <ToggleGroup
         type="single"

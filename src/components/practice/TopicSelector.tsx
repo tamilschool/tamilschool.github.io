@@ -24,7 +24,7 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
   ];
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex items-center gap-2">
       <label className="text-sm font-medium text-gray-700 whitespace-nowrap">பொருள்:</label>
       <Select value={selectedTopic} onValueChange={onTopicChange}>
         <SelectTrigger className="w-auto min-w-[140px] bg-white border-gray-300 border">
