@@ -82,6 +82,12 @@
 - [ ] Update `QuestionView` to remove header and apply new background _(status: not-started)_
 - [ ] Restyle `KuralDisplay` to neutral card _(status: not-started)_
 
+## UI tone refresh
+
+- [x] Soften practice selectors _(status: in-progress)_
+- [x] Restyle timer button _(status: in-progress)_
+- [x] Restyle navigation buttons _(status: in-progress)_
+
 ## Phase 4: Practice Mode
 
 - [ ] Create `/src/features/practice/PracticeApp.tsx`

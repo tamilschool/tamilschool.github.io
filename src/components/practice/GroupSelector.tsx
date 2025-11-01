@@ -20,7 +20,7 @@ export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorPro
         onValueChange={(value) => {
           if (value) onGroupChange(value as GroupType);
         }}
-        className="border border-gray-300 rounded-md p-1 flex items-center gap-1 w-full h-full"
+        className="flex w-full h-full items-center gap-2 rounded-xl border border-slate-200 bg-white p-1 shadow-sm"
       >
         {groups.map((group) => {
           const display = GroupDisplay[group];
@@ -29,7 +29,7 @@ export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorPro
               key={group}
               value={group}
               aria-label={`${display.tamil} (${display.english})`}
-              className="flex-1 h-full px-3 text-sm font-medium flex items-center justify-center data-[state=on]:bg-blue-600 data-[state=on]:text-white"
+              className="flex-1 h-10 rounded-lg border border-transparent px-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 data-[state=on]:bg-sky-500 data-[state=on]:text-white data-[state=on]:shadow-sm"
             >
               {display.tamil}
             </ToggleGroupItem>

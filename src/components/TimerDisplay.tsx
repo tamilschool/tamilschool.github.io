@@ -32,23 +32,23 @@ export function TimerDisplay({
     ? formatTime(time)
     : 'தொடங்கு';
 
+  const baseClasses = "min-w-[112px] h-10 rounded-full px-5 text-sm font-semibold transition-colors flex items-center justify-center focus-visible:ring-2 focus-visible:ring-offset-0";
+  const stateClasses = isExpired
+    ? "bg-amber-500 text-white hover:bg-amber-600 focus-visible:ring-amber-200 shadow-[0_0_0_1px_rgba(251,191,36,0.35)]"
+    : isPaused
+    ? "bg-slate-400 text-white hover:bg-slate-500 focus-visible:ring-slate-300 shadow-[0_0_0_1px_rgba(148,163,184,0.35)]"
+    : isLive
+    ? "bg-emerald-500 text-white hover:bg-emerald-600 focus-visible:ring-emerald-200 shadow-[0_0_0_1px_rgba(16,185,129,0.35)]"
+    : "border border-emerald-200 bg-white text-emerald-600 hover:bg-emerald-50 focus-visible:ring-emerald-100 shadow-[0_0_0_1px_rgba(16,185,129,0.25)]";
+
   return (
     <div className="flex items-center gap-0">
-      <Button
-        className={`min-w-[100px] h-10 px-3 text-sm font-bold rounded-md flex items-center justify-center ${
-          isExpired
-            ? 'bg-red-600 hover:bg-red-700'
-            : isPaused
-            ? 'bg-gray-500 hover:bg-gray-600'
-            : isLive && !isPaused
-            ? 'bg-green-600 hover:bg-green-700'
-            : 'bg-green-600 hover:bg-green-700'
-        } text-white`}
-        onClick={onToggle}
-      >
+      <Button className={`${baseClasses} ${stateClasses}`} onClick={onToggle}>
         {buttonText}
         {isLive && count !== undefined && count > 0 && (
-          <> {count}</>
+          <span className="ml-1 rounded-full bg-white/20 px-2 text-xs font-semibold text-white">
+            {count}
+          </span>
         )}
       </Button>
     </div>
