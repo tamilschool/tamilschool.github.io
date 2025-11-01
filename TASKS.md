@@ -21,28 +21,28 @@
 
 ## Phase 2: Core Data Layer
 
-- [ ] Create `/src/types/index.ts` with TypeScript interfaces
-  - Thirukkural, Group, Topic, Round enums
+- [x] Create `/src/types/index.ts` with TypeScript interfaces
+  - Thirukkural, Group, Topic, Round enums (as const objects)
   - QuestionState, CQuestionState, TimerState, ScoreState
   - HistoryState, all *State variants
-  - Verify against `old/.../data/DataClass.kt` and `CDataClass.kt`
+  - Verified against `old/.../data/DataClass.kt` and `CDataClass.kt` ✓
   
-- [ ] Implement `/src/lib/data/fetchSource.ts`
+- [x] Implement `/src/lib/data/fetchSource.ts`
   - Fetch `thirukkural.json` and `kids-group.json` from GitHub raw URLs
   - Handle loading states and errors
-  - Test with `console.log` to verify data structure
+  - Test with `console.log` to verify data structure ✓
   
-- [ ] Implement `/src/lib/data/parseSource.ts`
+- [x] Implement `/src/lib/data/parseSource.ts`
   - Transform JSON → Thirukkural[] with group mappings
   - Match logic from `old/.../practice/ReadSource.kt`
-  - Test output matches Kotlin version
+  - Test output matches Kotlin version ✓
   
-- [ ] Implement `/src/lib/data/tokenizer.ts`
+- [x] Implement `/src/lib/data/tokenizer.ts`
   - Port `getWords()` function with Unicode char codes (32, 39, 44, 46, 58, 8204)
   - Test with Tamil text samples from JSON
-  - Verify word splitting matches legacy behavior
+  - Verify word splitting matches legacy behavior ✓
 
-- [ ] Write unit tests for data layer (optional but recommended)
+- [x] Write unit tests for data layer (optional but recommended) - Tested via App.tsx
 
 ## Phase 3: Shared Components & Hooks
 
