@@ -9,6 +9,7 @@ export interface TimerDisplayProps {
   time: number; // seconds
   isLive: boolean;
   isPaused: boolean;
+  count?: number; // Optional answered questions count
   onToggle: () => void;
   onReset: () => void;
 }
@@ -23,6 +24,7 @@ export function TimerDisplay({
   time,
   isLive,
   isPaused,
+  count,
   onToggle,
   onReset,
 }: TimerDisplayProps) {
@@ -53,6 +55,11 @@ export function TimerDisplay({
             <Play className="h-4 w-4 mr-1" />
             {isExpired ? 'Restart' : 'Start'}
           </>
+        )}
+        {isLive && count !== undefined && count > 0 && (
+          <span className="ml-2 bg-white text-blue-600 px-2 py-0.5 rounded text-xs font-semibold">
+            {count}
+          </span>
         )}
       </Button>
 
