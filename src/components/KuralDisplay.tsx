@@ -69,7 +69,7 @@ export function KuralDisplay({
 
       <CardContent
         className={cn(
-          'px-4 py-4 space-y-2 text-md font-semibold leading-relaxed',
+          'px-4 py-4 space-y-2 font-semibold leading-relaxed',
           styles.body,
         )}
       >
@@ -90,12 +90,12 @@ export function KuralDisplay({
                 index > 0 && styles.headerBorder,
               )}
             >
-              <p className={cn('text-base font-medium leading-relaxed', styles.meaning)}>
+              <p className={cn('leading-relaxed', styles.meaning)}>
                 {getMeaning(thirukkural, meaning)}
               </p>
               <div
                 className={cn(
-                  'text-xs font-semibold uppercase tracking-wide text-right',
+                  'text-xs italic uppercase tracking-wide text-right',
                   styles.credit,
                 )}
               >
