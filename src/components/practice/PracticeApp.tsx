@@ -17,11 +17,11 @@ export interface PracticeAppProps {
   onSwitchMode?: () => void;
 }
 
-export function PracticeApp({}: PracticeAppProps) {
+export function PracticeApp({ }: PracticeAppProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
-  
+
   // User selections
   const [selectedGroup, setSelectedGroup] = useState<GroupType>(Group.II);
   const [selectedTopic, setSelectedTopic] = useState<TopicType>(Topic.FirstWord);
@@ -70,10 +70,10 @@ export function PracticeApp({}: PracticeAppProps) {
       try {
         const { thirukkuralData, groupsData } = await fetchSource();
         const parsedKurals = parseSource(thirukkuralData, groupsData);
-        
+
         console.log('✓ Practice Mode: Data loaded successfully');
         console.log(`Total kurals: ${parsedKurals.length}`);
-        
+
         setAllKurals(parsedKurals);
         setLoaded(true);
       } catch (err) {
@@ -178,7 +178,7 @@ export function PracticeApp({}: PracticeAppProps) {
   // Navigation handlers
   const handleNext = () => {
     setShowAnswer(false);
-    
+
     switch (selectedTopic) {
       case Topic.Athikaram:
         athikaramNav.goNext();
@@ -205,7 +205,7 @@ export function PracticeApp({}: PracticeAppProps) {
 
   const handlePrevious = () => {
     setShowAnswer(false);
-    
+
     switch (selectedTopic) {
       case Topic.Athikaram:
         athikaramNav.goPrevious();
@@ -332,18 +332,19 @@ export function PracticeApp({}: PracticeAppProps) {
         )}
 
         {/* Timer and Navigation */}
-        <div className="flex gap-3 items-center mb-3">
-          <div className="flex-shrink-0">
-            <TimerDisplay
-              time={timer.time}
-              isLive={timer.isLive}
-              isPaused={timer.isPaused}
-              count={timer.count}
-              onToggle={handleTimerClick}
-              onReset={() => resetTimer(true)}
-            />
-          </div>
-          {selectedTopic !== Topic.AllKurals && (
+        {selectedTopic !== Topic.AllKurals && (
+          <div className="flex gap-3 items-center mb-3">
+            <div className="flex-shrink-0">
+              <TimerDisplay
+                time={timer.time}
+                isLive={timer.isLive}
+                isPaused={timer.isPaused}
+                count={timer.count}
+                onToggle={handleTimerClick}
+                onReset={() => resetTimer(true)}
+              />
+            </div>
+
             <div className="flex-1">
               <NavigationControls
                 isLive={timer.isLive && timer.time > 0}
@@ -352,27 +353,20 @@ export function PracticeApp({}: PracticeAppProps) {
                 onShowAnswer={() => setShowAnswer(!showAnswer)}
               />
             </div>
-          )}
-        </div>
-
-        {/* Thiruvalluvar Statue Image */}
-        <div className="mb-3 rounded-lg overflow-hidden">
-          <img 
-            src="thiruvalluvar.jpg" 
-            alt="Thiruvalluvar Statue at Kanyakumari" 
-            className="w-full h-64 object-cover"
-          />
-        </div>
+          </div>
+        )}
 
         {/* Question Display */}
-        {!timer.isLive ? (
-          <div className="h-96 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-blue-300">
-            <p className="text-2xl font-semibold text-blue-600 mb-4">தொடங்குக</p>
-            <p className="text-lg text-blue-500">பயிற்சியை தொடங்க பச்சை பொத்தானை அழுத்தவும்</p>
+        {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
+          <div className="mb-3 rounded-lg overflow-hidden">
+            <img
+              src="thiruvalluvar.jpg"
+              alt="Thiruvalluvar Statue at Kanyakumari"
+              className="w-full h-64 object-cover"
+            />
           </div>
         ) : selectedTopic === Topic.AllKurals ? (
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold mb-4">அனைத்து குறள்கள்</h2>
             {currentKurals.map(kural => (
               <KuralDisplay
                 key={kural.kuralNo}
