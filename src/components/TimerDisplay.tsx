@@ -48,7 +48,8 @@ export function TimerDisplay({
         background: `linear-gradient(${trackColor}, ${trackColor})`
       };
 
-  const buttonBase = 'min-w-[112px] h-full rounded-lg border border-slate-200 bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0';
+  // Keep hover background subtle/white to avoid Button variant hover (which can be darker)
+  const buttonBase = 'min-w-[112px] h-full rounded-lg border border-slate-200 bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:bg-sky-100 hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0';
   const stateClasses = isExpired
     ? 'focus-visible:ring-amber-200'
     : isPaused
@@ -71,7 +72,7 @@ export function TimerDisplay({
         style={borderStyle}
       >
         <Button
-          className={`${buttonBase} ${stateClasses} ${activeTextClass}`}
+          className={`${buttonBase} ${stateClasses} ${activeTextClass} hover:border-sky-400 hover:text-sky-600`}
           onClick={onToggle}
         >
           {buttonText}
