@@ -19,7 +19,7 @@ export function NavigationControls({
   rightCount,
 }: NavigationControlsProps) {
   const baseNavButton = "group flex-1 h-10 rounded-lg border border-slate-200 bg-white hover:bg-sky-100 text-slate-600 transition-colors hover:border-sky-400 hover:text-sky-600 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-sky-200 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400";
-  const answerActiveClasses = "border-transparent bg-amber-500 text-white shadow-[0_0_0_1px_rgba(251,191,36,0.28)] hover:bg-amber-600 focus-visible:ring-amber-200";
+  const answerActiveClasses = "border-transparent bg-amber-500 text-white shadow-[0_0_0_1px_rgba(251,191,36,0.28)] hover:bg-amber-600 hover:text-white focus-visible:ring-amber-200";
   const leftBadge = (typeof leftCount === 'number' ? leftCount : null);
   const rightBadge = (typeof rightCount === 'number' ? rightCount : null);
   return (
@@ -39,7 +39,7 @@ export function NavigationControls({
       <Button
         onClick={onShowAnswer}
         disabled={!isLive}
-        className={`${baseNavButton} ${isLive ? answerActiveClasses : ''} text-sm font-semibold`}
+        className={`${baseNavButton} ${isLive ? answerActiveClasses : ''} text-sm `}
       >
         பதில்
       </Button>
