@@ -375,12 +375,13 @@ export function PracticeApp({}: PracticeAppProps) {
                 </div>
               ) : selectedTopic === Topic.AllKurals ? (
                 <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col gap-2 overflow-y-auto pr-1 min-h-0">
-                  {currentKurals.map((kural) => (
+                  {currentKurals.map((kural, idx) => (
                     <KuralDisplay
                       key={kural.kuralNo}
                       thirukkural={kural}
                       selectedMeanings={selectedMeanings}
                       variant="default"
+                      index={idx + 1}
                     />
                   ))}
                 </div>

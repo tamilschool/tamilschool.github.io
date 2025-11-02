@@ -11,12 +11,15 @@ export interface KuralDisplayProps {
   thirukkural: Thirukkural;
   selectedMeanings: Set<KuralMeaning>;
   variant?: 'default' | 'success' | 'secondary';
+  /** Optional index to show (only used in AllKurals list) */
+  index?: number;
 }
 
 export function KuralDisplay({
   thirukkural,
   selectedMeanings,
   variant = 'default',
+  index,
 }: KuralDisplayProps) {
   const variantStyles = {
     default: {
@@ -54,12 +57,19 @@ export function KuralDisplay({
     <Card className={cn('mb-3 rounded-xl', styles.container)}>
       <CardHeader
         className={cn(
-          'flex flex-row items-start justify-between space-y-0 px-4 py-3 border-b',
+          'flex flex-row items-center justify-between space-y-0 px-4 py-3 border-b',
           styles.headerBorder,
         )}
       >
-        <div className={cn('leading-snug', styles.heading)}>
-          {thirukkural.athikaram}
+        <div className="flex items-center gap-3">
+          {typeof index === 'number' && (
+            <div className="flex-shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-md bg-slate-100 text-xs font-semibold text-slate-600">
+              {index}
+            </div>
+          )}
+          <div className={cn('leading-snug', styles.heading)}>
+            {thirukkural.athikaram}
+          </div>
         </div>
         <div className={cn('text-xs flex flex-col text-right gap-1 font-medium', styles.meta)}>
           <span>அதிகாரம் : {thirukkural.athikaramNo}</span>
