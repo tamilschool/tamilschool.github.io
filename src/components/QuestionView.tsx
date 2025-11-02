@@ -90,7 +90,7 @@ export function QuestionView({
       </div>
 
       {showAnswer && (
-        <div className="space-y-4">
+        <div className="flex flex-1 flex-col gap-4 overflow-y-auto pr-1 pb-1 min-h-0 max-h-[calc(100vh-18rem)] sm:max-h-[calc(100vh-17rem)] md:max-h-[calc(100vh-16rem)] lg:max-h-[calc(100vh-15rem)]">
           {currentQuestion.answers?.length ? (
             currentQuestion.answers.map((kural) => (
               <KuralDisplay

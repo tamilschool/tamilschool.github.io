@@ -11,13 +11,18 @@ import { TopicSelector } from './TopicSelector';
 import { ScholarSelector } from './ScholarSelector';
 import { NavigationControls } from './NavigationControls';
 import { Group, Topic, KuralMeaning } from '@/types';
-import type { Thirukkural, Group as GroupType, Topic as TopicType, KuralMeaning as KuralMeaningType } from '@/types';
+import type {
+  Thirukkural,
+  Group as GroupType,
+  Topic as TopicType,
+  KuralMeaning as KuralMeaningType,
+} from '@/types';
 
 export interface PracticeAppProps {
   onSwitchMode?: () => void;
 }
 
-export function PracticeApp({ }: PracticeAppProps) {
+export function PracticeApp({}: PracticeAppProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
@@ -88,24 +93,22 @@ export function PracticeApp({ }: PracticeAppProps) {
   useEffect(() => {
     if (!loaded || allKurals.length === 0) return;
 
-    const filteredKurals = allKurals.filter(k => k.group.includes(selectedGroup));
+    const filteredKurals = allKurals.filter((k) => k.group.includes(selectedGroup));
     setCurrentKurals(filteredKurals);
 
     // Extract unique athikarams
-    const uniqueAthikarams = Array.from(
-      new Set(filteredKurals.map(k => k.athikaram))
-    ).sort();
+    const uniqueAthikarams = Array.from(new Set(filteredKurals.map((k) => k.athikaram))).sort();
     setAthikarams(uniqueAthikarams);
 
     // Extract unique first words
     const uniqueFirstWords = Array.from(
-      new Set(filteredKurals.map(k => k.words[0]).filter(Boolean))
+      new Set(filteredKurals.map((k) => k.words[0]).filter(Boolean))
     ).sort();
     setFirstWords(uniqueFirstWords);
 
     // Extract unique last words
     const uniqueLastWords = Array.from(
-      new Set(filteredKurals.map(k => k.words[k.words.length - 1]).filter(Boolean))
+      new Set(filteredKurals.map((k) => k.words[k.words.length - 1]).filter(Boolean))
     ).sort();
     setLastWords(uniqueLastWords);
 
@@ -116,6 +119,18 @@ export function PracticeApp({ }: PracticeAppProps) {
       lastWords: uniqueLastWords.length,
     });
   }, [loaded, selectedGroup, allKurals]);
+
+  const resetTimer = (startLive: boolean) => {
+    timer.reset();
+    setShowAnswer(false);
+    athikaramNav.clearAnswers();
+    kuralNav.clearAnswers();
+    firstWordNav.clearAnswers();
+    lastWordNav.clearAnswers();
+    if (startLive) {
+      timer.start();
+    }
+  };
 
   // Handle group change
   const handleGroupChange = (group: GroupType) => {
@@ -146,36 +161,18 @@ export function PracticeApp({ }: PracticeAppProps) {
     setSelectedMeanings(newSet);
   };
 
-  // Timer handlers
-  const resetTimer = (startLive: boolean) => {
-    timer.reset();
-    setShowAnswer(false);
-    athikaramNav.clearAnswers();
-    kuralNav.clearAnswers();
-    firstWordNav.clearAnswers();
-    lastWordNav.clearAnswers();
-    if (startLive) {
-      timer.start();
-    }
-  };
-
   const handleTimerClick = () => {
     if (timer.isLive && timer.time <= 0) {
-      // Restart
       resetTimer(true);
     } else if (timer.isLive && timer.isPaused) {
-      // Resume
       timer.resume();
     } else if (timer.isLive && !timer.isPaused) {
-      // Pause
       timer.pause();
     } else {
-      // Start
       timer.start();
     }
   };
 
-  // Navigation handlers
   const handleNext = () => {
     setShowAnswer(false);
 
@@ -198,7 +195,6 @@ export function PracticeApp({ }: PracticeAppProps) {
         timer.incrementCount();
         break;
       case Topic.AllKurals:
-        // AllKurals shows all kurals, no navigation
         break;
     }
   };
@@ -221,17 +217,15 @@ export function PracticeApp({ }: PracticeAppProps) {
         lastWordNav.goPrevious();
         break;
       case Topic.AllKurals:
-        // AllKurals shows all kurals, no navigation
         break;
     }
   };
 
-  // Get current question data based on topic
   const getCurrentQuestion = () => {
     switch (selectedTopic) {
       case Topic.Athikaram: {
         const currentAthikaram = athikaramNav.current;
-        const kuralsForAthikaram = currentKurals.filter(k => k.athikaram === currentAthikaram);
+        const kuralsForAthikaram = currentKurals.filter((k) => k.athikaram === currentAthikaram);
         return {
           athikaram: currentAthikaram,
           answers: kuralsForAthikaram,
@@ -239,7 +233,7 @@ export function PracticeApp({ }: PracticeAppProps) {
       }
       case Topic.FirstWord: {
         const currentWord = firstWordNav.current;
-        const kuralsForWord = currentKurals.filter(k => k.words[0] === currentWord);
+        const kuralsForWord = currentKurals.filter((k) => k.words[0] === currentWord);
         return {
           word: currentWord,
           answers: kuralsForWord,
@@ -247,7 +241,9 @@ export function PracticeApp({ }: PracticeAppProps) {
       }
       case Topic.LastWord: {
         const currentWord = lastWordNav.current;
-        const kuralsForWord = currentKurals.filter(k => k.words[k.words.length - 1] === currentWord);
+        const kuralsForWord = currentKurals.filter(
+          (k) => k.words[k.words.length - 1] === currentWord
+        );
         return {
           word: currentWord,
           answers: kuralsForWord,
@@ -261,16 +257,14 @@ export function PracticeApp({ }: PracticeAppProps) {
         };
       }
       case Topic.AllKurals:
-        // AllKurals shows all kurals
         return undefined;
     }
   };
 
-  // Group counts for display
   const groupCounts: Record<GroupType, number> = {
-    [Group.I]: allKurals.filter(k => k.group.includes(Group.I)).length,
-    [Group.II]: allKurals.filter(k => k.group.includes(Group.II)).length,
-    [Group.III]: allKurals.filter(k => k.group.includes(Group.III)).length,
+    [Group.I]: allKurals.filter((k) => k.group.includes(Group.I)).length,
+    [Group.II]: allKurals.filter((k) => k.group.includes(Group.II)).length,
+    [Group.III]: allKurals.filter((k) => k.group.includes(Group.III)).length,
   };
 
   const totalsByTopic: Record<TopicType, number> = {
@@ -286,13 +280,15 @@ export function PracticeApp({ }: PracticeAppProps) {
   const leftCount = timer.count;
   const rightCount = Math.max(totalForTopic - leftCount - 1, 0);
   const showTimerControls = selectedTopic !== Topic.AllKurals;
-  const showScholarSelection = (timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.Kural)) || selectedTopic === Topic.AllKurals;
+  const showScholarSelection =
+    (timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.Kural)) ||
+    selectedTopic === Topic.AllKurals;
 
   if (!loaded) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Loading திருக்குறள் பயிற்சி...</h1>
+          <h1 className="mb-4 text-2xl font-bold">Loading திருக்குறள் பயிற்சி...</h1>
           <p className="text-muted-foreground">Fetching data from GitHub</p>
         </div>
       </div>
@@ -301,9 +297,9 @@ export function PracticeApp({ }: PracticeAppProps) {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center text-destructive">
-          <h1 className="text-2xl font-bold mb-4">Error</h1>
+          <h1 className="mb-4 text-2xl font-bold">Error</h1>
           <p>{error}</p>
         </div>
       </div>
@@ -312,101 +308,98 @@ export function PracticeApp({ }: PracticeAppProps) {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 pb-[calc(env(safe-area-inset-bottom)+7.5rem)] md:pb-6">
-      {/* Light Blue Header */}
-      <div className="bg-blue-100 py-4 px-3 mb-0">
-        <h1 className="text-xl font-extrabold text-blue-800 text-center">திருக்குறள் பயிற்சி</h1>
-      </div>
-
-      {/* Control Panel */}
-      <div className="px-3 py-3">
-        <div className="hidden md:flex flex-col items-center gap-2 mb-4">
-          <div className="flex w-full max-w-3xl items-stretch gap-3">
-            <div className="flex-1">
-              <GroupSelector
-                selectedGroup={selectedGroup}
-                groupCounts={groupCounts}
-                onGroupChange={handleGroupChange}
-              />
-            </div>
-            {showTimerControls && (
-              <div className="flex items-center justify-center">
-                <TimerDisplay
-                  time={timer.time}
-                  isLive={timer.isLive}
-                  isPaused={timer.isPaused}
-                  totalTime={timer.totalTime}
-                  onToggle={handleTimerClick}
-                  onReset={() => resetTimer(true)}
-                />
-              </div>
-            )}
-            <div className="flex-1">
-              <TopicSelector
-                selectedTopic={selectedTopic}
-                onTopicChange={handleTopicChange}
-              />
-            </div>
-          </div>
-
-          {showTimerControls && (
-            <div className="w-full max-w-3xl">
-              <NavigationControls
-                isLive={timer.isLive && timer.time > 0}
-                onPrevious={handlePrevious}
-                onNext={handleNext}
-                onShowAnswer={() => setShowAnswer(!showAnswer)}
-                leftCount={leftCount}
-                rightCount={rightCount}
-              />
-            </div>
-          )}
-
-          {showScholarSelection && (
-            <div className="w-full max-w-3xl">
-              <ScholarSelector
-                selectedMeanings={selectedMeanings}
-                onMeaningToggle={handleMeaningToggle}
-              />
-            </div>
-          )}
+      <div className="flex min-h-screen flex-col bg-gray-50 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:h-screen md:overflow-hidden md:pb-6">
+        <div className="bg-blue-100 px-3 py-4">
+          <h1 className="text-center text-xl font-extrabold text-blue-800">திருக்குறள் பயிற்சி</h1>
         </div>
 
-        {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
-        {/* Question Display */}
-        {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
-          <div className="mb-3 rounded-lg overflow-hidden mx-auto w-full max-w-3xl">
-            <img
-              src="thiruvalluvar.jpg"
-              alt="Thiruvalluvar Statue at Kanyakumari"
-              className="w-full h-64 object-cover"
-            />
-          </div>
-        ) : selectedTopic === Topic.AllKurals ? (
-          <div className="space-y-2 mx-auto w-full max-w-3xl">
-            {currentKurals.map(kural => (
-              <KuralDisplay
-                key={kural.kuralNo}
-                thirukkural={kural}
-                selectedMeanings={selectedMeanings}
-                variant="default"
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="mx-auto w-full max-w-3xl">
-            <QuestionView
-              topic={selectedTopic}
-              selectedMeanings={selectedMeanings}
-              showAnswer={showAnswer}
-              currentQuestion={getCurrentQuestion()}
-            />
-          </div>
-        )}
-      </div>
-    </div>
+        <div className="flex-1 min-h-0 px-3 py-3">
+          <div className="mx-auto flex h-full w-full max-w-5xl flex-col min-h-0">
+            <div className="mb-4 hidden flex-col items-center gap-2 md:flex">
+              <div className="mx-auto flex w-full max-w-3xl items-stretch gap-3">
+                <div className="flex-1">
+                  <GroupSelector
+                    selectedGroup={selectedGroup}
+                    groupCounts={groupCounts}
+                    onGroupChange={handleGroupChange}
+                  />
+                </div>
+                {showTimerControls && (
+                  <div className="flex items-center justify-center">
+                    <TimerDisplay
+                      time={timer.time}
+                      isLive={timer.isLive}
+                      isPaused={timer.isPaused}
+                      totalTime={timer.totalTime}
+                      onToggle={handleTimerClick}
+                      onReset={() => resetTimer(true)}
+                    />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <TopicSelector selectedTopic={selectedTopic} onTopicChange={handleTopicChange} />
+                </div>
+              </div>
 
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur">
+              {showTimerControls && (
+                <div className="mx-auto w-full max-w-3xl">
+                  <NavigationControls
+                    isLive={timer.isLive && timer.time > 0}
+                    onPrevious={handlePrevious}
+                    onNext={handleNext}
+                    onShowAnswer={() => setShowAnswer(!showAnswer)}
+                    leftCount={leftCount}
+                    rightCount={rightCount}
+                  />
+                </div>
+              )}
+
+              {showScholarSelection && (
+                <div className="mx-auto w-full max-w-3xl">
+                  <ScholarSelector
+                    selectedMeanings={selectedMeanings}
+                    onMeaningToggle={handleMeaningToggle}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="flex-1 min-h-0 overflow-hidden">
+              {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
+                <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-lg">
+                  <img
+                    src="thiruvalluvar.jpg"
+                    alt="Thiruvalluvar Statue at Kanyakumari"
+                    className="h-128 w-full object-cover"
+                  />
+                </div>
+              ) : selectedTopic === Topic.AllKurals ? (
+                <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col gap-2 overflow-y-auto pr-1 min-h-0">
+                  {currentKurals.map((kural) => (
+                    <KuralDisplay
+                      key={kural.kuralNo}
+                      thirukkural={kural}
+                      selectedMeanings={selectedMeanings}
+                      variant="default"
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col overflow-hidden min-h-0">
+                  <QuestionView
+                    topic={selectedTopic}
+                    selectedMeanings={selectedMeanings}
+                    showAnswer={showAnswer}
+                    currentQuestion={getCurrentQuestion()}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur md:hidden">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
           {showScholarSelection && (
             <div className="w-full">
@@ -426,7 +419,7 @@ export function PracticeApp({ }: PracticeAppProps) {
               />
             </div>
             {showTimerControls && (
-              <div className="order-2 flex items-center justify-center flex-none min-w-[116px]">
+              <div className="order-2 flex min-w-[116px] flex-none items-center justify-center">
                 <TimerDisplay
                   time={timer.time}
                   isLive={timer.isLive}
@@ -438,10 +431,7 @@ export function PracticeApp({ }: PracticeAppProps) {
               </div>
             )}
             <div className={`${showTimerControls ? 'order-3' : 'order-2'} flex-1 min-w-[160px]`}>
-              <TopicSelector
-                selectedTopic={selectedTopic}
-                onTopicChange={handleTopicChange}
-              />
+              <TopicSelector selectedTopic={selectedTopic} onTopicChange={handleTopicChange} />
             </div>
           </div>
 
