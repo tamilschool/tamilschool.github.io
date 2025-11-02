@@ -365,7 +365,7 @@ export function PracticeApp({ }: PracticeAppProps) {
         )}
 
         {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
-        {(timer.isLive && selectedTopic === Topic.Porul || selectedTopic === Topic.AllKurals) && (
+        {(timer.isLive && selectedTopic === Topic.Porul || selectedTopic === Topic.Kural || selectedTopic === Topic.AllKurals) && (
           <div className="mb-3">
             <ScholarSelector
               selectedMeanings={selectedMeanings}
