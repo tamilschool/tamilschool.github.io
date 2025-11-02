@@ -286,6 +286,7 @@ export function PracticeApp({ }: PracticeAppProps) {
   const leftCount = timer.count;
   const rightCount = Math.max(totalForTopic - leftCount - 1, 0);
   const showTimerControls = selectedTopic !== Topic.AllKurals;
+  const showScholarSelection = (timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.Kural)) || selectedTopic === Topic.AllKurals;
 
   if (!loaded) {
     return (
@@ -319,28 +320,17 @@ export function PracticeApp({ }: PracticeAppProps) {
 
       {/* Control Panel */}
       <div className="px-3 py-3">
-        {/* Group and Topic Selectors */}
-        <div className="hidden md:flex gap-3 mb-3 h-12">
-          <div className="flex-1 h-full">
-            <GroupSelector
-              selectedGroup={selectedGroup}
-              groupCounts={groupCounts}
-              onGroupChange={handleGroupChange}
-            />
-          </div>
-          <div className="flex-1 h-full">
-            <TopicSelector
-              selectedTopic={selectedTopic}
-              onTopicChange={handleTopicChange}
-            />
-          </div>
-        </div>
-
-        {/* Timer and Navigation (desktop) */}
-        {selectedTopic !== Topic.AllKurals && (
-          <div className="hidden md:flex items-center gap-2 mb-3">
-            <div className="flex-shrink-0">
-              <div className="flex w-full justify-center">
+        <div className="hidden md:flex flex-col items-center gap-2 mb-4">
+          <div className="flex w-full max-w-3xl items-stretch gap-3">
+            <div className="flex-1">
+              <GroupSelector
+                selectedGroup={selectedGroup}
+                groupCounts={groupCounts}
+                onGroupChange={handleGroupChange}
+              />
+            </div>
+            {showTimerControls && (
+              <div className="flex items-center justify-center">
                 <TimerDisplay
                   time={timer.time}
                   isLive={timer.isLive}
@@ -350,9 +340,17 @@ export function PracticeApp({ }: PracticeAppProps) {
                   onReset={() => resetTimer(true)}
                 />
               </div>
-            </div>
-
+            )}
             <div className="flex-1">
+              <TopicSelector
+                selectedTopic={selectedTopic}
+                onTopicChange={handleTopicChange}
+              />
+            </div>
+          </div>
+
+          {showTimerControls && (
+            <div className="w-full max-w-3xl">
               <NavigationControls
                 isLive={timer.isLive && timer.time > 0}
                 onPrevious={handlePrevious}
@@ -362,22 +360,22 @@ export function PracticeApp({ }: PracticeAppProps) {
                 rightCount={rightCount}
               />
             </div>
-          </div>
-        )}
+          )}
+
+          {showScholarSelection && (
+            <div className="w-full max-w-3xl">
+              <ScholarSelector
+                selectedMeanings={selectedMeanings}
+                onMeaningToggle={handleMeaningToggle}
+              />
+            </div>
+          )}
+        </div>
 
         {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
-        {(timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.Kural) || selectedTopic === Topic.AllKurals) && (
-          <div className="mb-3">
-            <ScholarSelector
-              selectedMeanings={selectedMeanings}
-              onMeaningToggle={handleMeaningToggle}
-            />
-          </div>
-        )}
-
         {/* Question Display */}
         {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
-          <div className="mb-3 rounded-lg overflow-hidden">
+          <div className="mb-3 rounded-lg overflow-hidden mx-auto w-full max-w-3xl">
             <img
               src="thiruvalluvar.jpg"
               alt="Thiruvalluvar Statue at Kanyakumari"
@@ -385,7 +383,7 @@ export function PracticeApp({ }: PracticeAppProps) {
             />
           </div>
         ) : selectedTopic === Topic.AllKurals ? (
-          <div className="space-y-2">
+          <div className="space-y-2 mx-auto w-full max-w-3xl">
             {currentKurals.map(kural => (
               <KuralDisplay
                 key={kural.kuralNo}
@@ -396,18 +394,29 @@ export function PracticeApp({ }: PracticeAppProps) {
             ))}
           </div>
         ) : (
-          <QuestionView
-            topic={selectedTopic}
-            selectedMeanings={selectedMeanings}
-            showAnswer={showAnswer}
-            currentQuestion={getCurrentQuestion()}
-          />
+          <div className="mx-auto w-full max-w-3xl">
+            <QuestionView
+              topic={selectedTopic}
+              selectedMeanings={selectedMeanings}
+              showAnswer={showAnswer}
+              currentQuestion={getCurrentQuestion()}
+            />
+          </div>
         )}
       </div>
     </div>
 
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
+          {showScholarSelection && (
+            <div className="w-full">
+              <ScholarSelector
+                selectedMeanings={selectedMeanings}
+                onMeaningToggle={handleMeaningToggle}
+              />
+            </div>
+          )}
+
           <div className="flex flex-wrap items-center gap-2">
             <div className="order-1 flex-1 min-w-[140px]">
               <GroupSelector
