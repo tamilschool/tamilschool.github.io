@@ -29,7 +29,9 @@ export function TimerDisplay({
 }: TimerDisplayProps) {
   const isExpired = time <= 0 && isLive;
 
-  const buttonText = isLive 
+  const buttonText = isExpired
+    ? 'மீண்டும்'
+    : isLive
     ? formatTime(time)
     : 'தொடங்கு';
 
