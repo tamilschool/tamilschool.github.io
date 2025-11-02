@@ -13,7 +13,7 @@ export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorPro
   const groups: GroupType[] = [Group.II, Group.III];
 
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full h-10">
       <ToggleGroup
         type="single"
         value={selectedGroup}
@@ -29,7 +29,7 @@ export function GroupSelector({ selectedGroup, onGroupChange }: GroupSelectorPro
               key={group}
               value={group}
               aria-label={`${display.tamil} (${display.english})`}
-              className="flex-1 h-10 rounded-lg border border-transparent px-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 data-[state=on]:bg-sky-500 data-[state=on]:text-white data-[state=on]:shadow-sm"
+              className="flex-1 h-8 rounded-xl border border-transparent px-2 text-sm text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 data-[state=on]:bg-sky-500 data-[state=on]:text-white data-[state=on]:shadow-sm"
             >
               {display.tamil}
             </ToggleGroupItem>

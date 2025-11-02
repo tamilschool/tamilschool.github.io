@@ -273,6 +273,20 @@ export function PracticeApp({ }: PracticeAppProps) {
     [Group.III]: allKurals.filter(k => k.group.includes(Group.III)).length,
   };
 
+  const totalsByTopic: Record<TopicType, number> = {
+    [Topic.Athikaram]: athikarams.length,
+    [Topic.Porul]: currentKurals.length,
+    [Topic.Kural]: currentKurals.length,
+    [Topic.FirstWord]: firstWords.length,
+    [Topic.LastWord]: lastWords.length,
+    [Topic.AllKurals]: currentKurals.length,
+  };
+
+  const totalForTopic = totalsByTopic[selectedTopic] ?? 0;
+  const leftCount = timer.count;
+  const rightCount = Math.max(totalForTopic - leftCount - 1, 0);
+  const showTimerControls = selectedTopic !== Topic.AllKurals;
+
   if (!loaded) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -296,7 +310,8 @@ export function PracticeApp({ }: PracticeAppProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <div className="min-h-screen bg-gray-50 pb-[calc(env(safe-area-inset-bottom)+7.5rem)] md:pb-6">
       {/* Light Blue Header */}
       <div className="bg-blue-100 py-4 px-3 mb-0">
         <h1 className="text-xl font-extrabold text-blue-800 text-center">திருக்குறள் பயிற்சி</h1>
@@ -305,7 +320,7 @@ export function PracticeApp({ }: PracticeAppProps) {
       {/* Control Panel */}
       <div className="px-3 py-3">
         {/* Group and Topic Selectors */}
-        <div className="flex gap-3 mb-3 h-12">
+        <div className="hidden md:flex gap-3 mb-3 h-12">
           <div className="flex-1 h-full">
             <GroupSelector
               selectedGroup={selectedGroup}
@@ -321,51 +336,37 @@ export function PracticeApp({ }: PracticeAppProps) {
           </div>
         </div>
 
-        {/* Timer and Navigation */}
+        {/* Timer and Navigation (desktop) */}
         {selectedTopic !== Topic.AllKurals && (
-          (() => {
-            const totalsByTopic: Record<TopicType, number> = {
-              [Topic.Athikaram]: athikarams.length,
-              [Topic.Porul]: currentKurals.length,
-              [Topic.Kural]: currentKurals.length,
-              [Topic.FirstWord]: firstWords.length,
-              [Topic.LastWord]: lastWords.length,
-              [Topic.AllKurals]: currentKurals.length,
-            };
-            const totalForTopic = totalsByTopic[selectedTopic] ?? 0;
-            const leftCount = timer.count;
-            const rightCount = Math.max(totalForTopic - leftCount - 1, 0);
-
-            return (
-              <div className="flex gap-2 items-center mb-3">
-                <div className="flex-shrink-0">
-                  <TimerDisplay
-                    time={timer.time}
-                    isLive={timer.isLive}
-                    isPaused={timer.isPaused}
-                    totalTime={timer.totalTime}
-                    onToggle={handleTimerClick}
-                    onReset={() => resetTimer(true)}
-                  />
-                </div>
-
-                <div className="flex-1">
-                  <NavigationControls
-                    isLive={timer.isLive && timer.time > 0}
-                    onPrevious={handlePrevious}
-                    onNext={handleNext}
-                    onShowAnswer={() => setShowAnswer(!showAnswer)}
-                    leftCount={leftCount}
-                    rightCount={rightCount}
-                  />
-                </div>
+          <div className="hidden md:flex items-center gap-2 mb-3">
+            <div className="flex-shrink-0">
+              <div className="flex w-full justify-center">
+                <TimerDisplay
+                  time={timer.time}
+                  isLive={timer.isLive}
+                  isPaused={timer.isPaused}
+                  totalTime={timer.totalTime}
+                  onToggle={handleTimerClick}
+                  onReset={() => resetTimer(true)}
+                />
               </div>
-            );
-          })()
+            </div>
+
+            <div className="flex-1">
+              <NavigationControls
+                isLive={timer.isLive && timer.time > 0}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                onShowAnswer={() => setShowAnswer(!showAnswer)}
+                leftCount={leftCount}
+                rightCount={rightCount}
+              />
+            </div>
+          </div>
         )}
 
         {/* Scholar Meanings Selection - Only show for Porul and AllKurals topics when timer is live */}
-        {(timer.isLive && selectedTopic === Topic.Porul || selectedTopic === Topic.Kural || selectedTopic === Topic.AllKurals) && (
+        {(timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.Kural) || selectedTopic === Topic.AllKurals) && (
           <div className="mb-3">
             <ScholarSelector
               selectedMeanings={selectedMeanings}
@@ -404,5 +405,51 @@ export function PracticeApp({ }: PracticeAppProps) {
         )}
       </div>
     </div>
+
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="order-1 flex-1 min-w-[140px]">
+              <GroupSelector
+                selectedGroup={selectedGroup}
+                groupCounts={groupCounts}
+                onGroupChange={handleGroupChange}
+              />
+            </div>
+            {showTimerControls && (
+              <div className="order-2 flex items-center justify-center flex-none min-w-[116px]">
+                <TimerDisplay
+                  time={timer.time}
+                  isLive={timer.isLive}
+                  isPaused={timer.isPaused}
+                  totalTime={timer.totalTime}
+                  onToggle={handleTimerClick}
+                  onReset={() => resetTimer(true)}
+                />
+              </div>
+            )}
+            <div className={`${showTimerControls ? 'order-3' : 'order-2'} flex-1 min-w-[160px]`}>
+              <TopicSelector
+                selectedTopic={selectedTopic}
+                onTopicChange={handleTopicChange}
+              />
+            </div>
+          </div>
+
+          {showTimerControls && (
+            <div className="order-4 w-full">
+              <NavigationControls
+                isLive={timer.isLive && timer.time > 0}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                onShowAnswer={() => setShowAnswer(!showAnswer)}
+                leftCount={leftCount}
+                rightCount={rightCount}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

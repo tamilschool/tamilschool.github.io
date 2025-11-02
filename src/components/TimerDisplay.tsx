@@ -46,7 +46,7 @@ export function TimerDisplay({
         background: `linear-gradient(${trackColor}, ${trackColor})`
       };
 
-  const buttonBase = 'min-w-[112px] h-10 rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-600 transition-colors shadow-sm hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0';
+  const buttonBase = 'min-w-[112px] h-full rounded-lg border border-slate-200 bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0';
   const stateClasses = isExpired
     ? 'focus-visible:ring-amber-200'
     : isPaused

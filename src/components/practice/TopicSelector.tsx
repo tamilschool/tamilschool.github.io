@@ -25,9 +25,9 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
   ];
 
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full h-full ">
       <Select value={selectedTopic} onValueChange={onTopicChange}>
-        <SelectTrigger className="h-full w-full rounded-xl border border-slate-200 bg-white px-4 pr-10 text-sm font-semibold text-slate-700 shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200">
+        <SelectTrigger className="h-full w-full border border-slate-200 bg-white px-2 pr-1 rounded-lg text-sm text-slate-700 shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200">
           <SelectValue placeholder="Topic" className="flex items-center" />
         </SelectTrigger>
         <SelectContent>
