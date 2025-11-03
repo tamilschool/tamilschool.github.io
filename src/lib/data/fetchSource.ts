@@ -2,7 +2,7 @@ import { DATA_SOURCE } from '@/types';
 import type { ThirukkuralCollection, GroupsCollection } from '@/types';
 
 /**
- * Fetches Thirukkural JSON data from GitHub raw URLs
+ * Loads Thirukkural JSON data from the local project copy
  * Reference: old/.../practice/PracticeApp.kt fetchSource()
  */
 export async function fetchSource(): Promise<{
@@ -10,36 +10,24 @@ export async function fetchSource(): Promise<{
   groupsData: GroupsCollection;
 }> {
   try {
-    console.log(`Fetching from: ${DATA_SOURCE.thirukkuralUrl}`);
-    console.log(`Fetching from: ${DATA_SOURCE.groupsUrl}`);
+    console.log(`Loading local data: ${DATA_SOURCE.thirukkuralPath}`);
+    console.log(`Loading local data: ${DATA_SOURCE.groupsPath}`);
 
-    const [thirukkuralResponse, groupsResponse] = await Promise.all([
-      fetch(DATA_SOURCE.thirukkuralUrl),
-      fetch(DATA_SOURCE.groupsUrl),
+    const [thirukkuralModule, groupsModule] = await Promise.all([
+      import('@/data/thirukkural.json'),
+      import('@/data/kids-group.json'),
     ]);
 
-    if (!thirukkuralResponse.ok) {
-      throw new Error(
-        `Failed to fetch thirukkural.json: ${thirukkuralResponse.statusText}`
-      );
-    }
-
-    if (!groupsResponse.ok) {
-      throw new Error(
-        `Failed to fetch kids-group.json: ${groupsResponse.statusText}`
-      );
-    }
-
     const thirukkuralData =
-      (await thirukkuralResponse.json()) as ThirukkuralCollection;
-    const groupsData = (await groupsResponse.json()) as GroupsCollection;
+      thirukkuralModule.default as ThirukkuralCollection;
+    const groupsData = groupsModule.default as GroupsCollection;
 
-    console.log(`Source: ${DATA_SOURCE.thirukkuralUrl} loaded`);
+    console.log('Source: local thirukkural.json loaded');
     console.log(`Total kurals: ${thirukkuralData.kural.length}`);
 
     return { thirukkuralData, groupsData };
   } catch (error) {
-    console.error('Error fetching source data:', error);
+    console.error('Error loading source data:', error);
     throw error;
   }
 }

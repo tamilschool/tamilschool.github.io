@@ -5,18 +5,8 @@
 // ============================================================================
 
 export const DATA_SOURCE = {
-  domain: 'https://raw.githubusercontent.com',
-  account: 'tamilschool/tamilschool.github.io',
-  path: 'main/src/main/resources/files',
-  get baseUrl() {
-    return `${this.domain}/${this.account}/${this.path}`;
-  },
-  get thirukkuralUrl() {
-    return `${this.baseUrl}/thirukkural.json`;
-  },
-  get groupsUrl() {
-    return `${this.baseUrl}/kids-group.json`;
-  },
+  thirukkuralPath: 'src/data/thirukkural.json',
+  groupsPath: 'src/data/kids-group.json',
 };
 
 export const MAX_QUESTIONS = 15;
