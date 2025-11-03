@@ -386,7 +386,7 @@ export function PracticeApp({}: PracticeAppProps) {
                   ))}
                 </div>
               ) : (
-                <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col overflow-hidden min-h-0">
+                <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col overflow-y-auto min-h-0">
                   <QuestionView
                     topic={selectedTopic}
                     selectedMeanings={selectedMeanings}
