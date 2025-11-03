@@ -308,7 +308,7 @@ export function PracticeApp({}: PracticeAppProps) {
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-gray-50 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:h-screen md:overflow-hidden md:pb-6">
+      <div className="flex min-h-screen flex-col bg-gray-50 pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:h-screen md:overflow-hidden md:pb-6">
         <div className="bg-blue-100 px-3 py-4">
           <h1 className="text-center text-xl font-extrabold text-blue-800">திருக்குறள் பயிற்சி</h1>
         </div>
