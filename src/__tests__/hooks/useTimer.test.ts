@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { useTimer } from '@/hooks/useTimer';
 import { renderHook, act } from '@testing-library/react';
-import { vi } from 'vitest';
 
 describe('useTimer Hook', () => {
   it('initializes with correct time', () => {

@@ -19,22 +19,30 @@ export function parseSource(
   const groupsMap = new Map<number, Group[]>();
 
   // Parse Group II kurals
-  groupsData.II.split(',').forEach((numStr) => {
-    const kuralNo = parseInt(numStr.trim());
-    if (!groupsMap.has(kuralNo)) {
-      groupsMap.set(kuralNo, []);
-    }
-    groupsMap.get(kuralNo)!.push(Group.II);
-  });
+  if (groupsData.II.trim()) {
+    groupsData.II.split(',').forEach((numStr) => {
+      const kuralNo = parseInt(numStr.trim());
+      if (!isNaN(kuralNo)) {
+        if (!groupsMap.has(kuralNo)) {
+          groupsMap.set(kuralNo, []);
+        }
+        groupsMap.get(kuralNo)!.push(Group.II);
+      }
+    });
+  }
 
   // Parse Group III kurals
-  groupsData.III.split(',').forEach((numStr) => {
-    const kuralNo = parseInt(numStr.trim());
-    if (!groupsMap.has(kuralNo)) {
-      groupsMap.set(kuralNo, []);
-    }
-    groupsMap.get(kuralNo)!.push(Group.III);
-  });
+  if (groupsData.III.trim()) {
+    groupsData.III.split(',').forEach((numStr) => {
+      const kuralNo = parseInt(numStr.trim());
+      if (!isNaN(kuralNo)) {
+        if (!groupsMap.has(kuralNo)) {
+          groupsMap.set(kuralNo, []);
+        }
+        groupsMap.get(kuralNo)!.push(Group.III);
+      }
+    });
+  }
 
   // Transform JSON to Thirukkural objects
   const thirukkurals: Thirukkural[] = thirukkuralData.kural.map((data) => {
