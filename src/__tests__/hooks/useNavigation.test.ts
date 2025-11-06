@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { useNavigation } from '@/hooks/useNavigation';
 import { renderHook, act } from '@testing-library/react';
 import { Group } from '@/types';
@@ -127,6 +127,7 @@ describe('useNavigation Hook', () => {
     });
 
     // Index should change after goNext
+    expect(result.current.index).not.toBe(initialIndex);
     expect(result.current.index).toBeGreaterThanOrEqual(0);
     expect(result.current.index).toBeLessThan(mockKurals.length);
   });

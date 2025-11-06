@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { QuestionView } from '@/components/QuestionView';
 import { Topic, KuralMeaning, Group } from '@/types';
@@ -101,8 +101,8 @@ describe('QuestionView', () => {
     // Should display answers (KuralDisplay component renders the kurals)
     expect(container.textContent).toContain('அகர');
     // Should contain meaning (may have multiple since there are multiple kurals)
-    const meaningElements = screen.queryAllByText(function(content, element) {
-      return element && element.textContent.includes('எழுத்துக்கள்');
+    const meaningElements = screen.queryAllByText(function(_content, element) {
+      return element?.textContent?.includes('எழுத்துக்கள்') ?? false;
     });
     expect(meaningElements.length).toBeGreaterThan(0);
   });
@@ -123,7 +123,7 @@ describe('QuestionView', () => {
   });
 
   it('does not display meanings when no meanings selected', () => {
-    render(
+    const { container } = render(
       <QuestionView
         topic={Topic.Porul}
         selectedMeanings={new Set()}
@@ -133,14 +133,6 @@ describe('QuestionView', () => {
     );
 
     // Should not show the meaning when no meanings selected
-    const container = render(
-      <QuestionView
-        topic={Topic.Porul}
-        selectedMeanings={new Set()}
-        showAnswer={false}
-        currentQuestion={{ kural: mockKural }}
-      />
-    ).container;
     // Check that no meaning is displayed
     expect(container.querySelector('.text-lg')).not.toBeInTheDocument();
   });
