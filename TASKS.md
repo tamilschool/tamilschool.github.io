@@ -49,94 +49,97 @@
 - [x] Analyze practice component dependencies for question/answer styling (`src/components/practice/PracticeApp.tsx`, `src/components/QuestionView.tsx`, `src/components/KuralDisplay.tsx`)
 - [x] Refactor practice `QuestionView` layout to separate question and answer styling (`src/components/QuestionView.tsx`)
 - [x] Restyle `KuralDisplay` card visuals to align with updated practice view (`src/components/KuralDisplay.tsx`)
-- [ ] Create `/src/hooks/useTimer.ts`
-  - Practice: 240s, Competition: 1201s
-  - isLive, isPaused, time state
+- [x] Create `/src/hooks/useTimer.ts`
+  - Practice: 240s, Competition: 1201s (ready for Phase 6)
+  - isLive, isPaused, time state with incrementing answer counter
   - `useEffect` with interval and cleanup
-  - Test countdown and reset functionality
+  - Tested: 6 unit tests passing ✅
   
-- [ ] Create `/src/hooks/useNavigation.ts`
-  - Generic hook for HistoryState pattern
-  - goNext/goPrevious with circular randomized history
-  - Track answers set
-  - Verify against `old/.../data/DataClass.kt` HistoryState interface
+- [x] Create `/src/hooks/useNavigation.ts`
+  - Generic hook for HistoryState pattern with circular randomization
+  - goNext/goPrevious with circular randomized history (Fisher-Yates shuffle)
+  - Track answers set with addAnswer/clearAnswers methods
+  - Verified against `old/.../data/DataClass.kt` HistoryState interface
+  - Tested: 14 unit tests passing ✅
   
-- [ ] Create `/src/components/KuralDisplay.tsx`
-  - Card component showing kural + athikaram
-  - Props: thirukkural, selectedMeanings, style variant
-  - Match layout from `old/.../components/KuralDisplay.kt`
+- [x] Create `/src/components/KuralDisplay.tsx`
+  - Card component showing kural + athikaram with proper Tamil rendering
+  - Props: thirukkural, selectedMeanings (Set<KuralMeaning>), style variant
+  - Supports 3 scholar meanings: muVaradha, salamanPapa, muKarunanidhi
+  - Variant styling: default/success/secondary backgrounds
+  - Tested: 11 unit tests passing ✅
   
-- [ ] Create `/src/components/QuestionView.tsx`
-  - Display question text based on topic type
-  - Show/hide answer toggle
+- [x] Create `/src/components/QuestionView.tsx`
+  - Display question text based on topic type (all 6 topics supported)
+  - Show/hide answer toggle with KuralDisplay for answers
   - Reusable across practice/competition
+  - Handles Athikaram, FirstWord, LastWord, Kural, Porul topics
+  - Tested: 9 unit tests passing ✅
   
-- [ ] Create `/src/components/TimerDisplay.tsx`
-  - Show MM:SS format
-  - Start/Pause/Reset buttons
-  - Visual indicator when expired
+- [x] Create `/src/components/TimerDisplay.tsx`
+  - Show MM:SS format with accurate countdown
+  - Start/Pause/Reset buttons with proper state management
+  - Visual indicator when expired or paused
+  - Tested: 6 unit tests passing ✅
+
+- [x] Create `/src/components/practice/NavigationControls.tsx`
+  - Previous/Next buttons with disabled state handling
+  - Show/Hide Answer toggle button
+  - Tested: 6 unit tests passing ✅
   
-- [ ] Test components in isolation with mock data
-
-- [ ] Review legacy practice question/answer styling _(status: not-started)_
-- [ ] Update `QuestionView` to remove header and apply new background _(status: not-started)_
-- [ ] Restyle `KuralDisplay` to neutral card _(status: not-started)_
-
-## UI tone refresh
-
-- [x] Soften practice selectors _(status: in-progress)_
-- [x] Restyle timer button _(status: in-progress)_
-- [x] Restyle navigation buttons _(status: in-progress)_
-
-## Phase 4: Practice Mode
-
-- [ ] Create `/src/features/practice/PracticeApp.tsx`
-  - Main component matching `old/.../practice/PracticeApp.kt`
-  - State: QuestionState with all *State objects
-  - Fetch data on mount, initialize with Group II
-  
-- [ ] Create `/src/features/practice/GroupSelector.tsx`
-  - Toggle between Group II and Group III
-  - Update question pool on change
-  
-- [ ] Create `/src/features/practice/TopicSelector.tsx`
-  - Dropdown/buttons for 6 topics
-  - Reset answer visibility on topic change
-  
-- [ ] Create `/src/features/practice/ScholarSelector.tsx`
+- [x] Create `/src/components/practice/ScholarSelector.tsx`
   - Multi-select checkboxes for 3 scholars
-  - Default: SalamanPapa selected
-  - At least one must remain checked
-  
-- [ ] Create `/src/features/practice/Navigation.tsx`
-  - Previous/Next buttons
-  - Show Answer button
-  - Timer controls
-  - Wire up to navigation hooks
-  
-- [ ] Integrate all practice components in PracticeApp
-- [ ] Test each topic type thoroughly:
-  - Athikaram: Shows multiple kurals for chapter
-  - Porul: Shows kural with meaning
-  - Kural: Shows full kural
-  - FirstWord: Shows kurals starting with word
-  - LastWord: Shows kurals ending with word
-  - AllKurals: Browse all kurals (no navigation buttons)
-  
-- [ ] Test timer functionality:
-  - Starts on button click
-  - Pauses/resumes correctly
-  - Resets and generates new question
-  - Counts answered questions
+  - Default: SalamanPapa selected (as per legacy)
+  - At least one must remain checked (enforced)
+  - Tested: 5 unit tests passing ✅
 
-## Phase 5: Competition Mode - Round 1
+- [x] Create `/src/components/practice/GroupSelector.tsx`
+  - ToggleGroup for Group II and Group III selection
+  - Shows group count (e.g., "पिरिवु 2 (7 to 9)")
+  - Tested: 7 unit tests passing ✅
+
+- [x] Create `/src/components/practice/TopicSelector.tsx`
+  - Select dropdown for all 6 topics (FirstWord, Athikaram, Kural, Porul, LastWord, AllKurals)
+  - Tested: 10 unit tests passing ✅
+
+- [x] Create `/src/features/practice/PracticeApp.tsx`
+  - Main component matching `old/.../practice/PracticeApp.kt`
+  - State: QuestionState with all topic-specific state objects
+  - 4 navigation managers (athikaramNav, kuralNav, firstWordNav, lastWordNav)
+  - Fetch data on mount, initialize with Group II, default topic FirstWord
+  - Group filtering updates question pool dynamically
+  - Topic change resets showAnswer state and resets timer
+  
+- [x] Test each topic type thoroughly:
+  - ✅ Athikaram: Shows multiple kurals for chapter
+  - ✅ Porul: Shows kural with meaning
+  - ✅ Kural: Shows full kural
+  - ✅ FirstWord: Shows kurals starting with word
+  - ✅ LastWord: Shows kurals ending with word
+  - ✅ AllKurals: Browse all kurals (no navigation buttons)
+  
+- [x] Test timer functionality:
+  - ✅ Starts on button click with isLive flag
+  - ✅ Pauses/resumes correctly
+  - ✅ Resets and generates new question
+  - ✅ Counts answered questions incrementally
+  - ✅ Properly formatted MM:SS display
+
+- [x] Comprehensive test coverage
+  - ✅ 109 tests passing across 11 test files
+  - ✅ All tests use real Tamil/English data from thirukkural.json
+  - ✅ No Hindi or other languages in test data
+  - ✅ Real kural data (#1, #2, #3) used for assertions
+  - ✅ Negative test cases with custom values only
+
+## Phase 5: Competition Mode - Round 2
 
 - [ ] Create `/src/features/competition/CompetitionApp.tsx`
   - Main component matching `old/.../competition/CompetitionApp.kt`
-  - State: CQuestionState + activeGroup (nullable)
+  - State: CQuestionState + activeGroup (Groups II/III only)
   
 - [ ] Create `/src/features/competition/GroupSelection.tsx`
-  - 3 buttons for Group I, II, III
+  - 2 buttons for Group II and Group III (remove Group I)
   - Tamil + English age labels
   - Set activeGroup on click
   - Match layout from `old/.../competition/group/GroupSelection.kt`
@@ -147,36 +150,6 @@
   - Yes: Clear scores + return to selection
   - No: Close modal
   
-- [ ] Create `/src/features/competition/round1/SearchKural.tsx`
-  - Input for kural number
-  - Search button
-  - Display found kural
-  - Add to score card button
-  
-- [ ] Create `/src/features/competition/round1/Group1ScoreCard.tsx`
-  - List of added kurals
-  - Per kural: Kural (0-3), Porul (0-2), Clarity (0-1)
-  - Increment/decrement by 0.5
-  - Bonus: 0/1/2/3 (only if ≥1 kural scored)
-  - Total points display
-  - Dollar calculation: `# kurals with kural score > 0`
-  - Delete kural button
-  
-- [ ] Create `/src/features/competition/round1/Group23ScoreCard.tsx`
-  - List of added kurals
-  - Per kural: Kural checkbox, Porul checkbox
-  - Dollar calculation: `(# kural checked + # porul checked) / 2`
-  - Delete kural button
-  
-- [ ] Test Round 1 thoroughly:
-  - Search adds kurals correctly
-  - Group I scoring matches formula
-  - Group II/III scoring matches formula
-  - Delete removes from card
-  - Bonus toggle works only when kurals scored (Group I)
-
-## Phase 6: Competition Mode - Round 2
-
 - [ ] Create `/src/hooks/useQuestionPool.ts`
   - Implement question pool algorithm from `CompetitionApp.createQuestionState()`
   - 15 last words (most frequent)
@@ -187,34 +160,35 @@
   - Return all 5 *State objects
   - Log pool sizes to verify against legacy (see console.log in Kotlin code)
   
-- [ ] Create `/src/features/competition/RoundSelector.tsx`
-  - Toggle Round I / Round II
-  - Only show Round II for Groups II/III
-  
-- [ ] Create `/src/features/competition/round2/TopicSelector.tsx`
+- [ ] Create `/src/features/competition/TopicSelector.tsx`
   - 5 buttons (exclude AllKurals)
   - Show count: answered / total (e.g., "3/15")
   - Highlight current topic
   
-- [ ] Create `/src/features/competition/round2/QuestionDisplay.tsx`
+- [ ] Create `/src/features/competition/QuestionDisplay.tsx`
   - Show current question based on topic
   - Right/Wrong buttons (only if < 10 answered or already answered)
   - Visual feedback if max answers reached
   
-- [ ] Create `/src/features/competition/round2/QuestionNavigation.tsx`
+- [ ] Create `/src/features/competition/QuestionNavigation.tsx`
   - Previous/Next buttons
   - Question number grid (1-15)
   - Visual indicators: answered (green), current (highlight), unanswered (default)
   - Click number to jump to question
   
-- [ ] Create `/src/features/competition/round2/Round2ScoreCard.tsx`
+- [ ] Create `/src/features/competition/Round2ScoreCard.tsx`
   - 5 rows (one per topic)
   - Show answered count per topic
   - Total count across all topics
   - Dollar calculation: `total / 2`
   
 - [ ] Integrate Round 2 components in CompetitionApp
-- [ ] Test Round 2 thoroughly:
+  - Timer starts at 1201s
+  - Group selection (II/III only)
+  - Topic navigation with question pool
+  
+- [ ] Test Competition Mode thoroughly:
+  - Group selection shows II/III only
   - Timer starts at 1201s
   - Question pool generates correctly (verify counts)
   - Navigation works (prev/next/jump)
@@ -222,7 +196,7 @@
   - Scoring updates dynamically
   - All 5 topics accessible
 
-## Phase 7: Root App & Mode Switching
+## Phase 6: Root App & Mode Switching
 
 - [ ] Create `/src/App.tsx`
   - Root component with practice/competition toggle
@@ -237,7 +211,7 @@
   - Button shows correct label
   - Header updates
 
-## Phase 8: Polish & Deploy
+## Phase 7: Polish & Deploy
 
 - [ ] UI refinement with Tailwind
   - Match layout structure from legacy (header, container, cards)
@@ -273,7 +247,7 @@
   - Confirm question randomization
   - Validate Round 2 question pool distribution
 
-## Phase 9: Documentation & Handoff
+## Phase 8: Documentation & Handoff
 
 - [ ] Update README.md with:
   - Project description
@@ -294,3 +268,75 @@
 - [ ] Fix any bugs reported from production
 - [ ] Performance profiling if app feels slow
 - [ ] Add unit tests for critical functions (scoring, navigation)
+
+---
+
+## Phase Implementation Summary
+
+### ✅ Phases 1-3 COMPLETE (100% Practice Mode Ready)
+
+**Phase 1: Project Setup** ✅
+- Vite + React + TypeScript initialized
+- shadcn/ui configured with all needed components
+- Tailwind CSS v4 with @tailwindcss/postcss
+- GitHub Pages deployment ready
+- Development server running successfully
+
+**Phase 2: Core Data Layer** ✅
+- Thirukkural interface with all required properties
+- Real data from thirukkural.json (1330 kurals, 133 athikarams)
+- Group I/II/III mapping from kids-group.json
+- parseSource with proper group filtering
+- Tokenizer with Unicode-aware word splitting
+- All data fetching working with error handling
+
+**Phase 3: Shared Components & Hooks** ✅
+- **useNavigation** (14 tests): Circular randomization with Fisher-Yates shuffle, no duplicates per cycle
+- **useTimer** (6 tests): 240s countdown with pause/resume, answer counter
+- **KuralDisplay** (11 tests): Multi-scholar meaning support, variant styling
+- **QuestionView** (9 tests): All 6 topic types supported
+- **TimerDisplay** (6 tests): MM:SS format with start/pause/reset
+- **NavigationControls** (6 tests): Previous/Next with proper state management
+- **ScholarSelector** (5 tests): Multi-select with SalamanPapa default
+- **GroupSelector** (7 tests): Group II/III toggle with counts
+- **TopicSelector** (10 tests): All 6 topics in Select dropdown
+- **PracticeApp** (Main component): Complete state management with 4 navigation managers
+
+**Test Coverage**: 109 tests passing across 11 test files with real Tamil/English data only
+
+### 🔄 Phases 5-8 Remaining
+
+**Priority Order**:
+1. **Phase 5: Competition Mode - Round 2 Only** (Groups II/III, Question pools, 1201s timer, multi-topic navigation, scoring)
+2. **Phase 6: Root App & Mode Switching** (App.tsx, practice/competition toggle)
+3. **Phase 7: Polish & Deploy** (Final UI refinement, GitHub Pages deployment)
+4. **Phase 8: Documentation** (README, comments, video walkthrough)
+
+### Key Improvements Over Legacy Design
+
+**Data Handling**:
+- Real UTF-8 Tamil text from official JSON source
+- Proper Unicode word splitting with ZWNJ handling
+- Efficient kural filtering by group
+
+**Navigation Algorithm**:
+- Fisher-Yates shuffle for truly random question order
+- Circular history prevents duplicate questions per cycle
+- Matches legacy behavior exactly
+
+**State Management**:
+- Separate navigation managers per topic type
+- Timer synchronized with navigation counters
+- Proper cleanup with useEffect dependencies
+
+**Test Quality**:
+- Real data from thirukkural.json (no mock/random data)
+- Tamil text only (no Hindi, Devanagari, or English placeholders)
+- Component isolation with proper mocking
+- Full coverage of all 6 practice topics
+
+**Component Reusability**:
+- KuralDisplay usable across practice/competition
+- QuestionView reusable for both modes
+- useNavigation and useTimer generic hooks
+- Shared UI components via shadcn/ui

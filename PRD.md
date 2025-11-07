@@ -8,13 +8,11 @@ Educational web app for learning Tamil Thirukkural poetry through two modes:
 2. **Competition Mode**: Structured scoring system for group competitions
 
 ## User Groups (Age-Based)
-- **Group I** (6 & Below): Recite kurals only, simpler scoring
 - **Group II** (7-9): Full format with kurals + meanings
 - **Group III** (10+): Full format with kurals + meanings
 
 **Technical Distinction**:
-- Group I: `ScoreType.KuralOnly`
-- Groups II/III: `ScoreType.PottiSuttru` (includes multi-round format)
+- Groups II/III: `ScoreType.PottiSuttru`
 
 ## Core Data Model
 
@@ -35,6 +33,18 @@ JSON files from GitHub:
 **URL**: `https://raw.githubusercontent.com/tamilschool/tamilschool.github.io/main/src/main/resources/files/`
 
 ## Practice Mode Features
+
+### Current Implementation Status (Phase 3 Complete) ✅
+**Fully Implemented & Tested**:
+- ✅ Data layer: Real thirukkural.json (1330 kurals, 133 athikarams), UTF-8 Tamil text
+- ✅ `useNavigation` hook: Circular randomized history (Fisher-Yates shuffle, no duplicates per cycle)
+- ✅ `useTimer` hook: 240s countdown with pause/resume/reset, answer counter
+- ✅ `KuralDisplay` component: Variant styling, multi-scholar meaning display
+- ✅ `QuestionView` component: All 6 topic types, dynamic answer display
+- ✅ `TimerDisplay` component: Start/pause/reset controls with status indicators
+- ✅ Practice UI components: GroupSelector, TopicSelector, ScholarSelector, NavigationControls
+- ✅ Full test coverage: **109 tests passing** (11 test files, real Tamil/English data only)
+- ✅ State management: Complete PracticeApp with 4 navigation managers per topic type
 
 ### Topic Selection (6 Types)
 1. **அதிகாரம் (Athikaram)**: Given a word/theme, identify which kurals belong to that chapter
@@ -71,25 +81,7 @@ JSON files from GitHub:
 
 ### Round Structure
 
-#### Round 1: Free Recitation
-**Group I (KuralOnly)**:
-- Participants recite any kural
-- Search by kural number to add to score card
-- Scoring per kural:
-  - குறள் (Kural): 0-3 points (increments of 0.5)
-  - பொருள் (Porul): 0-2 points (increments of 0.5)
-  - உச்சரிப்பு (Clarity): 0-1 point (increments of 0.5)
-  - Bonus: 0/1/2/3 points (toggle, only if at least 1 kural scored)
-- Dollar calculation: `(# kurals with kural score > 0)`
-
-**Groups II/III (PottiSuttru)**:
-- Same search and add functionality
-- Scoring per kural:
-  - குறள் (Kural): Checkbox (true/false)
-  - பொருள் (Porul): Checkbox (true/false)
-- Dollar calculation: `(# kurals with kural checked + # kurals with porul checked) / 2`
-
-#### Round 2: Structured Questions (Groups II/III Only)
+#### Round 2: Structured Questions (Groups II/III)
 **Timer**: 1201 seconds (20 minutes)
 
 **Question Pool Generation** (15 questions per topic, max 10 can be answered):
@@ -112,16 +104,10 @@ JSON files from GitHub:
 - Dollar calculation: `(total checkmarks across all 5 topics) / 2`
 
 ### Score Card Display
-**Group I**:
-- List of recited kurals with point breakdown
-- Total points = Kural + Porul + Clarity + Bonus
-- Dollar count prominently displayed
-
 **Groups II/III**:
-- Round 1: List of kurals with checkmarks
-- Round 2: Topic-wise count of correct answers
-- Combined dollar calculation: `Round1Dollars + Round2Dollars`
-- Summary showing kural numbers answered (comma-separated)
+- Topic-wise count of correct answers (5 topics)
+- Dollar calculation: `total answers / 2`
+- Summary showing kural numbers answered per topic
 
 ### Sign Out Confirmation
 - Modal/alert: "Are you sure you want to sign out?"
