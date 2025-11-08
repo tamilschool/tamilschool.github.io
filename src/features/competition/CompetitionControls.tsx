@@ -1,16 +1,14 @@
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Check, X, Eye, EyeOff } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, X } from 'lucide-react';
 
 interface CompetitionControlsProps {
   currentIndex: number;
   totalCount: number;
-  showAnswer: boolean;
   answeredCount: number;
   isAnswered: boolean;
   isMaxAnswered: boolean;
   onPrevious: () => void;
   onNext: () => void;
-  onToggleAnswer: () => void;
   onMarkCorrect: () => void;
   onMarkWrong: () => void;
 }
@@ -18,13 +16,11 @@ interface CompetitionControlsProps {
 export function CompetitionControls({
   currentIndex,
   totalCount,
-  showAnswer,
   answeredCount,
   isAnswered,
   isMaxAnswered,
   onPrevious,
   onNext,
-  onToggleAnswer,
   onMarkCorrect,
   onMarkWrong,
 }: CompetitionControlsProps) {
@@ -37,18 +33,6 @@ export function CompetitionControls({
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
-
-      {/* <Button
-        onClick={onToggleAnswer}
-        className={`flex h-9 min-w-[88px] items-center justify-center gap-1 rounded-lg border px-3 text-xs font-semibold transition-colors ${
-          showAnswer
-            ? 'border-amber-500 bg-amber-500 text-white hover:bg-amber-600'
-            : 'border-slate-200 bg-white text-slate-600 shadow-sm hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600'
-        }`}
-      >
-        {showAnswer ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-        {showAnswer ? 'பதில் மறை' : 'பதில்'}
-      </Button> */}
 
       <Button
         onClick={onMarkCorrect}

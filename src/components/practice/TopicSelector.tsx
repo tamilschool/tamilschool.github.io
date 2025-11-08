@@ -13,9 +13,10 @@ import type { Topic as TopicType } from '@/types';
 export interface TopicSelectorProps {
   selectedTopic: TopicType;
   onTopicChange: (topic: TopicType) => void;
+  includeAllKurals?: boolean;
 }
 
-export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorProps) {
+export function TopicSelector({ selectedTopic, onTopicChange, includeAllKurals = true }: TopicSelectorProps) {
   const topics: TopicType[] = [
     Topic.FirstWord,
     Topic.Athikaram,
@@ -36,12 +37,14 @@ export function TopicSelector({ selectedTopic, onTopicChange }: TopicSelectorPro
               {TopicDisplay[topic]}
             </SelectItem>
           ))}
-          <SelectGroup>
-             <SelectLabel>---------------------------</SelectLabel>
-            <SelectItem value={Topic.AllKurals}>
-              {TopicDisplay[Topic.AllKurals]}
-            </SelectItem>
-          </SelectGroup>
+          {includeAllKurals && (
+            <SelectGroup>
+              <SelectLabel>---------------------------</SelectLabel>
+              <SelectItem value={Topic.AllKurals}>
+                {TopicDisplay[Topic.AllKurals]}
+              </SelectItem>
+            </SelectGroup>
+          )}
         </SelectContent>
       </Select>
     </div>

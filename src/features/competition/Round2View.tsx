@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { CQuestionState } from '@/types';
 import {
   MAX_ANSWERS,
@@ -24,7 +24,6 @@ interface Round2ViewProps {
 const COMPETITION_TIMER_SECONDS = 1201;
 
 export default function Round2View({ questionState, onQuestionStateChange, onSignOut }: Round2ViewProps) {
-  const [showAnswer, setShowAnswer] = useState(true);
   const selectedMeanings = useMemo(() => new Set([KuralMeaning.SalamanPapa]), []);
   const timer = useTimer({ initialTime: COMPETITION_TIMER_SECONDS, isLive: questionState.timerState.isLive });
 
@@ -342,23 +341,22 @@ export default function Round2View({ questionState, onQuestionStateChange, onSig
           <div className="flex-1 min-w-0 space-y-3 lg:max-w-3xl lg:space-y-4">
             <div className="mx-auto w-full rounded-xl bg-white p-3 shadow-sm lg:p-4">
               <div className="flex flex-wrap items-center gap-2 lg:gap-3">
-                <div className="min-w-[220px] flex-1">
+                <div className="min-w-[160px] ">
                   <TopicSelector
                     selectedTopic={questionState.selectedTopic}
                     onTopicChange={handleSelectTopic}
+                    includeAllKurals={false}
                   />
                 </div>
 
                 <CompetitionControls
                   currentIndex={currentIndex}
                   totalCount={totalCount}
-                  showAnswer={showAnswer}
                   answeredCount={answeredCount}
                   isAnswered={isAnswered}
                   isMaxAnswered={isMaxAnswered}
                   onPrevious={handlePrevious}
                   onNext={handleNext}
-                  onToggleAnswer={() => setShowAnswer((prev) => !prev)}
                   onMarkCorrect={handleMarkCorrect}
                   onMarkWrong={handleMarkWrong}
                 />
@@ -393,12 +391,22 @@ export default function Round2View({ questionState, onQuestionStateChange, onSig
               />
             </div>
 
-            <QuestionView
-              topic={currentTopic}
-              selectedMeanings={selectedMeanings}
-              showAnswer={showAnswer}
-              currentQuestion={currentQuestion}
-            />
+            {timer.isLive ? (
+              <QuestionView
+                topic={currentTopic}
+                selectedMeanings={selectedMeanings}
+                showAnswer={true}
+                currentQuestion={currentQuestion}
+              />
+            ) : (
+              <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-lg">
+                <img
+                  src="thiruvalluvar.jpg"
+                  alt="Thiruvalluvar Statue at Kanyakumari"
+                  className="h-128 w-full object-cover"
+                />
+              </div>
+            )}
           </div>
 
           <aside className="w-full shrink-0 lg:w-80 lg:pt-1 lg:sticky lg:top-4 lg:ml-6">
