@@ -318,8 +318,8 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
         <div className="mx-auto flex h-full w-full max-w-6xl flex-col gap-4 lg:flex-row">
           <div className="flex-1 min-w-0 space-y-3 lg:max-w-3xl lg:space-y-4">
             <div className="mx-auto w-full rounded-xl bg-white p-3 shadow-sm lg:p-4">
-              <div className="flex flex-wrap items-center gap-2 lg:gap-3">
-                <div className="min-w-[160px] ">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-[160px]">
                   <TopicSelector
                     selectedTopic={questionState.selectedTopic}
                     onTopicChange={handleSelectTopic}
