@@ -16,6 +16,7 @@ export interface UseTimerReturn {
   time: number;
   isLive: boolean;
   isPaused: boolean;
+  isExpired: boolean;
   count: number;
   totalTime: number;
   start: () => void;
@@ -92,6 +93,7 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturn {
     time,
     isLive,
     isPaused,
+    isExpired: isLive && time <= 0,
     count,
     totalTime: initialTime,
     start,
