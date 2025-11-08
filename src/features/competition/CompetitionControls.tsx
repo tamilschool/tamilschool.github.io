@@ -26,9 +26,10 @@ export function CompetitionControls({
       <Button
         onClick={onPrevious}
         disabled={currentIndex === 0}
-        className="flex h-9 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400"
+        className="flex h-9 min-w-[60px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-600 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400"
       >
         <ChevronLeft className="h-4 w-4" />
+        <span>முந்தைய</span>
       </Button>
 
       <div className="flex gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
@@ -38,10 +39,11 @@ export function CompetitionControls({
             if (pressed) onToggleAnswer(false);
           }}
           disabled={isMaxAnswered}
-          className="h-7 min-w-[40px] text-xs data-[state=on]:bg-rose-500 data-[state=on]:text-white"
+          className="h-7 flex items-center gap-1 px-2 text-xs data-[state=on]:bg-rose-500 data-[state=on]:text-white"
           title="தவறு"
         >
           <X className="h-4 w-4" />
+          <span>தவறு</span>
         </Toggle>
 
         <Toggle
@@ -50,24 +52,22 @@ export function CompetitionControls({
             if (pressed) onToggleAnswer(true);
           }}
           disabled={isMaxAnswered}
-          className="h-7 min-w-[40px] text-xs data-[state=on]:bg-emerald-500 data-[state=on]:text-white"
+          className="h-7 flex items-center gap-1 px-2 text-xs data-[state=on]:bg-emerald-500 data-[state=on]:text-white"
           title="சரி"
         >
           <Check className="h-4 w-4" />
+          <span>சரி</span>
         </Toggle>
       </div>
 
       <Button
         onClick={onNext}
         disabled={currentIndex >= totalCount - 1}
-        className="flex h-9 min-w-[44px] items-center justify-center rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-600 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400"
+        className="flex h-9 min-w-[60px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-600 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400"
       >
+        <span>அடுத்த</span>
         <ChevronRight className="h-4 w-4" />
       </Button>
-
-      <div className="flex items-center text-[11px] font-semibold text-slate-500">
-        {currentIndex + 1} / {totalCount}
-      </div>
     </div>
   );
 }
