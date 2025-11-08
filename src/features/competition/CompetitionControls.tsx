@@ -1,28 +1,25 @@
 import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
 import { ChevronLeft, ChevronRight, Check, X } from 'lucide-react';
 
 interface CompetitionControlsProps {
   currentIndex: number;
   totalCount: number;
-  answeredCount: number;
-  isAnswered: boolean;
+  answer: boolean | null;
   isMaxAnswered: boolean;
   onPrevious: () => void;
   onNext: () => void;
-  onMarkCorrect: () => void;
-  onMarkWrong: () => void;
+  onToggleAnswer: (value: boolean) => void;
 }
 
 export function CompetitionControls({
   currentIndex,
   totalCount,
-  answeredCount,
-  isAnswered,
+  answer,
   isMaxAnswered,
   onPrevious,
   onNext,
-  onMarkCorrect,
-  onMarkWrong,
+  onToggleAnswer,
 }: CompetitionControlsProps) {
   return (
     <div className="flex flex-1 flex-wrap items-center gap-2">
@@ -34,33 +31,31 @@ export function CompetitionControls({
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <Button
-        onClick={onMarkCorrect}
-        disabled={isAnswered || isMaxAnswered}
-        className={`flex h-9 min-w-[88px] items-center justify-center gap-1 rounded-lg border px-3 text-xs font-semibold transition-colors ${
-          isAnswered
-            ? 'border-emerald-500 bg-emerald-500 text-white'
-            : isMaxAnswered
-            ? 'border-slate-200 bg-slate-100 text-slate-400'
-            : 'border-emerald-500 bg-white text-emerald-600 hover:bg-emerald-50'
-        } disabled:cursor-not-allowed`}
-      >
-        <Check className="h-4 w-4" />
-        சரி
-      </Button>
+      <div className="flex gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+        <Toggle
+          pressed={answer === false}
+          onPressedChange={(pressed) => {
+            if (pressed) onToggleAnswer(false);
+          }}
+          disabled={isMaxAnswered}
+          className="h-7 min-w-[40px] text-xs data-[state=on]:bg-rose-500 data-[state=on]:text-white"
+          title="தவறு"
+        >
+          <X className="h-4 w-4" />
+        </Toggle>
 
-      <Button
-        onClick={onMarkWrong}
-        disabled={!isAnswered}
-        className={`flex h-9 min-w-[88px] items-center justify-center gap-1 rounded-lg border px-3 text-xs font-semibold transition-colors ${
-          isAnswered
-            ? 'border-rose-500 bg-white text-rose-600 hover:bg-rose-50'
-            : 'border-slate-200 bg-slate-100 text-slate-400'
-        } disabled:cursor-not-allowed`}
-      >
-        <X className="h-4 w-4" />
-        தவறு
-      </Button>
+        <Toggle
+          pressed={answer === true}
+          onPressedChange={(pressed) => {
+            if (pressed) onToggleAnswer(true);
+          }}
+          disabled={isMaxAnswered}
+          className="h-7 min-w-[40px] text-xs data-[state=on]:bg-emerald-500 data-[state=on]:text-white"
+          title="சரி"
+        >
+          <Check className="h-4 w-4" />
+        </Toggle>
+      </div>
 
       <Button
         onClick={onNext}
@@ -70,11 +65,8 @@ export function CompetitionControls({
         <ChevronRight className="h-4 w-4" />
       </Button>
 
-      <div className="flex flex-col items-start justify-center text-[11px] font-semibold text-slate-500">
-        <span>
-          {currentIndex + 1} / {totalCount}
-        </span>
-        <span>விடைகள்: {answeredCount}</span>
+      <div className="flex items-center text-[11px] font-semibold text-slate-500">
+        {currentIndex + 1} / {totalCount}
       </div>
     </div>
   );

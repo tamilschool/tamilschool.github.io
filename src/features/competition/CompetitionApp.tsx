@@ -6,7 +6,6 @@ import { parseSource } from '@/lib/data/parseSource';
 import { useQuestionPool } from '@/hooks/useQuestionPool';
 import GroupSelection from './GroupSelection';
 import Round2View from './Round2View';
-import SignOutConfirm from './SignOutConfirm';
 
 interface CompetitionAppProps {
   // Props for future extensions
@@ -17,7 +16,6 @@ export default function CompetitionApp({}: CompetitionAppProps) {
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
   const [activeGroup, setActiveGroup] = useState<Group | null>(null);
   const [questionState, setQuestionState] = useState<CQuestionState | null>(null);
-  const [showSignOutConfirm, setShowSignOutConfirm] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Load data on mount
@@ -126,38 +124,12 @@ export default function CompetitionApp({}: CompetitionAppProps) {
     setActiveGroup(group);
   }, [createQuestionState]);
 
-  // Handle sign out
-  const handleSignOut = useCallback(() => {
-    setShowSignOutConfirm(true);
-  }, []);
-
-  // Confirm sign out
-  const handleConfirmSignOut = useCallback(() => {
-    setActiveGroup(null);
-    setQuestionState(null);
-    setShowSignOutConfirm(false);
-  }, []);
-
-  // Cancel sign out
-  const handleCancelSignOut = useCallback(() => {
-    setShowSignOutConfirm(false);
-  }, []);
-
   if (error) {
     return <div className="p-6 text-red-600">Error: {error}</div>;
   }
 
   if (!loaded) {
     return <div className="p-6">Loading competition data...</div>;
-  }
-
-  if (showSignOutConfirm) {
-    return (
-      <SignOutConfirm
-        onConfirm={handleConfirmSignOut}
-        onCancel={handleCancelSignOut}
-      />
-    );
   }
 
   if (!activeGroup || !questionState) {
@@ -174,7 +146,6 @@ export default function CompetitionApp({}: CompetitionAppProps) {
         <Round2View
           questionState={questionState}
           onQuestionStateChange={setQuestionState}
-          onSignOut={handleSignOut}
         />
       )}
     </div>

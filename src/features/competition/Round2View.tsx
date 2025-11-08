@@ -18,12 +18,11 @@ import Round2ScoreCard from './Round2ScoreCard';
 interface Round2ViewProps {
   questionState: CQuestionState;
   onQuestionStateChange: (state: CQuestionState) => void;
-  onSignOut: () => void;
 }
 
 const COMPETITION_TIMER_SECONDS = 1201;
 
-export default function Round2View({ questionState, onQuestionStateChange, onSignOut }: Round2ViewProps) {
+export default function Round2View({ questionState, onQuestionStateChange }: Round2ViewProps) {
   const selectedMeanings = useMemo(() => new Set([KuralMeaning.SalamanPapa]), []);
   const timer = useTimer({ initialTime: COMPETITION_TIMER_SECONDS, isLive: questionState.timerState.isLive });
 
@@ -272,59 +271,38 @@ export default function Round2View({ questionState, onQuestionStateChange, onSig
     });
   }, [questionState, onQuestionStateChange, timer]);
 
-  const handleMarkCorrect = useCallback(() => {
-    if (totalCount === 0 || isMaxAnswered) return;
+  const handleToggleAnswer = useCallback(
+    (value: boolean) => {
+      if (totalCount === 0 || isMaxAnswered) return;
 
-    const key = getQuestionKey(currentTopic, currentIndex);
-    const answered = questionState.scoreState.group23Score.round2[currentTopic];
-    if (answered.has(key)) return;
+      const key = getQuestionKey(currentTopic, currentIndex);
+      const answered = questionState.scoreState.group23Score.round2[currentTopic];
 
-    const updatedSet = new Set(answered);
-    updatedSet.add(key);
+      const updatedSet = new Set(answered);
+      if (value) {
+        updatedSet.add(key);
+      } else {
+        updatedSet.delete(key);
+      }
 
-    const nextState: CQuestionState = {
-      ...questionState,
-      scoreState: {
-        ...questionState.scoreState,
-        group23Score: {
-          ...questionState.scoreState.group23Score,
-          round2: {
-            ...questionState.scoreState.group23Score.round2,
-            [currentTopic]: updatedSet,
+      const nextState: CQuestionState = {
+        ...questionState,
+        scoreState: {
+          ...questionState.scoreState,
+          group23Score: {
+            ...questionState.scoreState.group23Score,
+            round2: {
+              ...questionState.scoreState.group23Score.round2,
+              [currentTopic]: updatedSet,
+            },
           },
         },
-      },
-    };
+      };
 
-    onQuestionStateChange(nextState);
-  }, [currentTopic, currentIndex, getQuestionKey, isMaxAnswered, questionState, onQuestionStateChange, totalCount]);
-
-  const handleMarkWrong = useCallback(() => {
-    if (totalCount === 0) return;
-
-    const key = getQuestionKey(currentTopic, currentIndex);
-    const answered = questionState.scoreState.group23Score.round2[currentTopic];
-    if (!answered.has(key)) return;
-
-    const updatedSet = new Set(answered);
-    updatedSet.delete(key);
-
-    const nextState: CQuestionState = {
-      ...questionState,
-      scoreState: {
-        ...questionState.scoreState,
-        group23Score: {
-          ...questionState.scoreState.group23Score,
-          round2: {
-            ...questionState.scoreState.group23Score.round2,
-            [currentTopic]: updatedSet,
-          },
-        },
-      },
-    };
-
-    onQuestionStateChange(nextState);
-  }, [currentTopic, currentIndex, getQuestionKey, questionState, onQuestionStateChange, totalCount]);
+      onQuestionStateChange(nextState);
+    },
+    [currentTopic, currentIndex, getQuestionKey, isMaxAnswered, questionState, onQuestionStateChange, totalCount]
+  );
 
   const answeredPredicate = useCallback(
     (index: number) => {
@@ -352,13 +330,11 @@ export default function Round2View({ questionState, onQuestionStateChange, onSig
                 <CompetitionControls
                   currentIndex={currentIndex}
                   totalCount={totalCount}
-                  answeredCount={answeredCount}
-                  isAnswered={isAnswered}
+                  answer={isAnswered ? true : false}
                   isMaxAnswered={isMaxAnswered}
                   onPrevious={handlePrevious}
                   onNext={handleNext}
-                  onMarkCorrect={handleMarkCorrect}
-                  onMarkWrong={handleMarkWrong}
+                  onToggleAnswer={handleToggleAnswer}
                 />
 
                 <div className="flex items-center">
@@ -371,13 +347,6 @@ export default function Round2View({ questionState, onQuestionStateChange, onSig
                     onReset={() => timer.reset()}
                   />
                 </div>
-
-                <button
-                  onClick={onSignOut}
-                  className="h-9 rounded-lg bg-rose-500 px-3 text-xs font-semibold text-white shadow-sm transition hover:bg-rose-600"
-                >
-                  வெளியேறு
-                </button>
               </div>
             </div>
 

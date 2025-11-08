@@ -2,12 +2,27 @@ import { useState } from 'react';
 import './App.css';
 import { PracticeApp } from './components/practice/PracticeApp';
 import CompetitionApp from './features/competition/CompetitionApp';
+import SignOutConfirm from './features/competition/SignOutConfirm';
 
 function App() {
   const [isPracticeMode, setIsPracticeMode] = useState(true);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   const toggleMode = () => {
     setIsPracticeMode(!isPracticeMode);
+  };
+
+  const handleExitCompetition = () => {
+    setShowExitConfirm(true);
+  };
+
+  const confirmExit = () => {
+    setShowExitConfirm(false);
+    setIsPracticeMode(true);
+  };
+
+  const cancelExit = () => {
+    setShowExitConfirm(false);
   };
 
   return (
@@ -18,12 +33,21 @@ function App() {
           <h1 className="text-2xl font-bold">
             {isPracticeMode ? 'திருக்குறள் பயிற்சி' : 'திருக்குறள் போட்டி'}
           </h1>
-          <button
-            onClick={toggleMode}
-            className="px-4 py-2 bg-white text-purple-600 font-semibold rounded hover:bg-gray-100 transition-colors"
-          >
-            {isPracticeMode ? 'போட்டி' : 'பயிற்சி'}
-          </button>
+          {isPracticeMode ? (
+            <button
+              onClick={toggleMode}
+              className="px-4 py-2 bg-white text-purple-600 font-semibold rounded hover:bg-gray-100 transition-colors"
+            >
+              போட்டி
+            </button>
+          ) : (
+            <button
+              onClick={handleExitCompetition}
+              className="px-4 py-2 bg-white text-rose-600 font-semibold rounded hover:bg-gray-100 transition-colors"
+            >
+              வெளியேறு
+            </button>
+          )}
         </div>
       </div>
 
@@ -31,6 +55,14 @@ function App() {
       <div className="flex-1 overflow-hidden">
         {isPracticeMode ? <PracticeApp /> : <CompetitionApp />}
       </div>
+
+      {/* Exit Confirmation Dialog */}
+      {showExitConfirm && (
+        <SignOutConfirm
+          onConfirm={confirmExit}
+          onCancel={cancelExit}
+        />
+      )}
     </div>
   );
 }
