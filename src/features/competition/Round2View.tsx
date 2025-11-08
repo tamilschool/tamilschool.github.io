@@ -332,6 +332,9 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                   totalCount={totalCount}
                   answer={isAnswered ? true : false}
                   isMaxAnswered={isMaxAnswered}
+                  isTimerLive={timer.isLive}
+                  isTimerPaused={timer.isPaused}
+                  isTimerExpired={timer.isExpired}
                   onPrevious={handlePrevious}
                   onNext={handleNext}
                   onToggleAnswer={handleToggleAnswer}

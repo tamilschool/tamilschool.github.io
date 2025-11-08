@@ -7,6 +7,9 @@ interface CompetitionControlsProps {
   totalCount: number;
   answer: boolean | null;
   isMaxAnswered: boolean;
+  isTimerLive: boolean;
+  isTimerPaused: boolean;
+  isTimerExpired: boolean;
   onPrevious: () => void;
   onNext: () => void;
   onToggleAnswer: (value: boolean) => void;
@@ -17,15 +20,27 @@ export function CompetitionControls({
   totalCount,
   answer,
   isMaxAnswered,
+  isTimerLive,
+  isTimerPaused,
+  isTimerExpired,
   onPrevious,
   onNext,
   onToggleAnswer,
 }: CompetitionControlsProps) {
+  // Timer is actively running (not paused, not expired)
+  const isTimerRunning = isTimerLive && !isTimerPaused && !isTimerExpired;
+  
+  // Navigation buttons only enabled when timer is actively running
+  const navigationDisabled = !isTimerRunning;
+  
+  // Answer toggles disabled unless timer is running OR timer expired (allow marking current question)
+  const answerDisabled = !isTimerRunning && !isTimerExpired;
+
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Button
         onClick={onPrevious}
-        disabled={currentIndex === 0}
+        disabled={navigationDisabled || currentIndex === 0}
         className="flex h-10 min-w-[60px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-600 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400"
       >
         <ChevronLeft className="h-4 w-4" />
@@ -38,7 +53,7 @@ export function CompetitionControls({
           onPressedChange={(pressed) => {
             if (pressed) onToggleAnswer(false);
           }}
-          disabled={isMaxAnswered}
+          disabled={answerDisabled || isMaxAnswered}
           className="h-8 flex items-center gap-1 px-2 text-xs data-[state=on]:bg-rose-500 data-[state=on]:text-white"
           title="தவறு"
         >
@@ -51,7 +66,7 @@ export function CompetitionControls({
           onPressedChange={(pressed) => {
             if (pressed) onToggleAnswer(true);
           }}
-          disabled={isMaxAnswered}
+          disabled={answerDisabled || isMaxAnswered}
           className="h-8 flex items-center gap-1 px-2 text-xs data-[state=on]:bg-emerald-500 data-[state=on]:text-white"
           title="சரி"
         >
@@ -62,7 +77,7 @@ export function CompetitionControls({
 
       <Button
         onClick={onNext}
-        disabled={currentIndex >= totalCount - 1}
+        disabled={navigationDisabled || currentIndex >= totalCount - 1}
         className="flex h-10 min-w-[60px] items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-600 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-400"
       >
         <span>அடுத்த</span>
