@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Thirukkural, Group, CQuestionState, CTimerState, ScoreState } from '@/types';
-import { Round, Topic } from '@/types';
+import { Round, Topic, COMPETITION_TIMER_SECONDS } from '@/types';
 import { fetchSource } from '@/lib/data/fetchSource';
 import { parseSource } from '@/lib/data/parseSource';
 import { useQuestionPool } from '@/hooks/useQuestionPool';
@@ -11,7 +11,7 @@ interface CompetitionAppProps {
   // Props for future extensions
 }
 
-export default function CompetitionApp({}: CompetitionAppProps) {
+export default function CompetitionApp({ }: CompetitionAppProps) {
   const [loaded, setLoaded] = useState(false);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
   const [activeGroup, setActiveGroup] = useState<Group | null>(null);
@@ -78,7 +78,7 @@ export default function CompetitionApp({}: CompetitionAppProps) {
     const timerState: CTimerState = {
       isLive: false,
       isPaused: false,
-      time: 1201, // 20 minutes + 1 second
+      time: COMPETITION_TIMER_SECONDS, // 20 minutes
     };
 
     // Create score state

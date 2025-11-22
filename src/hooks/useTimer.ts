@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
  * Reference: old/.../practice/PracticeApp.kt timerHandler()
  * 
  * Practice mode: 240 seconds
- * Competition mode: 1201 seconds
+ * Competition mode: 1200 seconds
  */
 export interface UseTimerOptions {
   initialTime?: number;

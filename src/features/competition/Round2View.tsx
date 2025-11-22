@@ -5,6 +5,7 @@ import {
   Topic,
   TopicDisplay,
   KuralMeaning,
+  COMPETITION_TIMER_SECONDS,
 } from '@/types';
 import type { Topic as TopicType, Thirukkural } from '@/types';
 import { useTimer } from '@/hooks/useTimer';
@@ -19,8 +20,6 @@ interface Round2ViewProps {
   questionState: CQuestionState;
   onQuestionStateChange: (state: CQuestionState) => void;
 }
-
-const COMPETITION_TIMER_SECONDS = 1201;
 
 export default function Round2View({ questionState, onQuestionStateChange }: Round2ViewProps) {
   const selectedMeanings = useMemo(() => new Set([KuralMeaning.SalamanPapa]), []);

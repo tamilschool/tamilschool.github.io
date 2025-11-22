@@ -50,7 +50,7 @@
 - [x] Refactor practice `QuestionView` layout to separate question and answer styling (`src/components/QuestionView.tsx`)
 - [x] Restyle `KuralDisplay` card visuals to align with updated practice view (`src/components/KuralDisplay.tsx`)
 - [x] Create `/src/hooks/useTimer.ts`
-  - Practice: 240s, Competition: 1201s (ready for Phase 6)
+  - Practice: 240s, Competition: 1200s (ready for Phase 6)
   - isLive, isPaused, time state with incrementing answer counter
   - `useEffect` with interval and cleanup
   - Tested: 6 unit tests passing ✅
@@ -183,13 +183,13 @@
   - Dollar calculation: `total / 2`
   
 - [ ] Integrate Round 2 components in CompetitionApp
-  - Timer starts at 1201s
+  - Timer starts at 1200s
   - Group selection (II/III only)
   - Topic navigation with question pool
   
 - [ ] Test Competition Mode thoroughly:
   - Group selection shows II/III only
-  - Timer starts at 1201s
+  - Timer starts at 1200s
   - Question pool generates correctly (verify counts)
   - Navigation works (prev/next/jump)
   - Max 10 answers enforced per topic
@@ -307,7 +307,7 @@
 ### 🔄 Phases 5-8 Remaining
 
 **Priority Order**:
-1. **Phase 5: Competition Mode - Round 2 Only** (Groups II/III, Question pools, 1201s timer, multi-topic navigation, scoring)
+1. **Phase 5: Competition Mode - Round 2 Only** (Groups II/III, Question pools, 1200s timer, multi-topic navigation, scoring)
 2. **Phase 6: Root App & Mode Switching** (App.tsx, practice/competition toggle)
 3. **Phase 7: Polish & Deploy** (Final UI refinement, GitHub Pages deployment)
 4. **Phase 8: Documentation** (README, comments, video walkthrough)

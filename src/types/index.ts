@@ -11,6 +11,7 @@ export const DATA_SOURCE = {
 
 export const MAX_QUESTIONS = 15;
 export const MAX_ANSWERS = 10;
+export const COMPETITION_TIMER_SECONDS = 1200;
 
 // ============================================================================
 // Enums (using const objects for type-safe enum pattern via const assertion)
@@ -222,7 +223,7 @@ export interface QuestionState {
 export interface CTimerState {
   isLive: boolean;
   isPaused: boolean;
-  time: number; // seconds (1201 for competition)
+  time: number; // seconds (1200 for competition)
 }
 
 export interface CHistoryState<T> {

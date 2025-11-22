@@ -82,7 +82,7 @@ JSON files from GitHub:
 ### Round Structure
 
 #### Round 2: Structured Questions (Groups II/III)
-**Timer**: 1201 seconds (20 minutes)
+**Timer**: 1200 seconds (20 minutes)
 
 **Question Pool Generation** (15 questions per topic, max 10 can be answered):
 1. Extract 15 most frequent **last words**, remove those kurals from pool

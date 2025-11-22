@@ -109,7 +109,7 @@ User selects group →
   
   Round 2: (Groups II/III only)
     Generate question pool (5 topics × 15 questions) →
-    Start timer (1201s) →
+    Start timer (1200s) →
     User navigates questions →
     Mark answers (right/wrong) →
     Max 10 per topic enforced →
