@@ -1,6 +1,7 @@
 import type { CQuestionState } from '@/types';
 import { Topic, TopicDisplay } from '@/types';
 import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface Round2ScoreCardProps {
   questionState: CQuestionState;
@@ -22,32 +23,48 @@ export default function Round2ScoreCard({ questionState }: Round2ScoreCardProps)
   const totalAnswered = topics.reduce((sum, topic) => sum + getAnsweredCount(topic), 0);
 
   return (
-    <Card className="rounded-xl border border-blue-100 bg-white p-4 shadow-sm">
-      <h3 className="mb-3 text-sm font-bold text-slate-800">மதிப்பெண் அட்டை</h3>
+    <Card className="w-full max-w-2xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h3 className="mb-6 text-lg font-bold text-slate-800">மதிப்பெண் அட்டை</h3>
 
-      <div className="mb-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+      <div className="space-y-6">
         {topics.map((topic) => {
-          const answered = getAnsweredCount(topic);
-          const total = 10;
+          const score = getAnsweredCount(topic);
+          const maxScore = 10;
 
           return (
-            <div
-              key={topic}
-              className="rounded-lg border border-blue-100 bg-blue-50 px-2 py-2 text-center"
-            >
-              <div className="text-xs font-semibold text-slate-700">{TopicDisplay[topic]}</div>
-              <div className="text-sm font-semibold text-blue-600">
-                {answered}/{total}
+            <div key={topic} className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="text-sm font-medium text-slate-700">
+                  {TopicDisplay[topic]}
+                </div>
+                <div className="text-sm font-bold text-slate-900">
+                  {score}/{maxScore}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                {Array.from({ length: maxScore }).map((_, index) => {
+                  const isFilled = index < score;
+                  return (
+                    <div
+                      key={index}
+                      className={cn(
+                        "h-3 flex-1 rounded-full transition-all duration-300",
+                        isFilled ? "bg-green-500" : "bg-slate-100"
+                      )}
+                    />
+                  );
+                })}
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="rounded-lg border border-blue-100 bg-blue-50 p-3">
-        <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-600">
-          <span>மொத்தம்</span>
-          <span className="text-sm font-bold text-blue-700">{totalAnswered}</span>
+      <div className="mt-8 border-t border-slate-100 pt-4">
+        <div className="flex items-center justify-between">
+          <span className="text-base font-bold text-slate-700">மொத்தம்</span>
+          <span className="text-2xl font-bold text-blue-600">{totalAnswered}</span>
         </div>
       </div>
     </Card>
