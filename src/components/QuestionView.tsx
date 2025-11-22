@@ -84,13 +84,13 @@ export function QuestionView({
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col space-y-4">
-      <div className="rounded-xl border border-amber-200 bg-amber-50 px-6 py-6 text-center shadow-sm">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 h-full min-h-0">
+      <div className="rounded-xl border border-amber-200 bg-amber-50 px-6 py-6 text-center shadow-sm shrink-0">
         {renderQuestionContent()}
       </div>
 
       {showAnswer && (
-        <div className="flex flex-col space-y-4 max-h-[60vh] overflow-y-auto pb-1">
+        <div className="flex-1 flex flex-col space-y-4 overflow-y-auto p-4 min-h-0">
           {currentQuestion.answers?.length ? (
             currentQuestion.answers.map((kural) => (
               <KuralDisplay

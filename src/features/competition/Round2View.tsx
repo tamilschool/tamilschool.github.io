@@ -204,7 +204,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
       }
 
       timer.reset();
-    //   setShowAnswer(false);
+      //   setShowAnswer(false);
       onQuestionStateChange(nextState);
     },
     [questionState, onQuestionStateChange, timer]
@@ -213,7 +213,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
   const handleNavigate = useCallback(
     (index: number) => {
       updateTopicIndex(currentTopic, index);
-    //   setShowAnswer(false);
+      //   setShowAnswer(false);
     },
     [currentTopic, updateTopicIndex]
   );
@@ -221,14 +221,14 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
   const handlePrevious = useCallback(() => {
     if (currentIndex > 0) {
       updateTopicIndex(currentTopic, currentIndex - 1);
-    //   setShowAnswer(false);
+      //   setShowAnswer(false);
     }
   }, [currentIndex, currentTopic, updateTopicIndex]);
 
   const handleNext = useCallback(() => {
     if (currentIndex < totalCount - 1) {
       updateTopicIndex(currentTopic, currentIndex + 1);
-    //   setShowAnswer(false);
+      //   setShowAnswer(false);
     }
   }, [currentIndex, currentTopic, totalCount, updateTopicIndex]);
 
@@ -313,10 +313,10 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
   );
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 pb-6">
+    <div className="flex h-screen flex-col bg-gray-50 overflow-hidden">
       <div className="flex-1 min-h-0 px-3 py-4">
         <div className="mx-auto flex h-full w-full max-w-6xl flex-col gap-4 lg:flex-row">
-          <div className="flex-1 min-w-0 space-y-3 lg:max-w-3xl lg:space-y-4">
+          <div className="flex-1 min-w-0 flex flex-col gap-3 lg:max-w-3xl lg:gap-4 h-full">
             <div className="mx-auto w-full rounded-xl bg-white p-3 shadow-sm lg:p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-[160px]">
