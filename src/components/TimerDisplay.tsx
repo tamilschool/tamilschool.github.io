@@ -29,50 +29,46 @@ export function TimerDisplay({
 }: TimerDisplayProps) {
   const isExpired = time <= 0 && isLive;
 
-  const buttonText = isExpired
-    ? 'மீண்டும்'
-    : isLive
-    ? formatTime(time)
-    : 'தொடங்கு';
+  const buttonText = isExpired ? 'மீண்டும்' : isLive ? formatTime(time) : 'தொடங்கு';
 
   const total = totalTime > 0 ? totalTime : 1;
   const normalized = Math.min(Math.max(time / total, 0), 1);
   const progressAngle = normalized * 360;
-  const progressColor = isExpired ? '#f97316' : isPaused ? '#94a3b8' : isLive ? '#10b981' : '#0ea5e9';
-  const trackColor = 'rgba(203, 213, 225, 0.45)';
+
+  // Colors: progress (green/amber/gray), and an opaque track so no pale inner band appears
+  const progressColor = isExpired ? '#f97316' : isPaused ? '#94a3b8' : isLive ? '#059669' : '#0ea5e9';
+  const trackColor = '#e5e7eb'; // slate-200 - opaque
+
   const borderStyle: CSSProperties = (isLive || isPaused)
     ? {
-        background: `conic-gradient(${progressColor} ${progressAngle}deg, ${trackColor} ${progressAngle}deg)`
+        background: `conic-gradient(${progressColor} ${progressAngle}deg, ${trackColor} ${progressAngle}deg)`,
       }
     : {
-        background: `linear-gradient(${trackColor}, ${trackColor})`
+        background: `${trackColor}`,
       };
 
-  // Keep hover background subtle/white to avoid Button variant hover (which can be darker)
-  const buttonBase = 'min-w-[112px] h-full rounded-lg border border-slate-200 bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:bg-sky-100 hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0';
+  // Button base: use explicit height so overall outer size (button + wrapper padding) matches other header buttons
+  const buttonBase = isPaused
+    ? 'select-none min-w-[112px] h-9 rounded-lg border border-amber-400 bg-amber-100 px-5 text-sm transition-colors shadow-md hover:bg-amber-200 animate-pulse'
+    : 'select-none min-w-[112px] h-9 rounded-lg border border-transparent bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:bg-sky-100 hover:text-emerald-600';
+
   const stateClasses = isExpired
-    ? 'focus-visible:ring-amber-200'
+    ? ''
     : isPaused
-    ? 'focus-visible:ring-slate-200'
-    : isLive
-    ? 'focus-visible:ring-emerald-200'
-    : 'focus-visible:ring-sky-200';
-  const activeTextClass = isExpired
-    ? 'text-amber-600'
-    : isPaused
-    ? 'text-slate-500'
+    ? 'text-amber-800'
     : isLive
     ? 'text-emerald-600'
     : 'text-emerald-600';
 
   return (
     <div className="flex items-center">
+      {/* outer gradient ring: small padding so outer size matches other buttons */}
       <div
-        className={`relative inline-flex rounded-xl p-[2px] -my-[2px] ${isLive && isPaused ? 'animate-pulse' : ''}`}
+        className={`relative inline-flex rounded-lg p-[2px] -my-[2px] ${isLive && isPaused ? 'animate-pulse' : ''}`}
         style={borderStyle}
       >
         <Button
-          className={`${buttonBase} ${stateClasses} ${activeTextClass} hover:border-sky-400 hover:text-sky-600`}
+          className={`${buttonBase} ${stateClasses} hover:border-sky-400 hover:text-sky-600 focus-visible:ring-0 focus-visible:shadow-none focus-visible:outline-none focus:ring-0 focus:shadow-none`}
           onClick={onToggle}
         >
           {buttonText}
