@@ -346,6 +346,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                     isLive={timer.isLive}
                     isPaused={timer.isPaused}
                     totalTime={timer.totalTime}
+                    isCompetition={true}
                     onToggle={handleTimerToggle}
                     onReset={() => timer.reset()}
                   />

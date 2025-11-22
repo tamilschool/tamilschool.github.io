@@ -12,6 +12,7 @@ export interface TimerDisplayProps {
   totalTime: number;
   onToggle: () => void;
   onReset: () => void;
+  isCompetition?: boolean;
 }
 
 function formatTime(seconds: number): string {
@@ -26,10 +27,16 @@ export function TimerDisplay({
   isPaused,
   totalTime,
   onToggle,
+  onReset,
+  isCompetition = false,
 }: TimerDisplayProps) {
   const isExpired = time <= 0 && isLive;
 
-  const buttonText = isExpired ? 'மீண்டும்' : isLive ? formatTime(time) : 'தொடங்கு';
+  const buttonText = (() => {
+    if (isExpired) return isCompetition ? formatTime(time) : 'மீண்டும்';
+    if (isLive) return formatTime(time);
+    return 'தொடங்கு';
+  })();
 
   const total = totalTime > 0 ? totalTime : 1;
   const normalized = Math.min(Math.max(time / total, 0), 1);
@@ -69,7 +76,14 @@ export function TimerDisplay({
       >
         <Button
           className={`${buttonBase} ${stateClasses} hover:border-sky-400 hover:text-sky-600 focus-visible:ring-0 focus-visible:shadow-none focus-visible:outline-none focus:ring-0 focus:shadow-none`}
-          onClick={onToggle}
+          onClick={() => {
+            if (isExpired && !isCompetition) {
+              onReset();
+            } else {
+              onToggle();
+            }
+          }}
+          disabled={isExpired && isCompetition}
         >
           {buttonText}
         </Button>
