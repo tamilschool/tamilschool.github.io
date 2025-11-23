@@ -369,7 +369,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
               />
             </div>
 
-            {timer.isLive ? (
+            {timer.isLive && !timer.isPaused? (
               <QuestionView
                 topic={currentTopic}
                 selectedMeanings={selectedMeanings}
