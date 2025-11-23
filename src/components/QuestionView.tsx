@@ -84,35 +84,33 @@ export function QuestionView({
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col flex-1 min-h-0 min-w-0 h-full overflow-hidden">
+    <div className="mx-auto flex w-full max-w-3xl flex-col flex-1 min-h-0 min-w-0 h-full overflow-y-auto pr-1 pb-1">
       <div className="rounded-xl border border-amber-200 bg-amber-50 px-6 py-6 text-center shadow-sm shrink-0 mb-4">
         {renderQuestionContent()}
       </div>
 
       {showAnswer && (
-        <div className="flex-1 min-h-0 overflow-y-auto pr-1 pb-1">
-          <div className="flex flex-col gap-4">
-            {currentQuestion.answers?.length ? (
-              <>
-                {currentQuestion.answers.map((kural) => (
-                  <KuralDisplay
-                    key={kural.kuralNo}
-                    thirukkural={kural}
-                    selectedMeanings={selectedMeanings}
-                    variant="default"
-                  />
-                ))}
-              </>
-            ) : currentQuestion.kural ? (
-              <>
+        <div className="flex flex-col gap-4">
+          {currentQuestion.answers?.length ? (
+            <>
+              {currentQuestion.answers.map((kural) => (
                 <KuralDisplay
-                  thirukkural={currentQuestion.kural}
+                  key={kural.kuralNo}
+                  thirukkural={kural}
                   selectedMeanings={selectedMeanings}
                   variant="default"
                 />
-              </>
-            ) : null}
-          </div>
+              ))}
+            </>
+          ) : currentQuestion.kural ? (
+            <>
+              <KuralDisplay
+                thirukkural={currentQuestion.kural}
+                selectedMeanings={selectedMeanings}
+                variant="default"
+              />
+            </>
+          ) : null}
         </div>
       )}
     </div>
