@@ -6,6 +6,7 @@ interface QuestionNavigationProps {
   currentIndex: number;
   onNavigate: (index: number) => void;
   isAnswered: (index: number) => boolean;
+  disabled?: boolean;
 }
 
 export default function QuestionNavigation({
@@ -14,6 +15,7 @@ export default function QuestionNavigation({
   currentIndex,
   onNavigate,
   isAnswered,
+  disabled = false,
 }: QuestionNavigationProps) {
   if (totalCount === 0) {
     return null;
@@ -32,14 +34,14 @@ export default function QuestionNavigation({
         {Array.from({ length: totalCount }, (_, index) => (
           <button
             key={index}
-            onClick={() => onNavigate(index)}
-            className={`flex h-7 items-center justify-center rounded text-xs font-semibold transition-colors ${
-              currentIndex === index
+            onClick={() => !disabled && onNavigate(index)}
+            disabled={disabled}
+            className={`flex h-7 items-center justify-center rounded text-xs font-semibold transition-colors ${currentIndex === index
                 ? 'bg-blue-500 text-white shadow-sm'
                 : isAnswered(index)
-                ? 'bg-emerald-500 text-white hover:bg-emerald-600'
-                : 'bg-white text-slate-700 border border-slate-200 hover:border-blue-400 hover:bg-blue-50'
-            }`}
+                  ? 'bg-emerald-500 text-white hover:bg-emerald-600'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:border-blue-400 hover:bg-blue-50'
+              } ${disabled ? 'opacity-50 cursor-not-allowed hover:border-slate-200 hover:bg-white' : ''}`}
           >
             {index + 1}
           </button>

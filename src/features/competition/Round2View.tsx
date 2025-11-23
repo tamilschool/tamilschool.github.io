@@ -172,9 +172,17 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
 
   const handleSelectTopic = useCallback(
     (topic: TopicType) => {
+      // Pause timer and reset to current time (effectively stopping the round but keeping time)
+      timer.reset(timer.time);
+
       const nextState: CQuestionState = {
         ...questionState,
         selectedTopic: topic,
+        timerState: {
+          ...questionState.timerState,
+          isLive: false,
+          time: timer.time,
+        },
       };
 
       switch (topic) {
@@ -205,25 +213,28 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
 
   const handleNavigate = useCallback(
     (index: number) => {
+      if (!timer.isLive || timer.isPaused) return;
       updateTopicIndex(currentTopic, index);
       //   setShowAnswer(false);
     },
-    [currentTopic, updateTopicIndex]
+    [currentTopic, updateTopicIndex, timer.isLive, timer.isPaused]
   );
 
   const handlePrevious = useCallback(() => {
+    if (!timer.isLive || timer.isPaused) return;
     if (currentIndex > 0) {
       updateTopicIndex(currentTopic, currentIndex - 1);
       //   setShowAnswer(false);
     }
-  }, [currentIndex, currentTopic, updateTopicIndex]);
+  }, [currentIndex, currentTopic, updateTopicIndex, timer.isLive, timer.isPaused]);
 
   const handleNext = useCallback(() => {
+    if (!timer.isLive || timer.isPaused) return;
     if (currentIndex < totalCount - 1) {
       updateTopicIndex(currentTopic, currentIndex + 1);
       //   setShowAnswer(false);
     }
-  }, [currentIndex, currentTopic, totalCount, updateTopicIndex]);
+  }, [currentIndex, currentTopic, totalCount, updateTopicIndex, timer.isLive, timer.isPaused]);
 
   const handleTimerToggle = useCallback(() => {
     let nextTimerState = { ...questionState.timerState };
@@ -354,6 +365,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                 currentIndex={currentIndex}
                 onNavigate={handleNavigate}
                 isAnswered={answeredPredicate}
+                disabled={!timer.isLive || timer.isPaused}
               />
             </div>
 
