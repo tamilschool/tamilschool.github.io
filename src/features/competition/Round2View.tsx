@@ -229,28 +229,28 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
 
   const handleNavigate = useCallback(
     (index: number) => {
-      if (!timer.isLive || timer.isPaused) return;
+      if (!timer.isLive || timer.isPaused || timer.isExpired) return;
       updateTopicIndex(currentTopic, index);
       //   setShowAnswer(false);
     },
-    [currentTopic, updateTopicIndex, timer.isLive, timer.isPaused]
+    [currentTopic, updateTopicIndex, timer.isLive, timer.isPaused, timer.isExpired]
   );
 
   const handlePrevious = useCallback(() => {
-    if (!timer.isLive || timer.isPaused) return;
+    if (!timer.isLive || timer.isPaused || timer.isExpired) return;
     if (currentIndex > 0) {
       updateTopicIndex(currentTopic, currentIndex - 1);
       //   setShowAnswer(false);
     }
-  }, [currentIndex, currentTopic, updateTopicIndex, timer.isLive, timer.isPaused]);
+  }, [currentIndex, currentTopic, updateTopicIndex, timer.isLive, timer.isPaused, timer.isExpired]);
 
   const handleNext = useCallback(() => {
-    if (!timer.isLive || timer.isPaused) return;
+    if (!timer.isLive || timer.isPaused || timer.isExpired) return;
     if (currentIndex < totalCount - 1) {
       updateTopicIndex(currentTopic, currentIndex + 1);
       //   setShowAnswer(false);
     }
-  }, [currentIndex, currentTopic, totalCount, updateTopicIndex, timer.isLive, timer.isPaused]);
+  }, [currentIndex, currentTopic, totalCount, updateTopicIndex, timer.isLive, timer.isPaused, timer.isExpired]);
 
   const handleTimerToggle = useCallback(() => {
     let nextTimerState = { ...questionState.timerState };
@@ -344,6 +344,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                     selectedTopic={questionState.selectedTopic}
                     onTopicChange={handleSelectTopic}
                     includeAllKurals={false}
+                    disabled={timer.isExpired}
                   />
                 </div>
 
@@ -389,7 +390,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                 currentIndex={currentIndex}
                 onNavigate={handleNavigate}
                 isAnswered={answeredPredicate}
-                disabled={!timer.isLive || timer.isPaused}
+                disabled={!timer.isLive || timer.isPaused || timer.isExpired}
               />
             </div>
 
