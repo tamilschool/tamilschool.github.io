@@ -3,11 +3,11 @@ import { Topic, TopicDisplay } from '@/types';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
-interface Round2ScoreCardProps {
+interface ScoreCardProps {
   questionState: CQuestionState;
 }
 
-export default function Round2ScoreCard({ questionState }: Round2ScoreCardProps) {
+export default function ScoreCard({ questionState }: ScoreCardProps) {
   const topics: Topic[] = [
     Topic.FirstWord,
     Topic.LastWord,
@@ -34,12 +34,8 @@ export default function Round2ScoreCard({ questionState }: Round2ScoreCardProps)
           return (
             <div key={topic} className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-medium text-slate-700">
-                  {TopicDisplay[topic]}
-                </div>
-                <div className="text-sm font-bold text-slate-900">
-                  {score}/{maxScore}
-                </div>
+                <div className="text-sm font-medium text-slate-700">{TopicDisplay[topic]}</div>
+                <div className="text-sm font-bold text-slate-900">{score}/{maxScore}</div>
               </div>
 
               <div className="flex items-center gap-1">

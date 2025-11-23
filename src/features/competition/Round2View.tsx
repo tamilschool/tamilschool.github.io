@@ -14,7 +14,7 @@ import { TopicSelector } from '@/components/practice/TopicSelector';
 import { QuestionView } from '@/components/QuestionView';
 import { CompetitionControls } from './CompetitionControls';
 import QuestionNavigation from './QuestionNavigation';
-import Round2ScoreCard from './Round2ScoreCard';
+import ScoreCard from './ScoreCard';
 
 interface Round2ViewProps {
   questionState: CQuestionState;
@@ -376,7 +376,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
           </div>
 
           <aside className="w-full shrink-0 lg:w-80 lg:pt-1 lg:sticky lg:top-4 lg:ml-6">
-            <Round2ScoreCard questionState={questionState} />
+            <ScoreCard questionState={questionState} />
           </aside>
         </div>
       </div>
