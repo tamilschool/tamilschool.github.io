@@ -175,11 +175,6 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
       const nextState: CQuestionState = {
         ...questionState,
         selectedTopic: topic,
-        timerState: {
-          ...questionState.timerState,
-          isLive: false,
-          isPaused: false,
-        },
       };
 
       switch (topic) {
@@ -202,7 +197,6 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
           break;
       }
 
-      timer.reset();
       //   setShowAnswer(false);
       onQuestionStateChange(nextState);
     },
