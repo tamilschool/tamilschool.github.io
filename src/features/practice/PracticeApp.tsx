@@ -7,7 +7,7 @@ import { TimerDisplay } from '@/components/TimerDisplay';
 import { QuestionView } from '@/components/QuestionView';
 import { KuralDisplay } from '@/components/KuralDisplay';
 import { GroupSelector } from './GroupSelector';
-import { TopicSelector } from './TopicSelector';
+import { TopicSelector } from '@/components/shared/TopicSelector';
 import { ScholarSelector } from './ScholarSelector';
 import { NavigationControls } from './NavigationControls';
 import { Group, Topic, KuralMeaning } from '@/types';
@@ -22,7 +22,7 @@ export interface PracticeAppProps {
   onSwitchMode?: () => void;
 }
 
-export function PracticeApp({}: PracticeAppProps) {
+export function PracticeApp({ }: PracticeAppProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
@@ -394,7 +394,7 @@ export function PracticeApp({}: PracticeAppProps) {
         </div>
       </div>
 
-       <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur md:hidden">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
           {showScholarSelection && (
             <div className="w-full">

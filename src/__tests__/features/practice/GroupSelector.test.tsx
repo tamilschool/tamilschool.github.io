@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { GroupSelector } from '@/components/practice/GroupSelector';
+import { GroupSelector } from '@/features/practice/GroupSelector';
 import { Group } from '@/types';
 
 describe('GroupSelector', () => {

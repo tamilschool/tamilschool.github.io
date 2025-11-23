@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { PracticeApp } from './components/practice/PracticeApp';
+import { PracticeApp } from './features/practice/PracticeApp';
 import CompetitionApp from './features/competition/CompetitionApp';
 import SignOutConfirm from './features/competition/SignOutConfirm';
 

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { NavigationControls } from '@/components/practice/NavigationControls';
+import { NavigationControls } from '@/features/practice/NavigationControls';
 
 describe('NavigationControls', () => {
   it('renders three buttons', () => {

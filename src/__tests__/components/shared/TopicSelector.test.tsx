@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { TopicSelector } from '@/components/practice/TopicSelector';
+import { TopicSelector } from '@/components/shared/TopicSelector';
 import { Topic } from '@/types';
 
 describe('TopicSelector', () => {

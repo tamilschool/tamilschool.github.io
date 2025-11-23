@@ -10,7 +10,7 @@ import {
 import type { Topic as TopicType, Thirukkural } from '@/types';
 import { useTimer } from '@/hooks/useTimer';
 import { TimerDisplay } from '@/components/TimerDisplay';
-import { TopicSelector } from '@/components/practice/TopicSelector';
+import { TopicSelector } from '@/components/shared/TopicSelector';
 import { QuestionView } from '@/components/QuestionView';
 import { CompetitionControls } from './CompetitionControls';
 import QuestionNavigation from './QuestionNavigation';
