@@ -8,7 +8,7 @@ import { QuestionView } from '@/components/QuestionView';
 import { KuralDisplay } from '@/components/KuralDisplay';
 import { GroupSelector } from './GroupSelector';
 import { TopicSelector } from '@/components/shared/TopicSelector';
-import { ScholarSelector } from './ScholarSelector';
+import { ScholarSelector } from '@/components/shared/ScholarSelector';
 import { NavigationControls } from './NavigationControls';
 import { Group, Topic, KuralMeaning } from '@/types';
 import type {

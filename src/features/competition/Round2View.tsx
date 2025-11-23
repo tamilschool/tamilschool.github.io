@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { CQuestionState } from '@/types';
 import {
   MAX_ANSWERS,
@@ -7,10 +7,11 @@ import {
   KuralMeaning,
   COMPETITION_TIMER_SECONDS,
 } from '@/types';
-import type { Topic as TopicType, Thirukkural } from '@/types';
+import type { Topic as TopicType, Thirukkural, KuralMeaning as KuralMeaningType } from '@/types';
 import { useTimer } from '@/hooks/useTimer';
 import { TimerDisplay } from '@/components/TimerDisplay';
 import { TopicSelector } from '@/components/shared/TopicSelector';
+import { ScholarSelector } from '@/components/shared/ScholarSelector';
 import { QuestionView } from '@/components/QuestionView';
 import { CompetitionControls } from './CompetitionControls';
 import QuestionNavigation from './QuestionNavigation';
@@ -22,10 +23,25 @@ interface Round2ViewProps {
 }
 
 export default function Round2View({ questionState, onQuestionStateChange }: Round2ViewProps) {
-  const selectedMeanings = useMemo(() => new Set([KuralMeaning.SalamanPapa]), []);
+  const [selectedMeanings, setSelectedMeanings] = useState<Set<KuralMeaningType>>(
+    new Set([KuralMeaning.SalamanPapa])
+  );
   const timer = useTimer({ initialTime: COMPETITION_TIMER_SECONDS, isLive: questionState.timerState.isLive });
 
   const currentTopic = questionState.selectedTopic;
+  const showScholarSelection = timer.isLive && (currentTopic === Topic.Porul || currentTopic === Topic.Kural);
+
+  const handleMeaningToggle = useCallback((meaning: KuralMeaningType) => {
+    setSelectedMeanings((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(meaning)) {
+        newSet.delete(meaning);
+      } else {
+        newSet.add(meaning);
+      }
+      return newSet;
+    });
+  }, []);
 
   const getCurrentIndex = useCallback(
     (topic: Topic): number => {
@@ -356,6 +372,14 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                   />
                 </div>
               </div>
+              {showScholarSelection && (
+                <div className="mt-3 border-t border-slate-100 pt-3">
+                  <ScholarSelector
+                    selectedMeanings={selectedMeanings}
+                    onMeaningToggle={handleMeaningToggle}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="mx-auto w-full">
@@ -369,7 +393,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
               />
             </div>
 
-            {timer.isLive && !timer.isPaused? (
+            {timer.isLive && !timer.isPaused ? (
               <QuestionView
                 topic={currentTopic}
                 selectedMeanings={selectedMeanings}
