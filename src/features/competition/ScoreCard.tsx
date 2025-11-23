@@ -10,10 +10,10 @@ interface ScoreCardProps {
 export default function ScoreCard({ questionState }: ScoreCardProps) {
   const topics: Topic[] = [
     Topic.FirstWord,
-    Topic.LastWord,
+    Topic.Athikaram,
     Topic.Kural,
     Topic.Porul,
-    Topic.Athikaram,
+    Topic.LastWord,
   ];
 
   const getAnsweredCount = (topic: Topic): number => {
