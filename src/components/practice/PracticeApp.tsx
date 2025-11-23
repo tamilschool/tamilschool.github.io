@@ -307,11 +307,11 @@ export function PracticeApp({}: PracticeAppProps) {
   }
 
   return (
-    <>
-      <div className="flex min-h-screen flex-col bg-gray-50 pb-[calc(env(safe-area-inset-bottom)+9.5rem)] md:h-screen md:overflow-hidden md:pb-6">
+    <div className='flex flex-col h-full'>
+      <div className="flex h-screen flex-col bg-gray-50 overflow-hidden ">
         <div className="flex-1 min-h-0 px-3 py-3">
           <div className="mx-auto flex h-full w-full max-w-5xl flex-col min-h-0">
-            <div className="mb-4 hidden flex-col items-center gap-2 md:flex">
+            <div className="mb-4 flex-col items-center gap-2 md:flex shrink-0">
               <div className="mx-auto flex w-full max-w-3xl items-stretch gap-3">
                 <div className="flex-1">
                   <GroupSelector
@@ -360,7 +360,7 @@ export function PracticeApp({}: PracticeAppProps) {
               )}
             </div>
 
-            <div className="flex-1 min-h-0 overflow-hidden">
+            <div className="flex-1 min-w-0 flex flex-col min-h-0 h-full">
               {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
                 <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-lg">
                   <img
@@ -370,7 +370,7 @@ export function PracticeApp({}: PracticeAppProps) {
                   />
                 </div>
               ) : selectedTopic === Topic.AllKurals ? (
-                <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col gap-2 overflow-y-auto pr-1 min-h-0">
+                <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-2 overflow-y-auto pr-1 min-h-0">
                   {currentKurals.map((kural, idx) => (
                     <KuralDisplay
                       key={kural.kuralNo}
@@ -382,21 +382,19 @@ export function PracticeApp({}: PracticeAppProps) {
                   ))}
                 </div>
               ) : (
-                <div className="mx-auto flex h-full w-full max-w-3xl flex-1 flex-col overflow-y-auto min-h-0">
-                  <QuestionView
-                    topic={selectedTopic}
-                    selectedMeanings={selectedMeanings}
-                    showAnswer={showAnswer}
-                    currentQuestion={getCurrentQuestion()}
-                  />
-                </div>
+                <QuestionView
+                  topic={selectedTopic}
+                  selectedMeanings={selectedMeanings}
+                  showAnswer={showAnswer}
+                  currentQuestion={getCurrentQuestion()}
+                />
               )}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur md:hidden">
+       <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur md:hidden">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
           {showScholarSelection && (
             <div className="w-full">
@@ -446,6 +444,6 @@ export function PracticeApp({}: PracticeAppProps) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
