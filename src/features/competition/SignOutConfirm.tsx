@@ -1,30 +1,37 @@
 interface SignOutConfirmProps {
-  onConfirm: () => void;
+  onExit: () => void;
+  onRestart: () => void;
   onCancel: () => void;
 }
 
-export default function SignOutConfirm({ onConfirm, onCancel }: SignOutConfirmProps) {
+export default function SignOutConfirm({ onExit, onRestart, onCancel }: SignOutConfirmProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm mx-4">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-4">
         <h2 className="text-xl font-bold text-gray-900 mb-4">
           வெளியேற்றத்தை உறுதிப்படுத்தவும்
         </h2>
         <p className="text-gray-600 mb-6">
-          நீங்கள் வெளியேற விரும்புகிறீர்களா? உங்கள் எல்லா மதிப்பெண்களும் நீக்கப்படும்.
+          நீங்கள் என்ன செய்ய விரும்புகிறீர்கள்?
         </p>
-        <div className="flex gap-4 justify-end">
+        <div className="flex flex-col sm:flex-row gap-3 justify-end">
           <button
             onClick={onCancel}
             className="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 font-medium"
           >
-            இல்லை
+            ரத்து செய்
           </button>
           <button
-            onClick={onConfirm}
+            onClick={onRestart}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium"
+          >
+            அடுத்த போட்டியாளர்
+          </button>
+          <button
+            onClick={onExit}
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-medium"
           >
-            ஆம், வெளியேறவும்
+            வெளியேறு
           </button>
         </div>
       </div>

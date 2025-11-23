@@ -8,6 +8,8 @@ function App() {
   const [isPracticeMode, setIsPracticeMode] = useState(true);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
+  const [competitionKey, setCompetitionKey] = useState(0);
+
   const toggleMode = () => {
     setIsPracticeMode(!isPracticeMode);
   };
@@ -19,6 +21,12 @@ function App() {
   const confirmExit = () => {
     setShowExitConfirm(false);
     setIsPracticeMode(true);
+    setCompetitionKey(0); // Reset key when exiting
+  };
+
+  const handleRestartCompetition = () => {
+    setShowExitConfirm(false);
+    setCompetitionKey(prev => prev + 1);
   };
 
   const cancelExit = () => {
@@ -53,13 +61,14 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-hidden">
-        {isPracticeMode ? <PracticeApp /> : <CompetitionApp />}
+        {isPracticeMode ? <PracticeApp /> : <CompetitionApp key={competitionKey} />}
       </div>
 
       {/* Exit Confirmation Dialog */}
       {showExitConfirm && (
         <SignOutConfirm
-          onConfirm={confirmExit}
+          onExit={confirmExit}
+          onRestart={handleRestartCompetition}
           onCancel={cancelExit}
         />
       )}

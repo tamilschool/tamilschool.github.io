@@ -24,36 +24,42 @@ export interface QuestionPoolState {
  * Returns pools for: LastWord, FirstWord, Kural, Porul, Athikaram topics
  */
 export function useQuestionPool(kurals: Thirukkural[]): QuestionPoolState {
-  // Helper function to get distinct last words with frequency sorting
+  // Helper function to get distinct last words (legacy algorithm)
+  // Reference: old/.../data/CDataClass.kt cGetLastWords()
   function getLastWords(thirukkurals: Thirukkural[], max: number): string[] {
-    const wordFrequency = new Map<string, number>();
+    const shuffled = shuffle(thirukkurals);
+    const words: string[] = [];
+    const seen = new Set<string>();
 
-    thirukkurals.forEach(k => {
-      const lastWord = k.words[k.words.length - 1];
-      wordFrequency.set(lastWord, (wordFrequency.get(lastWord) || 0) + 1);
-    });
+    for (const kural of shuffled) {
+      const lastWord = kural.words[kural.words.length - 1];
+      if (!seen.has(lastWord)) {
+        seen.add(lastWord);
+        words.push(lastWord);
+        if (words.length >= max) break;
+      }
+    }
 
-    // Sort by frequency (descending), then by appearance
-    return Array.from(wordFrequency.entries())
-      .sort((a, b) => b[1] - a[1])
-      .map(([word]) => word)
-      .slice(0, max);
+    return words;
   }
 
-  // Helper function to get distinct first words with frequency sorting
+  // Helper function to get distinct first words (legacy algorithm)
+  // Reference: old/.../data/CDataClass.kt cGetFirstWords()
   function getFirstWords(thirukkurals: Thirukkural[], max: number): string[] {
-    const wordFrequency = new Map<string, number>();
+    const shuffled = shuffle(thirukkurals);
+    const words: string[] = [];
+    const seen = new Set<string>();
 
-    thirukkurals.forEach(k => {
-      const firstWord = k.words[0];
-      wordFrequency.set(firstWord, (wordFrequency.get(firstWord) || 0) + 1);
-    });
+    for (const kural of shuffled) {
+      const firstWord = kural.words[0];
+      if (!seen.has(firstWord)) {
+        seen.add(firstWord);
+        words.push(firstWord);
+        if (words.length >= max) break;
+      }
+    }
 
-    // Sort by frequency (descending), then by appearance
-    return Array.from(wordFrequency.entries())
-      .sort((a, b) => b[1] - a[1])
-      .map(([word]) => word)
-      .slice(0, max);
+    return words;
   }
 
   // Helper function to shuffle array
