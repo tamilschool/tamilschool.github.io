@@ -75,31 +75,44 @@ export function useQuestionPool(kurals: Thirukkural[]): QuestionPoolState {
   let allKurals = kurals;
   let remainingKurals = [...kurals];
 
-  console.log(`[Question Pool] Total Kurals: ${allKurals.length}`);
+  console.log(`\n========== QUESTION POOL ANALYSIS ==========`);
+  console.log(`Total Kurals: ${allKurals.length}`);
 
   // Step 1: Extract 15 last words (most frequent)
   const lastWords = getLastWords(remainingKurals, MAX_QUESTIONS);
+  const lastWordKurals = remainingKurals.filter(k => lastWords.includes(k.words[k.words.length - 1]));
+  const lastWordKuralsCount = lastWordKurals.length;
   remainingKurals = remainingKurals.filter(k => !lastWords.includes(k.words[k.words.length - 1]));
-  const afterLastWord = remainingKurals.length;
-  console.log(`[Question Pool] After Last Words: ${lastWords.length} extracted, ${afterLastWord} remaining`);
+  console.log(`\n1. Last Words Round:`);
+  console.log(`   - Selected 15 unique last words`);
+  console.log(`   - Covered Kurals: ${lastWordKuralsCount}`);
+  console.log(`   - Remaining: ${remainingKurals.length}`);
 
   // Step 2: Extract 15 first words (most frequent from remaining)
   const firstWords = getFirstWords(remainingKurals, MAX_QUESTIONS);
+  const firstWordKurals = remainingKurals.filter(k => firstWords.includes(k.words[0]));
+  const firstWordKuralsCount = firstWordKurals.length;
   remainingKurals = remainingKurals.filter(k => !firstWords.includes(k.words[0]));
-  const afterFirstWord = remainingKurals.length;
-  console.log(`[Question Pool] After First Words: ${firstWords.length} extracted, ${afterFirstWord} remaining`);
+  console.log(`\n2. First Words Round:`);
+  console.log(`   - Selected 15 unique first words`);
+  console.log(`   - Covered Kurals: ${firstWordKuralsCount}`);
+  console.log(`   - Remaining: ${remainingKurals.length}`);
 
   // Step 3: Extract 15 random kurals from remaining
   const kuralsPools = shuffle(remainingKurals).slice(0, MAX_QUESTIONS);
+  const kuralsCount = kuralsPools.length;
   remainingKurals = remainingKurals.filter(k => !kuralsPools.includes(k));
-  const afterKural = remainingKurals.length;
-  console.log(`[Question Pool] After Kurals: ${kuralsPools.length} extracted, ${afterKural} remaining`);
+  console.log(`\n3. Kural Round:`);
+  console.log(`   - Selected Kurals: ${kuralsCount}`);
+  console.log(`   - Remaining: ${remainingKurals.length}`);
 
   // Step 4: Extract 15 random porul meanings from remaining
   const porulPools = shuffle(remainingKurals).slice(0, MAX_QUESTIONS);
+  const porulsCount = porulPools.length;
   remainingKurals = remainingKurals.filter(k => !porulPools.includes(k));
-  const afterPorul = remainingKurals.length;
-  console.log(`[Question Pool] After Poruls: ${porulPools.length} extracted, ${afterPorul} remaining`);
+  console.log(`\n4. Porul Round:`);
+  console.log(`   - Selected Kurals: ${porulsCount}`);
+  console.log(`   - Remaining: ${remainingKurals.length}`);
 
   // Step 5: Extract up to 15 random athikarams from remaining
   const athikaramSet = new Set<string>();
@@ -111,17 +124,26 @@ export function useQuestionPool(kurals: Thirukkural[]): QuestionPoolState {
   }
 
   const athikarams = Array.from(athikaramSet);
-  remainingKurals = remainingKurals.filter(k => !athikarams.includes(k.athikaram));
-  const afterAthikaram = remainingKurals.length;
-  console.log(`[Question Pool] After Athikarams: ${athikarams.length} extracted, ${afterAthikaram} remaining`);
 
-  // Summary log
-  console.log(
-    `[Question Pool] Summary: Total=${allKurals.length}, ` +
-    `LastWords=${lastWords.length}, FirstWords=${firstWords.length}, ` +
-    `Kurals=${kuralsPools.length}, Poruls=${porulPools.length}, ` +
-    `Athikarams=${athikarams.length}`
-  );
+  // Calculate total unique athikarams in remaining
+  const totalUniqueAthikarams = new Set(remainingKurals.map(k => k.athikaram)).size;
+
+  console.log(`\n5. Athikaram Round:`);
+  console.log(`   - Selected Athikarams: ${athikarams.length}`);
+  console.log(`   - Total Unique Athikarams Available: ${totalUniqueAthikarams}`);
+  console.log(`   - Remaining Kurals: ${remainingKurals.length}`);
+
+  // Summary
+  const totalCoveredKurals = lastWordKuralsCount + firstWordKuralsCount + kuralsCount + porulsCount;
+  console.log(`\n========== SUMMARY ==========`);
+  console.log(`Total Covered Kurals: ${totalCoveredKurals} / ${allKurals.length}`);
+  console.log(`  - Last Words: ${lastWordKuralsCount}`);
+  console.log(`  - First Words: ${firstWordKuralsCount}`);
+  console.log(`  - Kurals: ${kuralsCount}`);
+  console.log(`  - Poruls: ${porulsCount}`);
+  console.log(`Athikarams: ${athikarams.length} selected from ${totalUniqueAthikarams} available`);
+  console.log(`Status: ${totalUniqueAthikarams >= MAX_QUESTIONS ? '✓ SUFFICIENT' : '⚠ INSUFFICIENT'}`);
+  console.log(`================================\n`);
 
   return {
     lastWords,

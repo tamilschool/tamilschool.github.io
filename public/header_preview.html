@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Design Options</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700;900&family=Tiro+Tamil:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .option-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .label {
+            padding: 12px 20px;
+            background: #e2e8f0;
+            font-weight: bold;
+            color: #475569;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-preview {
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Option 1: Modern Gradient */
+        .opt-1 {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        }
+
+        .title-1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        /* Option 2: Royal Gold (Traditional) */
+        .opt-2 {
+            background: #1e293b;
+        }
+
+        .title-2 {
+            font-family: 'Tiro Tamil', serif;
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fcd34d, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Option 3: Neon Glow */
+        .opt-3 {
+            background: #0f172a;
+        }
+
+        .title-3 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow:
+                0 0 7px #fff,
+                0 0 10px #fff,
+                0 0 21px #0ea5e9,
+                0 0 42px #0ea5e9,
+                0 0 82px #0ea5e9;
+        }
+
+        /* Option 4: Clean & Minimalist */
+        .opt-4 {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .title-4 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #334155;
+            position: relative;
+            display: inline-block;
+        }
+
+        .title-4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40%;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 2px;
+        }
+
+        /* Option 5: Glassmorphism */
+        .opt-5 {
+            background: linear-gradient(45deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+            position: relative;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 15px 40px;
+        }
+
+        .title-5 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #86198f;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="option-container">
+        <div class="label">Option 1: Modern Gradient (Current Style Enhanced)</div>
+        <div class="header-preview opt-1">
+            <h1 class="title-1">திருக்குறள் திருவிழா</h1>
+        </div>
+    </div>
+
+    <div class="option-container">
+        <div class="label">Option 2: Royal Gold (Traditional Serif)</div>
+        <div class="header-preview opt-2">
+            <h1 class="title-2">திருக்குறள் திருவிழா</h1>
+        </div>
+    </div>
+
+    <div class="option-container">
+        <div class="label">Option 3: Cyber/Neon Glow</div>
+        <div class="header-preview opt-3">
+            <h1 class="title-3">திருக்குறள் திருவிழா</h1>
+        </div>
+    </div>
+
+    <div class="option-container">
+        <div class="label">Option 4: Clean & Minimalist</div>
+        <div class="header-preview opt-4">
+            <h1 class="title-4">திருக்குறள் திருவிழா</h1>
+        </div>
+    </div>
+
+    <div class="option-container">
+        <div class="label">Option 5: Glassmorphism</div>
+        <div class="header-preview opt-5">
+            <div class="glass-card">
+                <h1 class="title-5">திருக்குறள் திருவிழா</h1>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

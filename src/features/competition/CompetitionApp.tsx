@@ -1,22 +1,38 @@
-import { useState, useEffect, useCallback } from 'react';
-import type { Thirukkural, Group, CQuestionState, CTimerState, ScoreState } from '@/types';
-import { Round, Topic, COMPETITION_TIMER_SECONDS } from '@/types';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import type { Thirukkural, CQuestionState, ScoreState } from '@/types';
+import { Group, Round, Topic, COMPETITION_TIMER_SECONDS } from '@/types';
 import { fetchSource } from '@/lib/data/fetchSource';
 import { parseSource } from '@/lib/data/parseSource';
 import { useQuestionPool } from '@/hooks/useQuestionPool';
-import GroupSelection from './GroupSelection';
 import Round2View from './Round2View';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface CompetitionAppProps {
   // Props for future extensions
 }
 
 export default function CompetitionApp({ }: CompetitionAppProps) {
+  const { groupId } = useParams<{ groupId: string }>();
+  const navigate = useNavigate();
   const [loaded, setLoaded] = useState(false);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
   const [activeGroup, setActiveGroup] = useState<Group | null>(null);
   const [questionState, setQuestionState] = useState<CQuestionState | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Convert groupId string to Group enum
+  const selectedGroup = useMemo(() => {
+    if (!groupId) return null;
+    // Check if groupId matches any Group value
+    return Object.values(Group).includes(groupId as Group) ? (groupId as Group) : null;
+  }, [groupId]);
+
+  // Redirect if invalid group
+  useEffect(() => {
+    if (!selectedGroup) {
+      navigate('/');
+    }
+  }, [selectedGroup, navigate]);
 
   // Load data on mount
   useEffect(() => {
@@ -34,59 +50,20 @@ export default function CompetitionApp({ }: CompetitionAppProps) {
     initializeData();
   }, []);
 
-  // Create question state for a group
+  // Filter kurals by group and generate question pools
+  const groupKurals = useMemo(() => {
+    if (!selectedGroup || !allKurals.length) return [];
+    return allKurals.filter((k) => k.group.includes(selectedGroup));
+  }, [allKurals, selectedGroup]);
+
+  // Generate question pools using the original algorithm
+  const questionPools = useQuestionPool(groupKurals);
+
+  // Create initial question state
   const createQuestionState = useCallback((group: Group): CQuestionState => {
-    // Filter kurals by group
-    const groupKurals = allKurals.filter(k => k.group.includes(group));
-    console.log(`[Competition] Group ${group}: ${groupKurals.length} kurals`);
-
-    // Generate question pools
-    const pools = useQuestionPool(groupKurals);
-
-    // Create athikaram state with proper formatting
-    const athikarams = pools.athikarams;
-    const athikaramState = {
-      index: 0,
-      targets: athikarams,
-    };
-
-    // Create kural state
-    const kuralState = {
-      index: 0,
-      targets: pools.kurals,
-    };
-
-    // Create porul state
-    const porulState = {
-      index: 0,
-      targets: pools.poruls,
-    };
-
-    // Create first word state
-    const firstWordState = {
-      index: 0,
-      targets: pools.firstWords,
-    };
-
-    // Create last word state
-    const lastWordState = {
-      index: 0,
-      targets: pools.lastWords,
-    };
-
-    // Create timer state
-    const timerState: CTimerState = {
-      isLive: false,
-      isPaused: false,
-      time: COMPETITION_TIMER_SECONDS, // 20 minutes
-    };
-
-    // Create score state
-    const scoreState: ScoreState = {
-      group1Score: {
-        round1: {},
-        bonus: 0,
-      },
+    // Initial Score State
+    const initialScoreState: ScoreState = {
+      group1Score: { round1: {}, bonus: 0 },
       group23Score: {
         round1: {},
         round2: {
@@ -100,22 +77,24 @@ export default function CompetitionApp({ }: CompetitionAppProps) {
       },
     };
 
-    const cQuestionState: CQuestionState = {
+    return {
       selectedGroup: group,
       selectedRound: Round.II,
       selectedTopic: Topic.FirstWord,
       round2Kurals: groupKurals,
-      athikaramState: athikaramState as any,
-      kuralState: kuralState as any,
-      porulState: porulState as any,
-      firstWordState: firstWordState as any,
-      lastWordState: lastWordState as any,
-      timerState,
-      scoreState,
+      athikaramState: { index: 0, targets: questionPools.athikarams },
+      kuralState: { index: 0, targets: questionPools.kurals },
+      porulState: { index: 0, targets: questionPools.poruls },
+      firstWordState: { index: 0, targets: questionPools.firstWords },
+      lastWordState: { index: 0, targets: questionPools.lastWords },
+      timerState: {
+        isLive: false,
+        isPaused: false,
+        time: COMPETITION_TIMER_SECONDS,
+      },
+      scoreState: initialScoreState,
     };
-
-    return cQuestionState;
-  }, [allKurals]);
+  }, [groupKurals, questionPools]);
 
   // Handle group selection
   const handleGroupSelect = useCallback((group: Group) => {
@@ -124,30 +103,29 @@ export default function CompetitionApp({ }: CompetitionAppProps) {
     setActiveGroup(group);
   }, [createQuestionState]);
 
+  // Initialize with selected group once loaded
+  useEffect(() => {
+    if (selectedGroup && loaded && allKurals.length > 0 && !activeGroup) {
+      handleGroupSelect(selectedGroup);
+    }
+  }, [selectedGroup, loaded, allKurals, activeGroup, handleGroupSelect]);
+
   if (error) {
     return <div className="p-6 text-red-600">Error: {error}</div>;
   }
 
-  if (!loaded) {
-    return <div className="p-6">Loading competition data...</div>;
-  }
-
-  if (!activeGroup || !questionState) {
+  if (!loaded || !activeGroup || !questionState) {
     return (
-      <GroupSelection
-        onSelectGroup={handleGroupSelect}
-      />
+      <div className="flex items-center justify-center h-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
+      </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-full">
-      {questionState && (
-        <Round2View
-          questionState={questionState}
-          onQuestionStateChange={setQuestionState}
-        />
-      )}
-    </div>
+    <Round2View
+      questionState={questionState}
+      onQuestionStateChange={setQuestionState}
+    />
   );
 }

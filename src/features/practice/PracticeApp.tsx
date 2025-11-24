@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchSource } from '@/lib/data/fetchSource';
 import { parseSource } from '@/lib/data/parseSource';
 import { useTimer } from '@/hooks/useTimer';
@@ -18,17 +19,28 @@ import type {
   KuralMeaning as KuralMeaningType,
 } from '@/types';
 
-export interface PracticeAppProps {
-  onSwitchMode?: () => void;
-}
-
-export function PracticeApp({ }: PracticeAppProps) {
+export function PracticeApp() {
+  const { groupId } = useParams<{ groupId: string }>();
+  const navigate = useNavigate();
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [allKurals, setAllKurals] = useState<Thirukkural[]>([]);
 
+  // Convert groupId string to number
+  const selectedGroup = useMemo(() => {
+    if (!groupId) return null;
+    // Check if groupId matches any Group value
+    return Object.values(Group).includes(groupId as Group) ? (groupId as Group) : null;
+  }, [groupId]);
+
+  // Redirect if invalid group
+  useEffect(() => {
+    if (!selectedGroup) {
+      navigate('/');
+    }
+  }, [selectedGroup, navigate]);
+
   // User selections
-  const [selectedGroup, setSelectedGroup] = useState<GroupType>(Group.II);
   const [selectedTopic, setSelectedTopic] = useState<TopicType>(Topic.FirstWord);
   const [selectedMeanings, setSelectedMeanings] = useState<Set<KuralMeaningType>>(
     new Set([KuralMeaning.SalamanPapa])
@@ -75,10 +87,6 @@ export function PracticeApp({ }: PracticeAppProps) {
       try {
         const { thirukkuralData, groupsData } = await fetchSource();
         const parsedKurals = parseSource(thirukkuralData, groupsData);
-
-        console.log('✓ Practice Mode: Data loaded successfully');
-        console.log(`Total kurals: ${parsedKurals.length}`);
-
         setAllKurals(parsedKurals);
         setLoaded(true);
       } catch (err) {
@@ -91,7 +99,7 @@ export function PracticeApp({ }: PracticeAppProps) {
 
   // Update current kurals and derived data when group changes
   useEffect(() => {
-    if (!loaded || allKurals.length === 0) return;
+    if (!loaded || allKurals.length === 0 || !selectedGroup) return;
 
     const filteredKurals = allKurals.filter((k) => k.group.includes(selectedGroup));
     setCurrentKurals(filteredKurals);
@@ -111,13 +119,6 @@ export function PracticeApp({ }: PracticeAppProps) {
       new Set(filteredKurals.map((k) => k.words[k.words.length - 1]).filter(Boolean))
     ).sort();
     setLastWords(uniqueLastWords);
-
-    console.log(`Group ${selectedGroup}:`, {
-      kurals: filteredKurals.length,
-      athikarams: uniqueAthikarams.length,
-      firstWords: uniqueFirstWords.length,
-      lastWords: uniqueLastWords.length,
-    });
   }, [loaded, selectedGroup, allKurals]);
 
   const resetTimer = (startLive: boolean) => {
@@ -132,10 +133,10 @@ export function PracticeApp({ }: PracticeAppProps) {
     }
   };
 
-  // Handle group change
+  // Handle group change - Navigate to new URL
   const handleGroupChange = (group: GroupType) => {
     if (group !== selectedGroup) {
-      setSelectedGroup(group);
+      navigate(`/practice/${group}`);
       setShowAnswer(false);
       resetTimer(false);
     }
@@ -295,12 +296,12 @@ export function PracticeApp({ }: PracticeAppProps) {
     );
   }
 
-  if (!loaded) {
+  if (!loaded || !selectedGroup) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <h1 className="mb-4 text-2xl font-bold">Loading திருக்குறள் பயிற்சி...</h1>
-          <p className="text-muted-foreground">Loading data</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto" />
         </div>
       </div>
     );
@@ -364,7 +365,7 @@ export function PracticeApp({ }: PracticeAppProps) {
               {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
                 <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-lg">
                   <img
-                    src="thiruvalluvar.jpg"
+                    src="/thiruvalluvar.jpg"
                     alt="Thiruvalluvar Statue at Kanyakumari"
                     className="h-128 w-full object-cover"
                   />
