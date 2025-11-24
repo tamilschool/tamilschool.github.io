@@ -312,7 +312,7 @@ export function PracticeApp() {
       <div className="flex h-screen flex-col bg-gray-50 overflow-hidden ">
         <div className="flex-1 min-h-0 px-3 py-3">
           <div className="mx-auto flex h-full w-full max-w-5xl flex-col min-h-0">
-            <div className="mb-4 flex-col items-center gap-2 md:flex shrink-0">
+            <div className="mb-4 hidden flex-col items-center gap-2 md:flex shrink-0">
               <div className="mx-auto flex w-full max-w-3xl items-stretch gap-3">
                 <div className="flex-1">
                   <GroupSelector
