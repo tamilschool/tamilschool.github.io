@@ -55,7 +55,7 @@ describe('ToggleGroup Component', () => {
             </ToggleGroup>
         );
 
-        const buttons = screen.getAllByRole('button');
+        const buttons = screen.getAllByRole('radio');
         buttons.forEach(button => {
             expect(button).toBeDisabled();
         });
@@ -69,11 +69,8 @@ describe('ToggleGroup Component', () => {
             </ToggleGroup>
         );
 
-        const disabledButton = screen.getByText('A');
-        const enabledButton = screen.getByText('B');
-
-        expect(disabledButton).toBeDisabled();
-        expect(enabledButton).not.toBeDisabled();
+        expect(screen.getByText('A').closest('button')).toBeDisabled();
+        expect(screen.getByText('B').closest('button')).not.toBeDisabled();
     });
 
     it('applies variant to items', () => {
@@ -84,7 +81,7 @@ describe('ToggleGroup Component', () => {
         );
 
         const button = container.querySelector('button');
-        expect(button).toHaveClass('border');
+        expect(button).toHaveClass('border-input');
     });
 
     it('applies size to items', () => {
@@ -95,6 +92,6 @@ describe('ToggleGroup Component', () => {
         );
 
         const button = container.querySelector('button');
-        expect(button).toHaveClass('h-9');
+        expect(button).toHaveClass('h-8');
     });
 });

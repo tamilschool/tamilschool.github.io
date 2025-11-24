@@ -9,52 +9,39 @@ describe('GroupSelection Component', () => {
         const onSelectGroup = vi.fn();
         render(<GroupSelection onSelectGroup={onSelectGroup} />);
 
-        expect(screen.getByText(/குழு தேர்வு/i)).toBeInTheDocument();
+        expect(screen.getByText(/திருக்குறள் போட்டி/i)).toBeInTheDocument();
+        expect(screen.getByText(/உங்கள் பிரிவைத் தேர்ந்தெடுக்கவும்/i)).toBeInTheDocument();
     });
 
-    it('displays all three group options', () => {
+    it('displays available group options', () => {
         const onSelectGroup = vi.fn();
         render(<GroupSelection onSelectGroup={onSelectGroup} />);
 
-        // Check for group labels
-        expect(screen.getByText(/குழு I/)).toBeInTheDocument();
-        expect(screen.getByText(/குழு II/)).toBeInTheDocument();
-        expect(screen.getByText(/குழு III/)).toBeInTheDocument();
+        // Check for group labels (Group I is not in competition mode currently)
+        expect(screen.getByText(/பிரிவு 2/)).toBeInTheDocument();
+        expect(screen.getByText(/பிரிவு 3/)).toBeInTheDocument();
     });
 
-    it('calls onSelectGroup with Group.I when first card clicked', async () => {
+    it('calls onSelectGroup with Group.II when first card clicked', async () => {
         const user = userEvent.setup();
         const onSelectGroup = vi.fn();
 
         render(<GroupSelection onSelectGroup={onSelectGroup} />);
 
-        const groupICard = screen.getByText(/குழு I/).closest('div[role="button"]');
-        if (groupICard) {
-            await user.click(groupICard);
-            expect(onSelectGroup).toHaveBeenCalledWith(Group.I);
-        }
-    });
-
-    it('calls onSelectGroup with Group.II when second card clicked', async () => {
-        const user = userEvent.setup();
-        const onSelectGroup = vi.fn();
-
-        render(<GroupSelection onSelectGroup={onSelectGroup} />);
-
-        const groupIICard = screen.getByText(/குழு II/).closest('div[role="button"]');
+        const groupIICard = screen.getByText(/பிரிவு 2/).closest('button');
         if (groupIICard) {
             await user.click(groupIICard);
             expect(onSelectGroup).toHaveBeenCalledWith(Group.II);
         }
     });
 
-    it('calls onSelectGroup with Group.III when third card clicked', async () => {
+    it('calls onSelectGroup with Group.III when second card clicked', async () => {
         const user = userEvent.setup();
         const onSelectGroup = vi.fn();
 
         render(<GroupSelection onSelectGroup={onSelectGroup} />);
 
-        const groupIIICard = screen.getByText(/குழு III/).closest('div[role="button"]');
+        const groupIIICard = screen.getByText(/பிரிவு 3/).closest('button');
         if (groupIIICard) {
             await user.click(groupIIICard);
             expect(onSelectGroup).toHaveBeenCalledWith(Group.III);
@@ -66,6 +53,6 @@ describe('GroupSelection Component', () => {
         render(<GroupSelection onSelectGroup={onSelectGroup} />);
 
         const buttons = screen.getAllByRole('button');
-        expect(buttons.length).toBeGreaterThanOrEqual(3);
+        expect(buttons.length).toBeGreaterThanOrEqual(2);
     });
 });

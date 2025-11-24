@@ -47,8 +47,8 @@ describe('CompetitionControls Component', () => {
         const previousButton = screen.getByText(/முந்தைய/i);
         const nextButton = screen.getByText(/அடுத்த/i);
 
-        expect(previousButton).toBeDisabled();
-        expect(nextButton).toBeDisabled();
+        expect(previousButton.closest('button')).toBeDisabled();
+        expect(nextButton.closest('button')).toBeDisabled();
     });
 
     it('disables navigation when timer is not live', () => {
@@ -57,8 +57,8 @@ describe('CompetitionControls Component', () => {
         const previousButton = screen.getByText(/முந்தைய/i);
         const nextButton = screen.getByText(/அடுத்த/i);
 
-        expect(previousButton).toBeDisabled();
-        expect(nextButton).toBeDisabled();
+        expect(previousButton.closest('button')).toBeDisabled();
+        expect(nextButton.closest('button')).toBeDisabled();
     });
 
     it('disables navigation when timer is expired', () => {
@@ -67,22 +67,22 @@ describe('CompetitionControls Component', () => {
         const previousButton = screen.getByText(/முந்தைய/i);
         const nextButton = screen.getByText(/அடுத்த/i);
 
-        expect(previousButton).toBeDisabled();
-        expect(nextButton).toBeDisabled();
+        expect(previousButton.closest('button')).toBeDisabled();
+        expect(nextButton.closest('button')).toBeDisabled();
     });
 
     it('disables previous button at first question', () => {
         render(<CompetitionControls {...defaultProps} currentIndex={0} />);
 
         const previousButton = screen.getByText(/முந்தைய/i);
-        expect(previousButton).toBeDisabled();
+        expect(previousButton.closest('button')).toBeDisabled();
     });
 
     it('disables next button at last question', () => {
         render(<CompetitionControls {...defaultProps} currentIndex={14} totalCount={15} />);
 
         const nextButton = screen.getByText(/அடுத்த/i);
-        expect(nextButton).toBeDisabled();
+        expect(nextButton.closest('button')).toBeDisabled();
     });
 
     it('calls onPrevious when previous button clicked', async () => {
@@ -131,22 +131,22 @@ describe('CompetitionControls Component', () => {
         const correctButton = screen.getByText(/சரி/i);
         const wrongButton = screen.getByText(/தவறு/i);
 
-        expect(correctButton).toBeDisabled();
-        expect(wrongButton).toBeDisabled();
+        expect(correctButton.closest('button')).toBeDisabled();
+        expect(wrongButton.closest('button')).toBeDisabled();
     });
 
     it('shows correct answer as pressed', () => {
         render(<CompetitionControls {...defaultProps} answer={true} />);
 
         const correctButton = screen.getByText(/சரி/i);
-        expect(correctButton).toHaveAttribute('data-state', 'on');
+        expect(correctButton.closest('button')).toHaveAttribute('data-state', 'on');
     });
 
     it('shows wrong answer as pressed', () => {
         render(<CompetitionControls {...defaultProps} answer={false} />);
 
         const wrongButton = screen.getByText(/தவறு/i);
-        expect(wrongButton).toHaveAttribute('data-state', 'on');
+        expect(wrongButton.closest('button')).toHaveAttribute('data-state', 'on');
     });
 
     it('enables answer toggles even when timer expired', () => {

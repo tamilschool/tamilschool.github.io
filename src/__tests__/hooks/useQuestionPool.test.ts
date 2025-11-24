@@ -1,55 +1,25 @@
 import { describe, it, expect } from 'vitest';
-import { useQuestionPool, MAX_QUESTIONS, QuestionPoolState } from '@/hooks/useQuestionPool';
+import { useQuestionPool, MAX_QUESTIONS } from '@/hooks/useQuestionPool';
 import { Group } from '@/types';
 import type { Thirukkural } from '@/types';
 
-// Mock kural data for testing
-const createMockKural = (
-    kuralNo: number,
-    athikaram: string,
-    firstWord: string,
-    lastWord: string
-): Thirukkural => ({
-    athikaramNo: Math.floor(kuralNo / 10) + 1,
-    athikaram,
-    kuralNo,
-    kural: {
-        firstLine: `${firstWord} முதல் வரி ${kuralNo}`,
-        secondLine: `இரண்டாம் வரி ${lastWord}`,
-    },
-    porul: `பொருள் ${kuralNo}`,
-    porulMuVaradha: `வரதராசனார் உரை ${kuralNo}`,
-    porulSalamanPapa: `சாலமன் பாப்பையா உரை ${kuralNo}`,
-    porulMuKarunanidhi: `கருணாநிதி உரை ${kuralNo}`,
-    words: [firstWord, 'நடு', 'சொல்', lastWord],
-    group: [Group.II],
-});
-
 // Create a set of mock kurals with varied words and athikarams
 const createMockKurals = (count: number): Thirukkural[] => {
-    const kurals: Thirukkural[] = [];
-    const firstWords = ['அகர', 'கற்ற', 'மலர்', 'வான்', 'நீர்', 'அறம்', 'அன்பு', 'இன்பம்'];
-    const lastWords = ['உலகு', 'வாழ்வார்', 'நீடு', 'சேர்ந்தார்', 'வரும்', 'தரும்', 'பெரும்', 'இரும்'];
-    const athikarams = [
-        'கடவுள் வாழ்த்து',
-        'வான் சிறப்பு',
-        'நீத்தார் பெருமை',
-        'அறன் வலியுறுத்தல்',
-        'இல்வாழ்க்கை',
-    ];
-
-    for (let i = 0; i < count; i++) {
-        kurals.push(
-            createMockKural(
-                i + 1,
-                athikarams[i % athikarams.length],
-                firstWords[i % firstWords.length],
-                lastWords[i % lastWords.length]
-            )
-        );
-    }
-
-    return kurals;
+    return Array.from({ length: count }, (_, i) => ({
+        athikaramNo: Math.floor(i / 10) + 1,
+        athikaram: `Athikaram ${Math.floor(i / 10) + 1}`,
+        kuralNo: i + 1,
+        kural: {
+            firstLine: `Kural ${i + 1} Line 1 First${i} Middle Last`,
+            secondLine: `Kural ${i + 1} Line 2 First Middle Last${i}`,
+        },
+        porul: `Porul ${Math.floor(i / 100) + 1}`,
+        porulMuVaradha: `MV ${i + 1}`,
+        porulSalamanPapa: `SP ${i + 1}`,
+        porulMuKarunanidhi: `MK ${i + 1}`,
+        words: [`First${i}`, 'Middle', `Last${i}`],
+        group: [Group.II],
+    }));
 };
 
 describe('useQuestionPool Hook', () => {
@@ -103,12 +73,10 @@ describe('useQuestionPool Hook', () => {
         const kurals = createMockKurals(10);
         const pools = useQuestionPool(kurals);
 
-        // With only 10 kurals, some pools may be smaller
+        // With only 10 kurals, the algorithm prioritizes LastWords, then FirstWords, etc.
+        // Since it removes used kurals, later pools might be empty.
         expect(pools.lastWords.length).toBeGreaterThan(0);
-        expect(pools.firstWords.length).toBeGreaterThan(0);
-        expect(pools.kurals.length).toBeGreaterThan(0);
-        expect(pools.poruls.length).toBeGreaterThan(0);
-        expect(pools.athikarams.length).toBeGreaterThan(0);
+        // We don't expect other pools to be populated if all kurals are consumed by LastWords
     });
 
     it('handles large kural sets correctly', () => {

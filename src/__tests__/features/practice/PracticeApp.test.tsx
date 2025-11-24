@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PracticeApp from '@/features/practice/PracticeApp';
+import { PracticeApp } from '@/features/practice/PracticeApp';
 
 // Mock data fetching
 vi.mock('@/lib/data/fetchSource', () => ({
@@ -29,16 +29,20 @@ vi.mock('@/lib/data/parseSource', () => ({
 }));
 
 describe('PracticeApp Component', () => {
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
     it('renders loading state initially', () => {
         render(<PracticeApp />);
-        expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+        expect(screen.getAllByText(/Loading/i)[0]).toBeInTheDocument();
     });
 
     it('renders practice interface after loading', async () => {
         render(<PracticeApp />);
 
         await waitFor(() => {
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
+            expect(screen.queryAllByText(/Loading/i)).toHaveLength(0);
         }, { timeout: 2000 });
     });
 
@@ -48,10 +52,8 @@ describe('PracticeApp Component', () => {
 
         render(<PracticeApp />);
 
-        await waitFor(() => {
-            const errorText = screen.queryByText(/Error/i) || screen.queryByText(/Failed/i);
-            expect(errorText).toBeInTheDocument();
-        }, { timeout: 2000 });
+        // Use findByText to wait for the element to appear
+        expect(await screen.findByText(/Error/i)).toBeInTheDocument();
     });
 
     it('has topic selector', async () => {
@@ -67,9 +69,10 @@ describe('PracticeApp Component', () => {
         render(<PracticeApp />);
 
         await waitFor(() => {
-            const prevButton = screen.queryByText(/முந்தைய/i) || screen.queryByText(/Previous/i);
-            const nextButton = screen.queryByText(/அடுத்த/i) || screen.queryByText(/Next/i);
-            expect(prevButton || nextButton).toBeTruthy();
+            const prevButtons = screen.queryAllByLabelText(/Previous Question/i);
+            const nextButtons = screen.queryAllByLabelText(/Next Question/i);
+            expect(prevButtons.length).toBeGreaterThan(0);
+            expect(nextButtons.length).toBeGreaterThan(0);
         }, { timeout: 2000 });
     });
 });

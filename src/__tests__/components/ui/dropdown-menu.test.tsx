@@ -99,15 +99,11 @@ describe('DropdownMenu Component', () => {
 
         await user.click(screen.getByText('Open'));
 
-        const { container } = render(
-            <DropdownMenu open>
-                <DropdownMenuContent>
-                    <DropdownMenuSeparator />
-                </DropdownMenuContent>
-            </DropdownMenu>
-        );
-
-        expect(container.querySelector('[role="separator"]')).toBeInTheDocument();
+        // Radix UI Separator should have role="separator"
+        // Since it's in a Portal, we must use screen, not container
+        const separator = screen.getByRole('separator');
+        expect(separator).toBeInTheDocument();
+        expect(separator).toHaveClass('h-px');
     });
 
     it('handles checkbox items', async () => {

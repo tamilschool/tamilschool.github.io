@@ -284,23 +284,23 @@ export function PracticeApp({ }: PracticeAppProps) {
     (timer.isLive && (selectedTopic === Topic.Porul || selectedTopic === Topic.Kural)) ||
     selectedTopic === Topic.AllKurals;
 
-  if (!loaded) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <h1 className="mb-4 text-2xl font-bold">Loading திருக்குறள் பயிற்சி...</h1>
-          <p className="text-muted-foreground">Loading data</p>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center text-destructive">
           <h1 className="mb-4 text-2xl font-bold">Error</h1>
           <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!loaded) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <h1 className="mb-4 text-2xl font-bold">Loading திருக்குறள் பயிற்சி...</h1>
+          <p className="text-muted-foreground">Loading data</p>
         </div>
       </div>
     );

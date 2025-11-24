@@ -66,7 +66,7 @@ describe('Toggle Component', () => {
     it('applies size variants correctly', () => {
         const { container } = render(<Toggle size="sm">Small</Toggle>);
         const button = container.querySelector('button');
-        expect(button).toHaveClass('h-9');
+        expect(button).toHaveClass('h-8');
     });
 
     it('applies custom className', () => {

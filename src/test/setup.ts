@@ -21,3 +21,15 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn(),
   })),
 });
+
+// Polyfill for pointer capture (needed for Radix UI)
+if (!HTMLElement.prototype.hasPointerCapture) {
+  HTMLElement.prototype.hasPointerCapture = () => false;
+  HTMLElement.prototype.setPointerCapture = () => { };
+  HTMLElement.prototype.releasePointerCapture = () => { };
+}
+
+// Polyfill for scrollIntoView (needed for Radix UI Select)
+if (!HTMLElement.prototype.scrollIntoView) {
+  HTMLElement.prototype.scrollIntoView = () => { };
+}

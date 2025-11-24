@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import ScoreCard from '@/features/competition/ScoreCard';
-import { Topic, Group, Round, CQuestionState, CTimerState, ScoreState } from '@/types';
-import type { Thirukkural } from '@/types';
+import { Topic, Group, Round } from '@/types';
+import type { CQuestionState, CTimerState, ScoreState } from '@/types';
 
 // Create mock question state
 const createMockQuestionState = (scores: { [key in Topic]?: number }): CQuestionState => {
@@ -14,11 +14,11 @@ const createMockQuestionState = (scores: { [key in Topic]?: number }): CQuestion
         group23Score: {
             round1: {},
             round2: {
-                [Topic.FirstWord]: new Set(Array.from({ length: scores[Topic.FirstWord] || 0 }, (_, i) => i)),
-                [Topic.Athikaram]: new Set(Array.from({ length: scores[Topic.Athikaram] || 0 }, (_, i) => i)),
-                [Topic.Kural]: new Set(Array.from({ length: scores[Topic.Kural] || 0 }, (_, i) => i)),
-                [Topic.Porul]: new Set(Array.from({ length: scores[Topic.Porul] || 0 }, (_, i) => i)),
-                [Topic.LastWord]: new Set(Array.from({ length: scores[Topic.LastWord] || 0 }, (_, i) => i)),
+                [Topic.FirstWord]: new Set(Array.from({ length: scores[Topic.FirstWord] || 0 }, (_, i) => String(i))),
+                [Topic.Athikaram]: new Set(Array.from({ length: scores[Topic.Athikaram] || 0 }, (_, i) => String(i))),
+                [Topic.Kural]: new Set(Array.from({ length: scores[Topic.Kural] || 0 }, (_, i) => String(i))),
+                [Topic.Porul]: new Set(Array.from({ length: scores[Topic.Porul] || 0 }, (_, i) => String(i))),
+                [Topic.LastWord]: new Set(Array.from({ length: scores[Topic.LastWord] || 0 }, (_, i) => String(i))),
                 [Topic.AllKurals]: new Set(),
             },
         },
@@ -57,11 +57,11 @@ describe('ScoreCard Component', () => {
         const questionState = createMockQuestionState({});
         render(<ScoreCard questionState={questionState} />);
 
-        expect(screen.getByText(/முதல் சொல்/i)).toBeInTheDocument();
+        expect(screen.getByText(/முதல் வார்த்தை/i)).toBeInTheDocument();
         expect(screen.getByText(/அதிகாரம்/i)).toBeInTheDocument();
         expect(screen.getByText(/குறள்/i)).toBeInTheDocument();
         expect(screen.getByText(/பொருள்/i)).toBeInTheDocument();
-        expect(screen.getByText(/கடைசி சொல்/i)).toBeInTheDocument();
+        expect(screen.getByText(/கடைசி வார்த்தை/i)).toBeInTheDocument();
     });
 
     it('displays zero scores initially', () => {

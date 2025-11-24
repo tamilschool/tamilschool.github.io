@@ -28,6 +28,7 @@ export function NavigationControls({
         onClick={onPrevious}
         disabled={!isLive}
         className={baseNavButton}
+        aria-label="Previous Question"
       >
         {leftBadge !== null && (
           <span className="mr-1 rounded-full bg-slate-100 px-2 text-[11px] font-semibold text-slate-600 group-disabled:bg-slate-100 group-disabled:text-slate-400">
@@ -47,6 +48,7 @@ export function NavigationControls({
         onClick={onNext}
         disabled={!isLive}
         className={baseNavButton}
+        aria-label="Next Question"
       >
         <ChevronRight className="h-5 w-5" />
         {rightBadge !== null && (

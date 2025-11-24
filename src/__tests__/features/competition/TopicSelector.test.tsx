@@ -41,8 +41,8 @@ describe('TopicSelector Component', () => {
         const questionState = createMockQuestionState();
         render(<TopicSelector questionState={questionState} onSelectTopic={vi.fn()} />);
 
-        expect(screen.getByText(/முதல் சொல்/)).toBeInTheDocument();
-        expect(screen.getByText(/கடைசி சொல்/)).toBeInTheDocument();
+        expect(screen.getByText(/முதல் வார்த்தை/)).toBeInTheDocument();
+        expect(screen.getByText(/கடைசி வார்த்தை/)).toBeInTheDocument();
         expect(screen.getByText(/குறள்/)).toBeInTheDocument();
         expect(screen.getByText(/பொருள்/)).toBeInTheDocument();
         expect(screen.getByText(/அதிகாரம்/)).toBeInTheDocument();
