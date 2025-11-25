@@ -37,7 +37,7 @@ export default function SignOutConfirm({
         <p className="text-gray-600 mb-6">
           {description}
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-end">
+        <div className="flex flex-row gap-3 justify-end flex-wrap">
           <button
             onClick={onCancel}
             className="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 font-medium"
