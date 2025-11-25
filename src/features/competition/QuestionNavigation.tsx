@@ -8,6 +8,8 @@ interface QuestionNavigationProps {
   onNavigate: (index: number) => void;
   isAnswered: (index: number) => boolean;
   disabled?: boolean;
+  /** Compact mode: hides header row and scrollbar, just shows number buttons */
+  compact?: boolean;
 }
 
 export default function QuestionNavigation({
@@ -17,6 +19,7 @@ export default function QuestionNavigation({
   onNavigate,
   isAnswered,
   disabled = false,
+  compact = false,
 }: QuestionNavigationProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const currentButtonRef = useRef<HTMLButtonElement>(null);
@@ -37,15 +40,20 @@ export default function QuestionNavigation({
   }
 
   return (
-    <Card className="bg-white p-3 shadow-sm border border-slate-200">
-      <div className="mb-2 flex items-center justify-between">
-        <span className="text-xs font-semibold text-slate-600">{topicLabel}</span>
-        <span className="text-xs font-medium text-slate-500">
-          {currentIndex + 1} / {totalCount}
-        </span>
-      </div>
+    <Card className={`bg-white shadow-sm border border-slate-200 ${compact ? 'p-2' : 'p-3'}`}>
+      {!compact && (
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-xs font-semibold text-slate-600">{topicLabel}</span>
+          <span className="text-xs font-medium text-slate-500">
+            {currentIndex + 1} / {totalCount}
+          </span>
+        </div>
+      )}
 
-      <div ref={scrollContainerRef} className="flex gap-1.5 overflow-x-auto pb-1 md:grid md:grid-cols-15 md:overflow-visible md:pb-0 scrollbar-hide">
+      <div 
+        ref={scrollContainerRef} 
+        className={`flex gap-1.5 overflow-x-auto md:grid md:grid-cols-15 md:overflow-visible ${compact ? 'scrollbar-none' : 'pb-1 md:pb-0 scrollbar-hide'}`}
+      >
         {Array.from({ length: totalCount }, (_, index) => {
           const isCurrent = currentIndex === index;
           const answered = isAnswered(index);

@@ -465,6 +465,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                 onNavigate={handleNavigate}
                 isAnswered={answeredPredicate}
                 disabled={!timer.isLive || timer.isPaused || timer.isExpired}
+                compact
               />
             </div>
 

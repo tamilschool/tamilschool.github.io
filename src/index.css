@@ -62,4 +62,12 @@
     min-height: 100vh;
     min-height: 100dvh;
   }
+  /* Hide scrollbar completely but keep scrollability */
+  .scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
 }
