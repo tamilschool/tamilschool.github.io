@@ -338,8 +338,9 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
         <div className="mx-auto flex h-full w-full max-w-6xl flex-col gap-4 lg:flex-row">
           <div className="flex-1 min-w-0 flex flex-col gap-3 lg:max-w-3xl lg:gap-4 h-full">
             <div className="mx-auto w-full rounded-xl bg-white p-3 shadow-sm lg:p-4">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-[160px]">
+              <div className="flex flex-wrap items-stretch gap-3 lg:gap-4">
+                {/* Topic selector - grows on both mobile and desktop */}
+                <div className="flex-1 min-w-[140px] order-1">
                   <TopicSelector
                     selectedTopic={questionState.selectedTopic}
                     onTopicChange={handleSelectTopic}
@@ -348,20 +349,37 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                   />
                 </div>
 
-                <CompetitionControls
-                  currentIndex={currentIndex}
-                  totalCount={totalCount}
-                  answer={isAnswered ? true : false}
-                  isMaxAnswered={isMaxAnswered}
-                  isTimerLive={timer.isLive}
-                  isTimerPaused={timer.isPaused}
-                  isTimerExpired={timer.isExpired}
-                  onPrevious={handlePrevious}
-                  onNext={handleNext}
-                  onToggleAnswer={handleToggleAnswer}
-                />
+                {/* Timer - mobile/tablet only, grows to fill space */}
+                <div className="flex-1 min-w-[100px] xl:hidden order-2">
+                  <TimerDisplay
+                    time={timer.time}
+                    isLive={timer.isLive}
+                    isPaused={timer.isPaused}
+                    totalTime={timer.totalTime}
+                    isCompetition={true}
+                    onToggle={handleTimerToggle}
+                    onReset={() => timer.reset()}
+                  />
+                </div>
 
-                <div className="flex items-center">
+                {/* Navigation controls - full width on mobile/tablet, grows on desktop */}
+                <div className="w-full xl:w-auto xl:flex-[2] order-3 xl:order-2">
+                  <CompetitionControls
+                    currentIndex={currentIndex}
+                    totalCount={totalCount}
+                    answer={isAnswered ? true : false}
+                    isMaxAnswered={isMaxAnswered}
+                    isTimerLive={timer.isLive}
+                    isTimerPaused={timer.isPaused}
+                    isTimerExpired={timer.isExpired}
+                    onPrevious={handlePrevious}
+                    onNext={handleNext}
+                    onToggleAnswer={handleToggleAnswer}
+                  />
+                </div>
+
+                {/* Timer - large desktop only, grows to fill space */}
+                <div className="hidden xl:flex flex-1 min-w-[100px] order-4">
                   <TimerDisplay
                     time={timer.time}
                     isLive={timer.isLive}

@@ -48,34 +48,34 @@ export function TimerDisplay({
 
   const borderStyle: CSSProperties = (isLive || isPaused)
     ? {
-        background: `conic-gradient(${progressColor} ${progressAngle}deg, ${trackColor} ${progressAngle}deg)`,
-      }
+      background: `conic-gradient(${progressColor} ${progressAngle}deg, ${trackColor} ${progressAngle}deg)`,
+    }
     : {
-        background: `${trackColor}`,
-      };
+      background: `${trackColor}`,
+    };
 
   // Button base: use explicit height so overall outer size (button + wrapper padding) matches other header buttons
   const buttonBase = isPaused
-    ? 'select-none min-w-[112px] h-9 rounded-lg border border-amber-400 bg-amber-100 px-5 text-sm transition-colors shadow-md hover:bg-amber-200 animate-pulse'
-    : 'select-none min-w-[112px] h-9 rounded-lg border border-transparent bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:bg-sky-100 hover:text-emerald-600';
+    ? 'select-none h-9 rounded-lg border border-amber-400 bg-amber-100 px-5 text-sm transition-colors shadow-md hover:bg-amber-200 animate-pulse'
+    : 'select-none h-9 rounded-lg border border-transparent bg-white px-5 text-sm text-slate-600 transition-colors shadow-sm hover:bg-sky-100 hover:text-emerald-600';
 
   const stateClasses = isExpired
     ? ''
     : isPaused
-    ? 'text-amber-800'
-    : isLive
-    ? 'text-emerald-600'
-    : 'text-emerald-600';
+      ? 'text-amber-800'
+      : isLive
+        ? 'text-emerald-600'
+        : 'text-emerald-600';
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-full">
       {/* outer gradient ring: small padding so outer size matches other buttons */}
       <div
-        className={`relative inline-flex rounded-lg p-[2px] -my-[2px] ${isLive && isPaused ? 'animate-pulse' : ''}`}
+        className={`relative flex w-full rounded-lg p-[2px] -my-[2px] ${isLive && isPaused ? 'animate-pulse' : ''}`}
         style={borderStyle}
       >
         <Button
-          className={`${buttonBase} ${stateClasses} hover:border-sky-400 hover:text-sky-600 focus-visible:ring-0 focus-visible:shadow-none focus-visible:outline-none focus:ring-0 focus:shadow-none`}
+          className={`${buttonBase} ${stateClasses} w-full hover:border-sky-400 hover:text-sky-600 focus-visible:ring-0 focus-visible:shadow-none focus-visible:outline-none focus:ring-0 focus:shadow-none`}
           onClick={() => {
             if (isExpired && !isCompetition) {
               onReset();
