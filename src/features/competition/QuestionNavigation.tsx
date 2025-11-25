@@ -45,7 +45,7 @@ export default function QuestionNavigation({
         </span>
       </div>
 
-      <div ref={scrollContainerRef} className="flex gap-1.5 overflow-x-auto pb-1 md:grid md:grid-cols-10 md:overflow-visible md:pb-0 scrollbar-hide">
+      <div ref={scrollContainerRef} className="flex gap-1.5 overflow-x-auto pb-1 md:grid md:grid-cols-15 md:overflow-visible md:pb-0 scrollbar-hide">
         {Array.from({ length: totalCount }, (_, index) => {
           const isCurrent = currentIndex === index;
           const answered = isAnswered(index);
