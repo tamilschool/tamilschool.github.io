@@ -48,5 +48,18 @@
     font-family: "Noto Sans Tamil", system-ui, -apple-system, sans-serif;
     margin: 0;
     min-height: 100vh;
+    min-height: 100dvh; /* dynamic viewport height for mobile */
+  }
+}
+
+@layer utilities {
+  /* Use dynamic viewport height to handle mobile browser URL bar */
+  .h-screen-dynamic {
+    height: 100vh;
+    height: 100dvh;
+  }
+  .min-h-screen-dynamic {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 }

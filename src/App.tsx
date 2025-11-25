@@ -66,7 +66,7 @@ function Layout() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen-dynamic">
       {/* Header - Hidden on HomePage */}
       {!isHomePage && (
         <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md relative z-20 overflow-hidden">
