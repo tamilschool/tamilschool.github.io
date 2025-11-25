@@ -31,23 +31,23 @@ export default function CompactScoreCard({ questionState }: CompactScoreCardProp
     const totalAnswered = topics.reduce((sum, topic) => sum + getAnsweredCount(topic), 0);
 
     return (
-        <div className="flex items-center justify-center flex-wrap gap-2 rounded-lg border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 px-3 py-2.5 shadow-sm">
+        <div className="flex items-center justify-center flex-wrap gap-1.5 rounded-lg border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 px-2 py-1.5 shadow-sm">
             {topics.map((topic) => {
                 const score = getAnsweredCount(topic);
                 const config = topicConfig[topic];
                 return (
                     <div
                         key={topic}
-                        className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold shadow-sm ${config.colorClass}`}
+                        className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm ${config.colorClass}`}
                     >
                         <span>{config.label}</span>
                         <span className="font-bold">{score}</span>
                     </div>
                 );
             })}
-            <div className="flex items-center gap-1.5 rounded-full bg-blue-600 px-3 py-1 text-sm font-bold text-white shadow-md">
+            <div className="flex items-center gap-1 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white shadow-md">
                 <span>மொ</span>
-                <span className="text-base">{totalAnswered}</span>
+                <span>{totalAnswered}</span>
             </div>
         </div>
     );

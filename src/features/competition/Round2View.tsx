@@ -338,7 +338,8 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
       <div className="flex-1 min-h-0 px-3 py-4">
         <div className="mx-auto flex h-full w-full max-w-6xl flex-col gap-4 lg:flex-row">
           <div className="flex-1 min-w-0 flex flex-col gap-3 lg:max-w-3xl lg:gap-4 h-full">
-            <div className="mx-auto w-full max-w-3xl rounded-xl bg-white p-3 shadow-sm lg:p-4">
+            {/* Desktop controls - hidden on mobile */}
+            <div className="mx-auto w-full max-w-3xl rounded-xl bg-white p-3 shadow-sm lg:p-4 hidden md:block">
               <div className="flex flex-wrap items-stretch gap-3 lg:gap-4">
                 {/* Topic selector - grows on both mobile and desktop */}
                 <div className="flex-1 min-w-[140px] order-1">
@@ -393,7 +394,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                 </div>
               </div>
               {showScholarSelection && (
-                <div className="mt-3 border-t border-slate-100 pt-3">
+                <div className="mt-2 border-t border-slate-100 pt-3">
                   <ScholarSelector
                     selectedMeanings={selectedMeanings}
                     onMeaningToggle={handleMeaningToggle}
@@ -402,7 +403,8 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
               )}
             </div>
 
-            <div className="mx-auto w-full max-w-3xl">
+            {/* Desktop question navigation - hidden on mobile */}
+            <div className="mx-auto w-full max-w-3xl hidden md:block">
               <QuestionNavigation
                 topicLabel={TopicDisplay[currentTopic]}
                 totalCount={totalCount}
@@ -440,6 +442,69 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
           <aside className="hidden lg:block w-80 shrink-0 pt-1 sticky top-4 ml-6">
             <ScoreCard questionState={questionState} />
           </aside>
+        </div>
+      </div>
+
+      {/* Mobile bottom bar - part of flex layout, not fixed */}
+      <div className="shrink-0 border-t border-slate-200 bg-white px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:hidden">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
+          {showScholarSelection && (
+            <div className="w-full">
+              <ScholarSelector
+                selectedMeanings={selectedMeanings}
+                onMeaningToggle={handleMeaningToggle}
+              />
+            </div>
+          )}
+
+            <div className="mx-auto w-full max-w-3xl md:block">
+              <QuestionNavigation
+                topicLabel={TopicDisplay[currentTopic]}
+                totalCount={totalCount}
+                currentIndex={currentIndex}
+                onNavigate={handleNavigate}
+                isAnswered={answeredPredicate}
+                disabled={!timer.isLive || timer.isPaused || timer.isExpired}
+              />
+            </div>
+
+          <div className="flex items-center gap-2">
+            <div className="flex-1">
+              <TopicSelector
+                selectedTopic={questionState.selectedTopic}
+                onTopicChange={handleSelectTopic}
+                includeAllKurals={false}
+                disabled={timer.isExpired}
+              />
+            </div>
+            <div className="flex-1">
+              <TimerDisplay
+                time={timer.time}
+                isLive={timer.isLive}
+                isPaused={timer.isPaused}
+                totalTime={timer.totalTime}
+                isCompetition={true}
+                onToggle={handleTimerToggle}
+                onReset={() => timer.reset()}
+              />
+            </div>
+          </div>
+
+          <div className="w-full">
+            <CompetitionControls
+              currentIndex={currentIndex}
+              totalCount={totalCount}
+              answer={isAnswered ? true : false}
+              isMaxAnswered={isMaxAnswered}
+              isTimerLive={timer.isLive}
+              isTimerPaused={timer.isPaused}
+              isTimerExpired={timer.isExpired}
+              onPrevious={handlePrevious}
+              onNext={handleNext}
+              onToggleAnswer={handleToggleAnswer}
+            />
+          </div>
+
         </div>
       </div>
     </div>
