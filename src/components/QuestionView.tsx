@@ -83,6 +83,12 @@ export function QuestionView({
     return <p className="text-base font-medium text-amber-900">No question content available</p>;
   };
 
+  // Determine what to show in answers based on topic
+  // FirstWord, LastWord, Athikaram, Porul: show kural only (no meaning)
+  // Kural: show meaning only (no kural text)
+  const showKuralInAnswer = topic !== Topic.Kural;
+  const showMeaningInAnswer = topic === Topic.Kural;
+
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col flex-1 min-h-0 min-w-0 h-full overflow-y-auto pr-1 pb-1">
       <div className="rounded-xl border border-amber-200 bg-amber-50 px-6 py-6 text-center shadow-sm shrink-0 mb-4">
@@ -99,6 +105,8 @@ export function QuestionView({
                   thirukkural={kural}
                   selectedMeanings={selectedMeanings}
                   variant="default"
+                  showKural={showKuralInAnswer}
+                  showMeaning={showMeaningInAnswer}
                 />
               ))}
             </>
@@ -108,6 +116,8 @@ export function QuestionView({
                 thirukkural={currentQuestion.kural}
                 selectedMeanings={selectedMeanings}
                 variant="default"
+                showKural={showKuralInAnswer}
+                showMeaning={showMeaningInAnswer}
               />
             </>
           ) : null}

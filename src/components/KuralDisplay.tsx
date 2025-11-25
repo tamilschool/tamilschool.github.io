@@ -13,6 +13,10 @@ export interface KuralDisplayProps {
   variant?: 'default' | 'success' | 'secondary';
   /** Optional index to show (only used in AllKurals list) */
   index?: number;
+  /** Whether to show the kural text (default: true) */
+  showKural?: boolean;
+  /** Whether to show the meaning section (default: true) */
+  showMeaning?: boolean;
 }
 
 export function KuralDisplay({
@@ -20,6 +24,8 @@ export function KuralDisplay({
   selectedMeanings,
   variant = 'default',
   index,
+  showKural = true,
+  showMeaning = true,
 }: KuralDisplayProps) {
   const variantStyles = {
     default: {
@@ -77,17 +83,19 @@ export function KuralDisplay({
         </div>
       </CardHeader>
 
-      <CardContent
-        className={cn(
-          'px-4 py-4 space-y-2 font-semibold leading-relaxed',
-          styles.body,
-        )}
-      >
-        <p>{thirukkural.kural.firstLine}</p>
-        <p>{thirukkural.kural.secondLine}</p>
-      </CardContent>
+      {showKural && (
+        <CardContent
+          className={cn(
+            'px-4 py-4 space-y-2 font-semibold leading-relaxed',
+            styles.body,
+          )}
+        >
+          <p>{thirukkural.kural.firstLine}</p>
+          <p>{thirukkural.kural.secondLine}</p>
+        </CardContent>
+      )}
 
-      {selectedMeanings.size > 0 && (
+      {showMeaning && selectedMeanings.size > 0 && (
         <CardFooter
           className={cn('flex flex-col gap-4 px-4 py-3 border-t', styles.headerBorder)}
         >
