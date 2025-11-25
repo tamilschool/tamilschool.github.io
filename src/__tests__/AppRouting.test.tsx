@@ -10,7 +10,7 @@ vi.mock('../features/practice/PracticeApp', () => ({
             {!selectedGroup ? (
                 <div data-testid="landing-view">
                     <button onClick={() => onGroupSelect('II')}>Select Group II</button>
-                    <a href="/old/index.html">Old App</a>
+                    <a href="old/index.html">Old App</a>
                     <button data-testid="competition-btn">Competition</button>
                 </div>
             ) : (

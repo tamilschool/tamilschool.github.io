@@ -92,7 +92,7 @@ export default function HomePage() {
 
                     {/* Old App Button */}
                     <a
-                        href="/old/index.html"
+                        href={`${import.meta.env.BASE_URL}old/index.html`}
                         className="block w-full group relative overflow-hidden rounded-xl bg-white/90 backdrop-blur-md p-4 text-left shadow-xl transition-all hover:bg-white hover:scale-[1.02] active:scale-[0.98] border border-white/20 border-l-8 border-l-yellow-600"
                     >
                         <div className="relative z-10 flex items-center justify-between px-2">
