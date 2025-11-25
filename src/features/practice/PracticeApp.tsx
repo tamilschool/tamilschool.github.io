@@ -309,8 +309,8 @@ export function PracticeApp() {
 
   return (
     <div className='flex flex-col h-full'>
-      <div className="flex h-screen flex-col bg-gray-50 overflow-hidden ">
-        <div className="flex-1 min-h-0 px-3 py-3">
+      <div className="flex flex-1 flex-col bg-gray-50 overflow-hidden min-h-0">
+        <div className="flex-1 min-h-0 px-3 py-3 overflow-hidden">
           <div className="mx-auto flex h-full w-full max-w-5xl flex-col min-h-0">
             <div className="mb-4 hidden flex-col items-center gap-2 md:flex shrink-0">
               <div className="mx-auto flex w-full max-w-3xl items-stretch gap-3">
@@ -361,7 +361,7 @@ export function PracticeApp() {
               )}
             </div>
 
-            <div className="flex-1 min-w-0 flex flex-col min-h-0 h-full">
+            <div className="flex-1 min-w-0 flex flex-col min-h-0">
               {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
                 <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-lg">
                   <img
@@ -395,7 +395,8 @@ export function PracticeApp() {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-50/95 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur md:hidden">
+      {/* Mobile bottom bar - part of flex layout, not fixed */}
+      <div className="shrink-0 border-t border-slate-200 bg-gray-50 px-3 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:hidden">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-2">
           {showScholarSelection && (
             <div className="w-full">

@@ -90,7 +90,7 @@ export function QuestionView({
       </div>
 
       {showAnswer && (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
           {currentQuestion.answers?.length ? (
             <>
               {currentQuestion.answers.map((kural) => (
