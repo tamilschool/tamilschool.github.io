@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 
 interface QuestionNavigationProps {
@@ -17,6 +18,20 @@ export default function QuestionNavigation({
   isAnswered,
   disabled = false,
 }: QuestionNavigationProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const currentButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Scroll current button into view when it changes
+  useEffect(() => {
+    if (currentButtonRef.current && scrollContainerRef.current) {
+      currentButtonRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+  }, [currentIndex]);
+
   if (totalCount === 0) {
     return null;
   }
@@ -30,7 +45,7 @@ export default function QuestionNavigation({
         </span>
       </div>
 
-      <div className="grid grid-cols-5 gap-1.5 sm:grid-cols-7 md:grid-cols-10">
+      <div ref={scrollContainerRef} className="flex gap-1.5 overflow-x-auto pb-1 md:grid md:grid-cols-10 md:overflow-visible md:pb-0 scrollbar-hide">
         {Array.from({ length: totalCount }, (_, index) => {
           const isCurrent = currentIndex === index;
           const answered = isAnswered(index);
@@ -49,10 +64,12 @@ export default function QuestionNavigation({
           }
 
           const disabledClass = disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : '';
-          const btnClass = `flex h-7 items-center justify-center rounded text-xs font-semibold transition-colors ${stateClass} ${disabledClass}`;
+          // Added min-w-[2rem] (w-8) to prevent shrinking in flex mode
+          const btnClass = `flex h-7 w-8 shrink-0 items-center justify-center rounded text-xs font-semibold transition-colors ${stateClass} ${disabledClass}`;
 
           return (
             <button
+              ref={isCurrent ? currentButtonRef : null}
               key={index}
               onClick={() => !disabled && onNavigate(index)}
               disabled={disabled}
