@@ -25,7 +25,7 @@ export function ScholarSelector({ selectedMeanings, onMeaningToggle }: ScholarSe
             onPressedChange={() => onMeaningToggle(meaning)}
             variant="outline"
             size="lg"
-            className="flex-1 min-w-0 border border-slate-200 bg-white px-5 text-xs sm:text-sm text-slate-600 shadow-sm transition-colors hover:border-sky-400 hover:text-sky-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 data-[state=on]:border-sky-500 data-[state=on]:bg-sky-500 data-[state=on]:text-white data-[state=on]:shadow-md overflow-hidden"
+            className="flex-1 min-w-0 border border-slate-200 bg-white px-3 text-xs sm:text-sm text-slate-600 shadow-sm transition-colors hover:border-sky-400 hover:text-sky-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 data-[state=on]:border-sky-500 data-[state=on]:bg-sky-500 data-[state=on]:text-white data-[state=on]:shadow-md overflow-hidden"
           >
             <span className="block w-full truncate text-center">
               {KuralMeaningDisplay[meaning]}
