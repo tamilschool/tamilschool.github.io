@@ -32,7 +32,7 @@ describe('QuestionNavigation Component', () => {
     });
 
     it('highlights current question', () => {
-        const { container } = render(<QuestionNavigation {...defaultProps} currentIndex={5} />);
+        render(<QuestionNavigation {...defaultProps} currentIndex={5} />);
         const currentButton = screen.getByText('6'); // currentIndex 5 = button text 6
         expect(currentButton).toHaveClass('bg-blue-500');
     });

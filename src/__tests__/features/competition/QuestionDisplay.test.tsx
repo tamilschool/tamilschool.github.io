@@ -2,7 +2,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import QuestionDisplay from '@/features/competition/QuestionDisplay';
-import { Topic, Group, Round, CQuestionState, CTimerState, ScoreState } from '@/types';
+import { Topic, Group, Round } from '@/types';
+import type { CQuestionState, ScoreState } from '@/types';
 
 const createMockQuestionState = (topic: Topic): CQuestionState => {
     const scoreState: ScoreState = {

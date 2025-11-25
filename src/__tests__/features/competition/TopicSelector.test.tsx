@@ -63,7 +63,7 @@ describe('TopicSelector Component', () => {
         const questionState = createMockQuestionState();
         questionState.selectedTopic = Topic.Kural;
 
-        const { container } = render(<TopicSelector questionState={questionState} onSelectTopic={vi.fn()} />);
+        render(<TopicSelector questionState={questionState} onSelectTopic={vi.fn()} />);
 
         const kuralButton = screen.getByText(/குறள்/).closest('button');
         expect(kuralButton).toHaveClass('bg-blue-500');
