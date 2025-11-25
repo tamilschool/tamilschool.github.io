@@ -74,12 +74,12 @@ function Layout() {
           <div className="absolute top-[-50%] left-[-10%] w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
           <div className="absolute top-[-50%] right-[-10%] w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
 
-          <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
+          <div className="max-w-7xl mx-auto px-3 py-2 md:px-4 md:py-4 flex items-center justify-between relative z-10">
             {/* Glassmorphism Title Card */}
             <div className="relative group">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-purple-300 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-              <div className="relative px-6 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-xl">
-                <h1 className="text-2xl font-bold text-white drop-shadow-sm tracking-wide">
+              <div className="relative px-4 py-1.5 md:px-6 md:py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-xl">
+                <h1 className="text-lg md:text-2xl font-bold text-white drop-shadow-sm tracking-wide">
                   {isPracticeMode ? 'திருக்குறள் பயிற்சி' : 'திருக்குறள் போட்டி'}
                 </h1>
               </div>

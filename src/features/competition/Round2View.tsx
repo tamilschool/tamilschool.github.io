@@ -16,6 +16,7 @@ import { QuestionView } from '@/components/QuestionView';
 import { CompetitionControls } from './CompetitionControls';
 import QuestionNavigation from './QuestionNavigation';
 import ScoreCard from './ScoreCard';
+import CompactScoreCard from './CompactScoreCard';
 
 interface Round2ViewProps {
   questionState: CQuestionState;
@@ -337,7 +338,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
       <div className="flex-1 min-h-0 px-3 py-4">
         <div className="mx-auto flex h-full w-full max-w-6xl flex-col gap-4 lg:flex-row">
           <div className="flex-1 min-w-0 flex flex-col gap-3 lg:max-w-3xl lg:gap-4 h-full">
-            <div className="mx-auto w-full rounded-xl bg-white p-3 shadow-sm lg:p-4">
+            <div className="mx-auto w-full max-w-3xl rounded-xl bg-white p-3 shadow-sm lg:p-4">
               <div className="flex flex-wrap items-stretch gap-3 lg:gap-4">
                 {/* Topic selector - grows on both mobile and desktop */}
                 <div className="flex-1 min-w-[140px] order-1">
@@ -401,7 +402,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
               )}
             </div>
 
-            <div className="mx-auto w-full">
+            <div className="mx-auto w-full max-w-3xl">
               <QuestionNavigation
                 topicLabel={TopicDisplay[currentTopic]}
                 totalCount={totalCount}
@@ -410,6 +411,11 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
                 isAnswered={answeredPredicate}
                 disabled={!timer.isLive || timer.isPaused || timer.isExpired}
               />
+            </div>
+
+            {/* Compact scorecard for small screens - shows below navigation */}
+            <div className="mx-auto w-full max-w-3xl lg:hidden mt-3">
+              <CompactScoreCard questionState={questionState} />
             </div>
 
             {timer.isLive && !timer.isPaused ? (
@@ -430,7 +436,8 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
             )}
           </div>
 
-          <aside className="w-full shrink-0 lg:w-80 lg:pt-1 lg:sticky lg:top-4 lg:ml-6">
+          {/* Full scorecard sidebar - only visible on large screens */}
+          <aside className="hidden lg:block w-80 shrink-0 pt-1 sticky top-4 ml-6">
             <ScoreCard questionState={questionState} />
           </aside>
         </div>
