@@ -334,7 +334,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
   );
 
   return (
-    <div className="flex h-screen flex-col bg-gray-50 overflow-hidden">
+    <div className="flex h-full flex-col bg-gray-50 overflow-hidden">
       <div className="flex-1 min-h-0 px-3 py-4">
         <div className="mx-auto flex h-full w-full max-w-6xl flex-col gap-4 lg:flex-row">
           <div className="flex-1 min-w-0 flex flex-col gap-3 lg:max-w-3xl lg:gap-4 h-full">
@@ -414,7 +414,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
             </div>
 
             {/* Compact scorecard for small screens - shows below navigation */}
-            <div className="mx-auto w-full max-w-3xl lg:hidden mt-3">
+            <div className="mx-auto w-full max-w-3xl lg:hidden">
               <CompactScoreCard questionState={questionState} />
             </div>
 
