@@ -7,14 +7,12 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { TimerDisplay } from '@/components/TimerDisplay';
 import { QuestionView } from '@/components/QuestionView';
 import { KuralDisplay } from '@/components/KuralDisplay';
-import { GroupSelector } from './GroupSelector';
 import { TopicSelector } from '@/components/shared/TopicSelector';
 import { ScholarSelector } from '@/components/shared/ScholarSelector';
 import { NavigationControls } from './NavigationControls';
 import { Group, Topic, KuralMeaning } from '@/types';
 import type {
   Thirukkural,
-  Group as GroupType,
   Topic as TopicType,
   KuralMeaning as KuralMeaningType,
 } from '@/types';
@@ -130,15 +128,6 @@ export function PracticeApp() {
     lastWordNav.clearAnswers();
     if (startLive) {
       timer.start();
-    }
-  };
-
-  // Handle group change - Navigate to new URL
-  const handleGroupChange = (group: GroupType) => {
-    if (group !== selectedGroup) {
-      navigate(`/practice/${group}`);
-      setShowAnswer(false);
-      resetTimer(false);
     }
   };
 
@@ -262,12 +251,6 @@ export function PracticeApp() {
     }
   };
 
-  const groupCounts: Record<GroupType, number> = {
-    [Group.I]: allKurals.filter((k) => k.group.includes(Group.I)).length,
-    [Group.II]: allKurals.filter((k) => k.group.includes(Group.II)).length,
-    [Group.III]: allKurals.filter((k) => k.group.includes(Group.III)).length,
-  };
-
   const totalsByTopic: Record<TopicType, number> = {
     [Topic.Athikaram]: athikarams.length,
     [Topic.Porul]: currentKurals.length,
@@ -315,14 +298,10 @@ export function PracticeApp() {
             <div className="mb-4 hidden flex-col items-center gap-2 md:flex shrink-0">
               <div className="mx-auto flex w-full max-w-3xl items-stretch gap-3">
                 <div className="flex-1">
-                  <GroupSelector
-                    selectedGroup={selectedGroup}
-                    groupCounts={groupCounts}
-                    onGroupChange={handleGroupChange}
-                  />
+                  <TopicSelector selectedTopic={selectedTopic} onTopicChange={handleTopicChange} />
                 </div>
                 {showTimerControls && (
-                  <div className="flex items-center justify-center">
+                  <div className="flex flex-1 items-center justify-center">
                     <TimerDisplay
                       time={timer.time}
                       isLive={timer.isLive}
@@ -333,9 +312,6 @@ export function PracticeApp() {
                     />
                   </div>
                 )}
-                <div className="flex-1">
-                  <TopicSelector selectedTopic={selectedTopic} onTopicChange={handleTopicChange} />
-                </div>
               </div>
 
               {showTimerControls && (
@@ -407,16 +383,12 @@ export function PracticeApp() {
             </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="order-1 flex-1 min-w-[140px]">
-              <GroupSelector
-                selectedGroup={selectedGroup}
-                groupCounts={groupCounts}
-                onGroupChange={handleGroupChange}
-              />
+          <div className="flex items-center gap-2">
+            <div className="flex-1">
+              <TopicSelector selectedTopic={selectedTopic} onTopicChange={handleTopicChange} />
             </div>
             {showTimerControls && (
-              <div className="order-2 flex min-w-[116px] flex-none items-center justify-center">
+              <div className="flex flex-1 items-center justify-center">
                 <TimerDisplay
                   time={timer.time}
                   isLive={timer.isLive}
@@ -427,13 +399,10 @@ export function PracticeApp() {
                 />
               </div>
             )}
-            <div className={`${showTimerControls ? 'order-3' : 'order-2'} flex-1 min-w-[160px]`}>
-              <TopicSelector selectedTopic={selectedTopic} onTopicChange={handleTopicChange} />
-            </div>
           </div>
 
           {showTimerControls && (
-            <div className="order-4 w-full">
+            <div className="w-full">
               <NavigationControls
                 isLive={timer.isLive && timer.time > 0}
                 onPrevious={handlePrevious}

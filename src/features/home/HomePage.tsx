@@ -26,7 +26,7 @@ export default function HomePage() {
                 {/* Title with Glassmorphism */}
                 <div className="relative group">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-300 to-blue-300 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-                    <div className="relative px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl">
+                    <div className="relative px-4 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl">
                         <h1 className="text-xl sm:text-xl md:text-2xl font-bold text-white text-center drop-shadow-sm tracking-wide whitespace-nowrap">
                             திருக்குறள் திருவிழா
                         </h1>

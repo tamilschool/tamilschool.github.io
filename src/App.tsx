@@ -5,6 +5,7 @@ import { PracticeApp } from './features/practice/PracticeApp';
 import CompetitionApp from './features/competition/CompetitionApp';
 import SignOutConfirm from './features/competition/SignOutConfirm';
 import HomePage from './features/home/HomePage';
+import { Button } from '@/components/ui/button';
 import { fetchSource } from './lib/data/fetchSource';
 import { parseSource } from './lib/data/parseSource';
 import { analyzeQuestionPoolCoverage } from './lib/analyzeQuestionPool';
@@ -79,20 +80,20 @@ function Layout() {
             <div className="relative group">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-purple-300 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
               <div className="relative px-4 py-1.5 md:px-6 md:py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-xl">
-                <h1 className="text-lg md:text-2xl font-bold text-white drop-shadow-sm tracking-wide">
+                <h2 className="text-sm md:text-xl font-bold text-white drop-shadow-sm tracking-wide">
                   {isPracticeMode ? 'திருக்குறள் பயிற்சி' : 'திருக்குறள் போட்டி'}
-                </h1>
+                </h2>
               </div>
             </div>
 
             <div className="flex gap-4 items-center">
-              <button
+              <Button
                 onClick={handleHomeClick}
-                className={`px-4 py-2 bg-white/90 backdrop-blur-sm font-semibold rounded-lg shadow-sm hover:bg-white transition-all duration-300 ${isPracticeMode ? 'text-purple-700' : 'text-rose-600'
-                  }`}
+                variant="outline"
+                className={`bg-white/90 backdrop-blur-sm font-semibold shadow-sm hover:bg-white transition-all duration-300 sm:h-8 sm:px-3 sm:py-1 sm:text-xs md:h-9 md:px-4 md:py-2 md:text-sm lg:h-10 lg:px-5 lg:py-3 lg:text-base ${isPracticeMode ? 'text-purple-700' : 'text-rose-600'}`}
               >
                 முகப்பு
-              </button>
+              </Button>
             </div>
           </div>
         </div>
