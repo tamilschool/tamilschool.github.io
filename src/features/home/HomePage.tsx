@@ -14,7 +14,7 @@ export default function HomePage() {
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="/thiruvalluvar.jpg"
+                    src={`${import.meta.env.BASE_URL}thiruvalluvar.jpg`}
                     alt="Thiruvalluvar"
                     className="w-full h-full object-cover"
                 />

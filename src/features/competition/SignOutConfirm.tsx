@@ -20,8 +20,17 @@ export default function SignOutConfirm({
   showRestart = true
 }: SignOutConfirmProps) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-4">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={`${import.meta.env.BASE_URL}thiruvalluvar.jpg`}
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+      <div className="relative z-10 bg-white rounded-lg shadow-lg p-6 max-w-md mx-4">
         <h2 className="text-xl font-bold text-gray-900 mb-4">
           {title}
         </h2>

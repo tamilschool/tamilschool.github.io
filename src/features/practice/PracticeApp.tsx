@@ -365,7 +365,7 @@ export function PracticeApp() {
               {!timer.isLive && selectedTopic !== Topic.AllKurals ? (
                 <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-lg">
                   <img
-                    src="/thiruvalluvar.jpg"
+                    src={`${import.meta.env.BASE_URL}thiruvalluvar.jpg`}
                     alt="Thiruvalluvar Statue at Kanyakumari"
                     className="h-128 w-full object-cover"
                   />
