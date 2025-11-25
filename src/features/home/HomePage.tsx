@@ -10,7 +10,7 @@ export default function HomePage() {
     };
 
     return (
-        <div className="relative min-h-full flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative min-h-full flex flex-col items-center overflow-hidden">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <img
@@ -22,12 +22,12 @@ export default function HomePage() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 w-full max-w-lg px-6 py-12 flex flex-col items-center gap-8">
+            <div className="relative z-10 w-full max-w-lg px-6 py-8 flex flex-col items-center gap-8">
                 {/* Title with Glassmorphism */}
                 <div className="relative group">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-300 to-blue-300 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
                     <div className="relative px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center drop-shadow-sm tracking-wide whitespace-nowrap">
+                        <h1 className="text-xl sm:text-xl md:text-2xl font-bold text-white text-center drop-shadow-sm tracking-wide whitespace-nowrap">
                             திருக்குறள் திருவிழா
                         </h1>
                     </div>
