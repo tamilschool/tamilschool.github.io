@@ -4,11 +4,6 @@
 // Constants
 // ============================================================================
 
-export const DATA_SOURCE = {
-  thirukkuralPath: 'src/data/thirukkural.json',
-  groupsPath: 'src/data/kids-group.json',
-};
-
 export const MAX_QUESTIONS = 15;
 export const MAX_ANSWERS = 10;
 export const COMPETITION_TIMER_SECONDS = 1200;

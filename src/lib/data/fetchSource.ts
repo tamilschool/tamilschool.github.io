@@ -1,28 +1,34 @@
-import { DATA_SOURCE } from '@/types';
 import type { ThirukkuralCollection, GroupsCollection } from '@/types';
 
 /**
- * Loads Thirukkural JSON data from the local project copy
- * Reference: old/.../practice/PracticeApp.kt fetchSource()
+ * Loads Thirukkural JSON data from /data/ path
+ * Both the new React app and old Kotlin app use the same data source
  */
 export async function fetchSource(): Promise<{
   thirukkuralData: ThirukkuralCollection;
   groupsData: GroupsCollection;
 }> {
   try {
-    console.log(`Loading local data: ${DATA_SOURCE.thirukkuralPath}`);
-    console.log(`Loading local data: ${DATA_SOURCE.groupsPath}`);
+    const baseUrl = import.meta.env.BASE_URL;
+    const thirukkuralPath = `${baseUrl}data/thirukkural.json`;
+    const groupsPath = `${baseUrl}data/kids-group.json`;
 
-    const [thirukkuralModule, groupsModule] = await Promise.all([
-      import('@/data/thirukkural.json'),
-      import('@/data/kids-group.json'),
+    console.log(`Loading data: ${thirukkuralPath}`);
+    console.log(`Loading data: ${groupsPath}`);
+
+    const [thirukkuralResponse, groupsResponse] = await Promise.all([
+      fetch(thirukkuralPath),
+      fetch(groupsPath),
     ]);
 
-    const thirukkuralData =
-      thirukkuralModule.default as ThirukkuralCollection;
-    const groupsData = groupsModule.default as GroupsCollection;
+    if (!thirukkuralResponse.ok || !groupsResponse.ok) {
+      throw new Error('Failed to fetch data files');
+    }
 
-    console.log('Source: local thirukkural.json loaded');
+    const thirukkuralData = (await thirukkuralResponse.json()) as ThirukkuralCollection;
+    const groupsData = (await groupsResponse.json()) as GroupsCollection;
+
+    console.log('Data loaded successfully');
     console.log(`Total kurals: ${thirukkuralData.kural.length}`);
 
     return { thirukkuralData, groupsData };
