@@ -38,15 +38,15 @@ export default function CompactScoreCard({ questionState }: CompactScoreCardProp
                 return (
                     <div
                         key={topic}
-                        className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold shadow-sm ${config.colorClass}`}
+                        className={`flex items-center gap-1 rounded px-2 py-0.5 text-xs font-semibold shadow-sm ${config.colorClass}`}
                     >
-                        <span>{config.label}</span>
+                        <span>{config.label}:</span>
                         <span className="font-bold">{score}</span>
                     </div>
                 );
             })}
-            <div className="flex items-center gap-1 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white shadow-md">
-                <span>மொ</span>
+            <div className="flex items-center gap-1 rounded bg-blue-600 px-2 py-0.5 text-xs font-bold text-white shadow-md">
+                <span>மொ:</span>
                 <span>{totalAnswered}</span>
             </div>
         </div>
