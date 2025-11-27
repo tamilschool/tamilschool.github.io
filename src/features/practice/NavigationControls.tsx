@@ -26,7 +26,7 @@ export function NavigationControls({
     <div className="flex gap-2 w-full h-10">
       <Button
         onClick={onPrevious}
-        disabled={!isLive}
+        disabled={!isLive || leftCount === 0}
         className={baseNavButton}
         aria-label="Previous Question"
       >
@@ -46,7 +46,7 @@ export function NavigationControls({
       </Button>
       <Button
         onClick={onNext}
-        disabled={!isLive}
+        disabled={!isLive || rightCount === 0}
         className={baseNavButton}
         aria-label="Next Question"
       >

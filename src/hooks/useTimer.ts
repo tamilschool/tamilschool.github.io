@@ -25,6 +25,7 @@ export interface UseTimerReturn {
   reset: (newTime?: number) => void;
   toggle: () => void;
   incrementCount: () => void;
+  decrementCount: () => void;
 }
 
 export function useTimer(options: UseTimerOptions = {}): UseTimerReturn {
@@ -89,6 +90,10 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturn {
     setCount((c) => c + 1);
   }, []);
 
+  const decrementCount = useCallback(() => {
+    setCount((c) => Math.max(0, c - 1));
+  }, []);
+
   return {
     time,
     isLive,
@@ -102,5 +107,6 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturn {
     reset,
     toggle,
     incrementCount,
+    decrementCount,
   };
 }

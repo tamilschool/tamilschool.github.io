@@ -193,16 +193,20 @@ export function PracticeApp() {
     switch (selectedTopic) {
       case Topic.Athikaram:
         athikaramNav.goPrevious();
+        timer.decrementCount();
         break;
       case Topic.Porul:
       case Topic.Kural:
         kuralNav.goPrevious();
+        timer.decrementCount();
         break;
       case Topic.FirstWord:
         firstWordNav.goPrevious();
+        timer.decrementCount();
         break;
       case Topic.LastWord:
         lastWordNav.goPrevious();
+        timer.decrementCount();
         break;
       case Topic.AllKurals:
         break;

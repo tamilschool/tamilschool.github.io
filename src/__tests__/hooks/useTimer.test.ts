@@ -73,6 +73,35 @@ describe('useTimer Hook', () => {
     expect(result.current.count).toBe(2);
   });
 
+  it('decrements count when decrementCount is called', () => {
+    const { result } = renderHook(() => useTimer({ initialTime: 120, isLive: false }));
+
+    // First increment to 2
+    act(() => {
+      result.current.incrementCount();
+      result.current.incrementCount();
+    });
+    expect(result.current.count).toBe(2);
+
+    // Decrement to 1
+    act(() => {
+      result.current.decrementCount();
+    });
+    expect(result.current.count).toBe(1);
+
+    // Decrement to 0
+    act(() => {
+      result.current.decrementCount();
+    });
+    expect(result.current.count).toBe(0);
+
+    // Should not go below 0
+    act(() => {
+      result.current.decrementCount();
+    });
+    expect(result.current.count).toBe(0);
+  });
+
   it('has correct initial properties', () => {
     const { result } = renderHook(() => useTimer({ initialTime: 240, isLive: false }));
 
@@ -86,5 +115,6 @@ describe('useTimer Hook', () => {
     expect(result.current).toHaveProperty('resume');
     expect(result.current).toHaveProperty('reset');
     expect(result.current).toHaveProperty('incrementCount');
+    expect(result.current).toHaveProperty('decrementCount');
   });
 });
