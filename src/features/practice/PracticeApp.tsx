@@ -119,10 +119,11 @@ export function PracticeApp() {
   const resetTimer = (startLive: boolean) => {
     timer.reset();
     setShowAnswer(false);
-    athikaramNav.clearAnswers();
-    kuralNav.clearAnswers();
-    firstWordNav.clearAnswers();
-    lastWordNav.clearAnswers();
+    // Reset navigation to random position when starting
+    athikaramNav.reset();
+    kuralNav.reset();
+    firstWordNav.reset();
+    lastWordNav.reset();
     if (startLive) {
       timer.start();
     }

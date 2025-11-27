@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { Thirukkural } from '@/types';
 
 /**
@@ -23,6 +23,7 @@ export interface UseNavigationReturn<T> {
   goPrevious: () => void;
   clearAnswers: () => void;
   addAnswer: (answer: string) => void;
+  reset: () => void;
 }
 
 /**
@@ -68,6 +69,18 @@ export function useNavigation<T>({
   );
   const [history, setHistory] = useState<number[]>([]);
   const [answers, setAnswers] = useState<Set<string>>(new Set());
+  const [hasInitialized, setHasInitialized] = useState(targets.length > 0);
+
+  // When targets changes from empty to populated, randomize the starting index
+  useEffect(() => {
+    if (targets.length > 0 && !hasInitialized) {
+      const newIndex = nextIndex(0, targets.length);
+      console.log(`Initializing random start index: ${newIndex} of ${targets.length}`);
+      setIndex(newIndex);
+      setHistory([]);
+      setHasInitialized(true);
+    }
+  }, [targets.length, hasInitialized]);
 
   const goNext = useCallback(() => {
     setHistory((currentHistory) => {
@@ -125,6 +138,14 @@ export function useNavigation<T>({
     setAnswers((prev) => new Set(prev).add(answer));
   }, []);
 
+  // Reset navigation to a random position and clear history
+  const reset = useCallback(() => {
+    const newIndex = nextIndex(index, targets.length);
+    setIndex(newIndex);
+    setHistory([]);
+    setAnswers(new Set());
+  }, [index, targets.length]);
+
   return {
     index,
     current: targets[index],
@@ -134,5 +155,6 @@ export function useNavigation<T>({
     goPrevious,
     clearAnswers,
     addAnswer,
+    reset,
   };
 }
