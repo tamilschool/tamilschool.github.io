@@ -55,28 +55,25 @@ export function PracticeApp() {
   const timer = useTimer({ initialTime: 240, isLive: false });
 
   // Navigation state managers for different topics
+  // initialIndex omitted to use random initial position
   const athikaramNav = useNavigation({
     targets: athikarams,
     thirukkurals: currentKurals,
-    initialIndex: 0,
   });
 
   const kuralNav = useNavigation({
     targets: currentKurals,
     thirukkurals: currentKurals,
-    initialIndex: 0,
   });
 
   const firstWordNav = useNavigation({
     targets: firstWords,
     thirukkurals: currentKurals,
-    initialIndex: 0,
   });
 
   const lastWordNav = useNavigation({
     targets: lastWords,
     thirukkurals: currentKurals,
-    initialIndex: 0,
   });
 
   // Load data on mount
