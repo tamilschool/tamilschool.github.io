@@ -47,7 +47,8 @@ function generateRandomList(maxIndex: number): number[] {
  * Reference: old/.../data/DataClass.kt nextIndex()
  */
 function nextIndex(currentIndex: number, maxIndex: number): number {
-  if (maxIndex === 1) return 0;
+  // Handle edge cases: empty or single element arrays
+  if (maxIndex <= 1) return 0;
   
   let newIndex: number;
   do {
