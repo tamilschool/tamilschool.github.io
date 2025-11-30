@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CQuestionState } from '@/types';
 import {
   MAX_ANSWERS,
@@ -30,6 +30,22 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
     new Set([KuralMeaning.SalamanPapa])
   );
   const timer = useTimer({ initialTime: COMPETITION_TIMER_SECONDS, isLive: questionState.timerState.isLive });
+
+  // Prevent accidental page reload/navigation during active competition
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // Only show warning if timer is live (competition in progress)
+      if (timer.isLive && !timer.isExpired) {
+        e.preventDefault();
+        // Modern browsers ignore custom messages, but we still need to set returnValue
+        e.returnValue = 'Competition in progress. Are you sure you want to leave?';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [timer.isLive, timer.isExpired]);
 
   const currentTopic = questionState.selectedTopic;
   const showScholarSelection = timer.isLive && (currentTopic === Topic.Porul || currentTopic === Topic.Kural);
