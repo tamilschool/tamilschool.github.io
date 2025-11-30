@@ -10,7 +10,8 @@ import { KuralDisplay } from '@/components/KuralDisplay';
 import { TopicSelector } from '@/components/shared/TopicSelector';
 import { ScholarSelector } from '@/components/shared/ScholarSelector';
 import { NavigationControls } from './NavigationControls';
-import { Group, Topic, KuralMeaning } from '@/types';
+import { Group, Topic, KuralMeaning, GroupDisplay } from '@/types';
+import { trackTimerStart, trackTopicChange, trackNavigation, trackAnswerView } from '@/lib/analytics';
 import type {
   Thirukkural,
   Topic as TopicType,
@@ -132,6 +133,7 @@ export function PracticeApp() {
   // Handle topic change
   const handleTopicChange = (topic: TopicType) => {
     if (topic !== selectedTopic) {
+      trackTopicChange(topic, selectedGroup ? GroupDisplay[selectedGroup].english : '');
       setSelectedTopic(topic);
       setShowAnswer(false);
       resetTimer(false);
@@ -157,12 +159,22 @@ export function PracticeApp() {
     } else if (timer.isLive && !timer.isPaused) {
       timer.pause();
     } else {
+      // Timer starting
+      trackTimerStart(selectedTopic, selectedGroup ? GroupDisplay[selectedGroup].english : '');
       timer.start();
     }
   };
 
+  const handleShowAnswer = () => {
+    if (!showAnswer) {
+      trackAnswerView(selectedTopic);
+    }
+    setShowAnswer(!showAnswer);
+  };
+
   const handleNext = () => {
     setShowAnswer(false);
+    trackNavigation('next', selectedTopic);
 
     switch (selectedTopic) {
       case Topic.Athikaram:
@@ -189,6 +201,7 @@ export function PracticeApp() {
 
   const handlePrevious = () => {
     setShowAnswer(false);
+    trackNavigation('previous', selectedTopic);
 
     switch (selectedTopic) {
       case Topic.Athikaram:
@@ -322,7 +335,7 @@ export function PracticeApp() {
                     isLive={timer.isLive && timer.time > 0}
                     onPrevious={handlePrevious}
                     onNext={handleNext}
-                    onShowAnswer={() => setShowAnswer(!showAnswer)}
+                    onShowAnswer={handleShowAnswer}
                     leftCount={leftCount}
                     rightCount={rightCount}
                   />
@@ -409,7 +422,7 @@ export function PracticeApp() {
                 isLive={timer.isLive && timer.time > 0}
                 onPrevious={handlePrevious}
                 onNext={handleNext}
-                onShowAnswer={() => setShowAnswer(!showAnswer)}
+                onShowAnswer={handleShowAnswer}
                 leftCount={leftCount}
                 rightCount={rightCount}
               />

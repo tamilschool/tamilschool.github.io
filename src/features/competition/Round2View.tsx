@@ -6,6 +6,7 @@ import {
   TopicDisplay,
   KuralMeaning,
   COMPETITION_TIMER_SECONDS,
+  GroupDisplay,
 } from '@/types';
 import type { Topic as TopicType, Thirukkural, KuralMeaning as KuralMeaningType } from '@/types';
 import { useTimer } from '@/hooks/useTimer';
@@ -17,6 +18,7 @@ import { CompetitionControls } from './CompetitionControls';
 import QuestionNavigation from './QuestionNavigation';
 import ScoreCard from './ScoreCard';
 import CompactScoreCard from './CompactScoreCard';
+import { trackTimerStart, trackTopicChange, trackNavigation, trackEvent } from '@/lib/analytics';
 
 interface Round2ViewProps {
   questionState: CQuestionState;
@@ -189,6 +191,9 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
 
   const handleSelectTopic = useCallback(
     (topic: TopicType) => {
+      // Track topic change
+      trackTopicChange(topic, questionState.selectedGroup ? GroupDisplay[questionState.selectedGroup].english : '');
+      
       // Pause timer and reset to current time (effectively stopping the round but keeping time)
       timer.reset(timer.time);
 
@@ -240,6 +245,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
   const handlePrevious = useCallback(() => {
     if (!timer.isLive || timer.isPaused || timer.isExpired) return;
     if (currentIndex > 0) {
+      trackNavigation('previous', currentTopic);
       updateTopicIndex(currentTopic, currentIndex - 1);
       //   setShowAnswer(false);
     }
@@ -248,6 +254,7 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
   const handleNext = useCallback(() => {
     if (!timer.isLive || timer.isPaused || timer.isExpired) return;
     if (currentIndex < totalCount - 1) {
+      trackNavigation('next', currentTopic);
       updateTopicIndex(currentTopic, currentIndex + 1);
       //   setShowAnswer(false);
     }
@@ -278,6 +285,8 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
         isPaused: true,
       };
     } else {
+      // Timer starting - track it
+      trackTimerStart(currentTopic, questionState.selectedGroup ? GroupDisplay[questionState.selectedGroup].english : '');
       timer.start();
       nextTimerState = {
         isLive: true,
@@ -298,6 +307,14 @@ export default function Round2View({ questionState, onQuestionStateChange }: Rou
 
       const key = getQuestionKey(currentTopic, currentIndex);
       const answered = questionState.scoreState.group23Score.round2[currentTopic];
+
+      // Track the score action
+      trackEvent('competition_score_toggle', {
+        topic: currentTopic,
+        action: value ? 'correct' : 'incorrect',
+        question_index: currentIndex,
+        group: questionState.selectedGroup ? GroupDisplay[questionState.selectedGroup].english : '',
+      });
 
       const updatedSet = new Set(answered);
       if (value) {

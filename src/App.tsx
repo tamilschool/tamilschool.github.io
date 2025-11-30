@@ -10,6 +10,7 @@ import { fetchSource } from './lib/data/fetchSource';
 import { parseSource } from './lib/data/parseSource';
 import { analyzeQuestionPoolCoverage } from './lib/analyzeQuestionPool';
 import { Group } from './types';
+import { trackSignOut } from './lib/analytics';
 
 // Run worst-case analysis on startup
 let analysisRun = false;
@@ -58,11 +59,13 @@ function Layout() {
   };
 
   const confirmExit = () => {
+    trackSignOut(isPracticeMode ? 'practice' : 'competition', true);
     setShowExitConfirm(false);
     navigate('/');
   };
 
   const cancelExit = () => {
+    trackSignOut(isPracticeMode ? 'practice' : 'competition', false);
     setShowExitConfirm(false);
   };
 

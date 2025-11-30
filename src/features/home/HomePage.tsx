@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { Group, GroupDisplay } from '@/types';
+import { trackModeSelection } from '@/lib/analytics';
 
 export default function HomePage() {
     const navigate = useNavigate();
 
     const handleSelect = (mode: 'practice' | 'competition', group: Group) => {
+        // Track the selection
+        trackModeSelection(mode, GroupDisplay[group].english);
         // Navigate to /mode/groupId (e.g., /practice/2)
         navigate(`/${mode}/${group}`);
     };
