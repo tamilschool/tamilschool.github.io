@@ -27,9 +27,11 @@ export function trackEvent(
   eventName: string,
   params?: Record<string, string | number | boolean>
 ) {
-  // Skip tracking in development
+  // Always log to console for debugging (both dev and production)
+  console.log('[Analytics]', eventName, params);
+
+  // Only send to analytics services in production
   if (!shouldTrack()) {
-    console.log('[Analytics - DEV MODE - NOT SENT]', eventName, params);
     return;
   }
 
